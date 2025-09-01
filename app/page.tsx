@@ -62,6 +62,7 @@ export default function Home() {
           <span>© {new Date().getFullYear()} Velvet House Agency — All rights reserved.</span>
           <nav style={{display:"flex",gap:12}}>
             <a href="/legal" style={{color:"#aeb8ff",textDecoration:"none"}}>Mentions légales</a>
+            <a href="/cgu" style={{color:"#aeb8ff",textDecoration:"none"}}>CGU</a>
           </nav>
         </div>
       </footer>
