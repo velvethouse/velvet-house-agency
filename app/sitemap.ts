@@ -8,6 +8,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/vip` },
     { url: `${base}/gifts` },
     { url: `${base}/dashboard` },
-    { url: `${base}/legal` }
+    { url: `${base}/legal` },
+    { url: `${base}/cgu` },
+    { url: `${base}/nova` }
   ];
 }
