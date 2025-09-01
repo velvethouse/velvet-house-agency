@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 // Garde cet import si tu ajoutes un globals.css plus tard (sinon aucun souci).
-import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Velvet House Agency",
