@@ -8,31 +8,46 @@ export function generateMetadata({ params }: Props): Metadata {
 
 export default function UserProfile({ params }: Props) {
   const name = params.username;
+
   return (
     <main style={{maxWidth:1100,margin:"0 auto",padding:"32px 20px",color:"#f5f5f7"}}>
       <h1 style={{marginBottom:8}}>Profil — {name}</h1>
-      <p style={{color:"#cfcfd6"}}>
+      <p style={{color:"#cfcfd6",marginBottom:16}}>
         Bio, planning, compteur de cadeaux, aperçu VIP, et bouton “Entrer en live”.
       </p>
 
-      <div style={{display:"grid",gap:12,marginTop:16}}>
-        <a href="/live" style={{padding:"12px 16px",background:"#8257e6",color:"#fff",borderRadius:10,textDecoration:"none",width:"fit-content"}}>
-          Rejoindre le live
+      {/* Liens publics */}
+      <div style={{display:"flex",gap:12,flexWrap:"wrap",margin:"12px 0 24px 0"}}>
+        <a href="/live" style={{padding:"10px 14px",border:"1px solid #2a2a33",borderRadius:10,textDecoration:"none",color:"#e7e7ee"}}>
+          Voir la liste des lives
         </a>
-        <a href="/gifts" style={{padding:"12px 16px",border:"1px solid #2a2a33",color:"#e7e7ee",borderRadius:10,textDecoration:"none",width:"fit-content"}}>
+        <a href="/gifts" style={{padding:"10px 14px",border:"1px solid #2a2a33",borderRadius:10,textDecoration:"none",color:"#e7e7ee"}}>
           Envoyer un cadeau
+        </a>
+        <a href="/vip" style={{padding:"10px 14px",border:"1px solid #2a2a33",borderRadius:10,textDecoration:"none",color:"#e7e7ee"}}>
+          Devenir VIP
         </a>
       </div>
 
-      {/* FOOTER */}
-      <footer style={{borderTop:"1px solid #1f1f25",marginTop:40}}>
-        <div style={{maxWidth:1100,margin:"0 auto",padding:"18px 20px",display:"flex",gap:16,justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",color:"#9a9aaa",fontSize:13}}>
-          <span>© {new Date().getFullYear()} Velvet House Agency — All rights reserved.</span>
-          <nav style={{display:"flex",gap:12}}>
-            <a href="/legal" style={{color:"#aeb8ff",textDecoration:"none"}}>Mentions légales</a>
-          </nav>
+      {/* Accès créatrice (privé, pas d’auth encore) */}
+      <div style={{border:"1px solid #1f1f25",borderRadius:12,padding:16}}>
+        <h2 style={{marginTop:0}}>Espace créatrice</h2>
+        <p style={{color:"#cfcfd6",marginBottom:12}}>Liens rapides (réservés à la streameuse) :</p>
+        <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+          <a href={`/u/${name}/studio`} style={{padding:"10px 14px",background:"#2a2a33",borderRadius:10,textDecoration:"none",color:"#e7e7ee"}}>
+            Studio
+          </a>
+          <a href={`/u/${name}/live`} style={{padding:"10px 14px",background:"#2a2a33",borderRadius:10,textDecoration:"none",color:"#e7e7ee"}}>
+            Live
+          </a>
+          <a href={`/u/${name}/chat`} style={{padding:"10px 14px",background:"#2a2a33",borderRadius:10,textDecoration:"none",color:"#e7e7ee"}}>
+            Chat
+          </a>
         </div>
-      </footer>
+        <p style={{color:"#8a8aa0",fontSize:13,marginTop:10}}>
+          (Plus tard, ces liens seront protégés par connexion/permissions.)
+        </p>
+      </div>
     </main>
   );
 }
