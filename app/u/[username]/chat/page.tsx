@@ -1,6 +1,7 @@
 'use client';
 
 import NovaChat from "../../../../components/NovaChat";
+import CreatorTabs from "../../../../components/CreatorTabs";
 
 export const metadata = { title: "Chat privé | Velvet House Agency" };
 
@@ -12,6 +13,10 @@ export default function PrivateChat({ params }: Props) {
   return (
     <main style={{maxWidth:1100,margin:"0 auto",padding:"32px 20px",color:"#f5f5f7"}}>
       <h1>Chat privé — {name}</h1>
+
+      {/* Onglets navigation créatrice */}
+      <CreatorTabs username={name} current="chat" />
+
       <p style={{color:"#cfcfd6",marginBottom:20}}>
         Espace de discussion réservé à la streameuse (pré-modération, notes, réponses rapides). Nova est dispo pour assister ✨
       </p>
