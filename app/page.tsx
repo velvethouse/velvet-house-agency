@@ -31,7 +31,7 @@ function Nav() {
           <a href="/gifts" style={{ color: "#cfcfd6", textDecoration: "none" }}>Gifts</a>
           <a href="/dashboard" style={{ color: "#cfcfd6", textDecoration: "none" }}>Dashboard</a>
           <a href="#about" style={{ color: "#cfcfd6", textDecoration: "none" }}>About</a>
-          <a href="#contact" style={{ color: "#cfcfd6", textDecoration: "none" }}>Contact</a>
+          <a href="/contact" style={{ color: "#cfcfd6", textDecoration: "none" }}>Contact</a>
         </div>
       </nav>
     </header>
@@ -64,7 +64,7 @@ export default function Home() {
           </p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
             <a
-              href="#contact"
+              href="/contact"
               style={{
                 padding: "14px 20px",
                 background: "#8257e6",
@@ -116,7 +116,7 @@ export default function Home() {
         </ul>
       </section>
 
-      {/* CONTACT */}
+      {/* CONTACT (section ancre conservée si tu veux scroller depuis le Hero) */}
       <section
         id="contact"
         style={{
