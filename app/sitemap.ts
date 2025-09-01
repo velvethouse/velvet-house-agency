@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/live` },
     { url: `${base}/vip` },
     { url: `${base}/gifts` },
-    { url: `${base}/dashboard` }
+    { url: `${base}/dashboard` },
+    { url: `${base}/legal` }
   ];
 }
