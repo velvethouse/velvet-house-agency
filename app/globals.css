@@ -1,10 +1,19 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* app/globals.css — version neutre */
+*,
+*::before,
+*::after { box-sizing: border-box; }
 
 html, body {
-  min-height: 100%;
-  background: #0b0b0c; /* velvet */
-  color: white;
-  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* NE PAS mettre de background ou de color ici.
+   Laisse le layout.tsx gérer le thème.
+*/
+
+/* Typo de base */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
