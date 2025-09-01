@@ -1,6 +1,7 @@
 'use client';
 
 import NovaChat from "../../../../components/NovaChat";
+import CreatorTabs from "../../../../components/CreatorTabs";
 
 export const metadata = { title: "Live | Velvet House Agency" };
 
@@ -12,8 +13,12 @@ export default function LiveStudio({ params }: Props) {
   return (
     <main style={{maxWidth:1100,margin:"0 auto",padding:"32px 20px",color:"#f5f5f7"}}>
       <h1>Live — {name}</h1>
+
+      {/* Onglets navigation créatrice */}
+      <CreatorTabs username={name} current="live" />
+
       <p style={{color:"#cfcfd6",marginBottom:20}}>
-        Espace de diffusion en direct pour {name}. Ici Nova reste dispo pour assister la streameuse pendant le live ✨
+        Espace de diffusion en direct pour {name}. Nova reste dispo pour assister pendant le live ✨
       </p>
 
       <div style={{border:"1px solid #1f1f25",borderRadius:12,padding:20,marginBottom:20}}>
