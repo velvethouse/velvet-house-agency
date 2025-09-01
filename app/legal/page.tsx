@@ -35,16 +35,6 @@ export default function LegalPage() {
       <p>
         Velvet House Agency ne saurait être tenue pour responsable des dommages directs ou indirects liés à l’utilisation du site.
       </p>
-
-      {/* FOOTER */}
-      <footer style={{borderTop:"1px solid #1f1f25",marginTop:40}}>
-        <div style={{maxWidth:1100,margin:"0 auto",padding:"18px 20px",display:"flex",gap:16,justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",color:"#9a9aaa",fontSize:13}}>
-          <span>© {new Date().getFullYear()} Velvet House Agency — All rights reserved.</span>
-          <nav style={{display:"flex",gap:12}}>
-            <a href="/legal" style={{color:"#aeb8ff",textDecoration:"none"}}>Mentions légales</a>
-          </nav>
-        </div>
-      </footer>
     </main>
   );
 }
