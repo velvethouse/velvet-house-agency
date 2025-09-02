@@ -6,15 +6,16 @@ import { useMemo, useState } from "react";
 
 /** --- Demo data (modifiable) --- */
 const LIVES = [
-  { title: "Showcase — Alice", time: "Tonight 9:00 PM", slug: "alice", desc: "Live showcase + Q&A", country: "US", languages: ["English", "French"] },
+  { title: "Showcase — Alice", time: "Tonight 9:00 PM", slug: "alice", desc: "Live showcase + Q&A", country: "US", languages: ["English", "French"], liveNow: true },
   { title: "VIP Talk — Bella", time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session", country: "FR", languages: ["French"] },
   { title: "Acoustic Set — Cora", time: "Saturday 7:00 PM", slug: "cora", desc: "Acoustic & chill", country: "ES", languages: ["Spanish", "English"] },
   { title: "Studio — Dana", time: "Sunday 6:30 PM", slug: "dana", desc: "Behind the scenes", country: "DE", languages: ["German", "English"] },
   { title: "Workshop — Emi", time: "Monday 5:00 PM", slug: "emi", desc: "Creative workshop", country: "MA", languages: ["Arabic", "French", "English"] },
 ];
 
-const allCountries = Array.from(new Set(LIVES.map(x => x.country))).sort();
-const allLanguages = Array.from(new Set(LIVES.flatMap(x => x.languages))).sort();
+/** Options auto à partir des données */
+const allCountries = Array.from(new Set(LIVES.map((x) => x.country))).sort();
+const allLanguages = Array.from(new Set(LIVES.flatMap((x) => x.languages))).sort();
 
 export default function LivePage() {
   const [country, setCountry] = useState("all");
@@ -22,7 +23,7 @@ export default function LivePage() {
   const [query, setQuery] = useState("");
 
   const results = useMemo(() => {
-    return LIVES.filter(x => {
+    return LIVES.filter((x) => {
       const okCountry = country === "all" ? true : x.country === country;
       const okLang = language === "all" ? true : x.languages.includes(language);
       const okQuery = query.trim()
@@ -102,6 +103,12 @@ export default function LivePage() {
     textAlign: "center" as const,
   };
 
+  const resetFilters = () => {
+    setCountry("all");
+    setLanguage("all");
+    setQuery("");
+  };
+
   return (
     <main style={pageStyle}>
       {/* Header */}
@@ -119,7 +126,7 @@ export default function LivePage() {
       </header>
 
       {/* Title */}
-      <section style={{ maxWidth: 1100, margin: "24px auto 10px", padding: "0 16px" }}>
+      <section style={{ maxWidth: 1100, margin: "24px auto 8px", padding: "0 16px" }}>
         <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>
           Live
         </h1>
@@ -168,6 +175,23 @@ export default function LivePage() {
             style={inputStyle}
           />
         </div>
+
+        <div style={{ display: "grid", gap: 6, alignContent: "end" }}>
+          <span style={{ color: "#d7c9b3", fontSize: 14 }}>
+            {results.length} result{results.length !== 1 ? "s" : ""}
+          </span>
+          <button
+            onClick={resetFilters}
+            style={{
+              ...outlineBtn,
+              borderRadius: 10,
+              padding: "8px 12px",
+              fontWeight: 700,
+            }}
+          >
+            Reset filters
+          </button>
+        </div>
       </section>
 
       {/* Results */}
@@ -214,4 +238,4 @@ export default function LivePage() {
       </section>
     </main>
   );
-}
+                       }
