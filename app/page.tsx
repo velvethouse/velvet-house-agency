@@ -41,50 +41,55 @@ export default function Home() {
     <main>
       <Nav />
 
-      {/* HERO avec lotus + nom */}
+      {/* HERO avec l'image que tu viens d'uploader */}
       <section
         style={{
-          minHeight: "75vh",
+          minHeight: "72vh",
           display: "grid",
           placeItems: "center",
-          padding: "40px 20px",
+          padding: "28px 20px",
           textAlign: "center"
         }}
       >
-        <div style={{ maxWidth: 600 }}>
-          {/* Logo lotus */}
+        <div style={{ width: "100%", maxWidth: 860, margin: "0 auto" }}>
           <img
-            src="/logo-lotus.svg"
-            alt="Velvet House Lotus"
-            style={{ width: "100%", maxWidth: 160, marginBottom: 16 }}
+            src="/A_mobile_app_design_for_Velvet_House_is_displayed_.png" // ← ton fichier actuel dans /public
+            alt="Velvet House"
+            style={{
+              width: "100%",
+              height: "auto",
+              borderRadius: 16,
+              display: "block",
+              margin: "0 auto 20px",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
+              border: "1px solid rgba(58,21,21,0.6)"
+            }}
           />
 
-          {/* Nom de la marque */}
-          <h1 style={{ margin: 0, fontSize: "2rem", letterSpacing: "2px" }}>
-            VELVET HOUSE
-          </h1>
-
-          {/* Boutons */}
-          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginTop: 24 }}>
+          {/* Boutons or */}
+          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
             <a
               href="/contact"
-              className="btn-gold"
               style={{
                 padding: "14px 20px",
+                background: "#d4a437",
+                color: "#2c0d0d",
                 borderRadius: 12,
                 textDecoration: "none",
-                fontWeight: 600
+                fontWeight: 600,
+                border: "1px solid #b98d2f"
               }}
             >
               Nous contacter
             </a>
             <a
               href="#about"
-              className="btn-outline-gold"
               style={{
                 padding: "14px 20px",
+                border: "1px solid #d4a437",
                 borderRadius: 12,
                 textDecoration: "none",
+                color: "#d4a437",
                 fontWeight: 600
               }}
             >
