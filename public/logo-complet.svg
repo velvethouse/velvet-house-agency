@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 340">
   <defs>
     <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#FFD700"/>
@@ -6,18 +6,19 @@
     </linearGradient>
   </defs>
 
-  <!-- Lotus contour style (comme ton ancien), aucun remplissage -->
-  <g fill="none" stroke="url(#gold)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
-    <!-- pétale central -->
+  <!-- Lotus -->
+  <g fill="none" stroke="url(#gold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" transform="translate(75,10) scale(2)">
     <path d="M32 10 C29 16 29 22 32 28 C35 22 35 16 32 10 Z"/>
-    <!-- pétales intérieurs gauche/droite -->
     <path d="M23 20 C19 23 18 28 19 32 C23 30 26 27 29 24 C27 22 25 21 23 20 Z"/>
     <path d="M41 20 C39 21 37 22 35 24 C38 27 41 30 45 32 C46 28 45 23 41 20 Z"/>
-    <!-- pétales extérieurs gauche/droite -->
     <path d="M16 27 C13 31 11.5 36 11.5 41 C16 39.8 20 37.5 23 34 C24.5 32.3 25.5 30.5 25.5 28.8 C22.3 28.2 19.2 27.6 16 27 Z"/>
     <path d="M48 27 C44.8 27.6 41.7 28.2 38.5 28.8 C38.5 30.5 39.5 32.3 41 34 C44 37.5 48 39.8 52.5 41 C52.5 36 51 31 48 27 Z"/>
-    <!-- base en éventail -->
     <path d="M20 40 C16 41 12.5 42.3 9.8 44.2 C16.5 45.3 24 45.5 31 44 C27.8 42.1 24.3 40.8 20 40 Z"/>
     <path d="M44 40 C39.7 40.8 36.2 42.1 33 44 C40 45.5 47.5 45.3 54.2 44.2 C51.5 42.3 48 41 44 40 Z"/>
   </g>
+
+  <!-- Texte -->
+  <text x="50%" y="300" text-anchor="middle" font-size="48" font-family="Georgia, serif" fill="url(#gold)" font-weight="bold">
+    VELVET HOUSE
+  </text>
 </svg>
