@@ -17,3 +17,33 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* --- Responsive --- */
+
+/* Logo adaptatif */
+.hero-logo {
+  max-width: clamp(180px, 40vw, 300px);
+  margin: 0 auto 20px;
+  display: block;
+}
+
+/* Titres adaptatifs */
+.hero-title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: #d4af37; /* doré */
+  margin-bottom: 10px;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  color: #f5f5f5;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Boutons en colonne sur petit écran */
+@media (max-width: 520px) {
+  .button-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
