@@ -1,49 +1,70 @@
-/* app/globals.css — version neutre */
-*,
-*::before,
-*::after { box-sizing: border-box; }
+/* ====== Couleurs principales ====== */
+:root {
+  --background: #1a0f0f; /* Bordeaux très sombre */
+  --foreground: #f5f5f7;
+  --gold: #D4AF37; /* Or luxe métallique */
+  --gold-gradient: linear-gradient(90deg, #FFD700, #D4AF37, #B8860B);
+}
 
-html, body {
+/* ====== Style global ====== */
+body {
   margin: 0;
   padding: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Playfair Display', serif;
 }
 
-/* NE PAS mettre de background ou de color ici.
-   Laisse le layout.tsx gérer le thème.
-*/
-
-/* Typo de base */
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-/* --- Responsive --- */
-
-/* Logo adaptatif */
-.hero-logo {
-  max-width: clamp(180px, 40vw, 300px);
-  margin: 0 auto 20px;
-  display: block;
+/* ====== Titres ====== */
+h1, h2, h3 {
+  color: var(--gold);
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
-/* Titres adaptatifs */
-.hero-title {
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  color: #d4af37; /* doré */
-  margin-bottom: 10px;
+/* Optionnel : effet doré métallique sur les grands titres */
+.gold-gradient-text {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
 }
 
-.hero-subtitle {
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
-  color: #f5f5f5;
-  max-width: 600px;
-  margin: 0 auto;
+/* ====== Paragraphes ====== */
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
-/* Boutons en colonne sur petit écran */
-@media (max-width: 520px) {
-  .button-container {
-    flex-direction: column;
-    gap: 10px;
-  }
+/* ====== Boutons ====== */
+button {
+  background-color: var(--gold);
+  color: #1a0f0f;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+/* Bouton transparent avec contour or */
+.button-outline {
+  background: transparent;
+  color: var(--gold);
+  border: 2px solid var(--gold);
+}
+
+.button-outline:hover {
+  background: var(--gold);
+  color: #1a0f0f;
 }
