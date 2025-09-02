@@ -4,7 +4,7 @@
 
 import { useMemo, useState } from "react";
 
-/** Demo data — add/modify as you like */
+/** --- Demo data (modifiable) --- */
 const LIVES = [
   { title: "Showcase — Alice", time: "Tonight 9:00 PM", slug: "alice", desc: "Live showcase + Q&A", country: "US", languages: ["English", "French"] },
   { title: "VIP Talk — Bella", time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session", country: "FR", languages: ["French"] },
@@ -214,4 +214,4 @@ export default function LivePage() {
       </section>
     </main>
   );
-      }
+}
