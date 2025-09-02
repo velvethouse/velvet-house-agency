@@ -13,5 +13,11 @@
     "react-dom": "18.2.0",
     "postcss": "^8.4.41",
     "autoprefixer": "^10.4.19"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "@types/react": "^18.2.74",
+    "@types/react-dom": "^18.2.22",
+    "@types/node": "^20.12.7"
   }
 }
