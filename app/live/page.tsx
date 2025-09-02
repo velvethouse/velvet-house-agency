@@ -4,69 +4,27 @@
 
 import { useMemo, useState } from "react";
 
-export const metadata = { title: "Live | Velvet House Agency" };
-
 /** Demo data — add/modify as you like */
 const LIVES = [
-  {
-    title: "Showcase — Alice",
-    time: "Tonight 9:00 PM",
-    slug: "alice",
-    desc: "Live showcase + Q&A",
-    country: "US",
-    languages: ["English", "French"],
-  },
-  {
-    title: "VIP Talk — Bella",
-    time: "Tomorrow 8:30 PM",
-    slug: "bella",
-    desc: "Private VIP session",
-    country: "FR",
-    languages: ["French"],
-  },
-  {
-    title: "Acoustic Set — Cora",
-    time: "Saturday 7:00 PM",
-    slug: "cora",
-    desc: "Acoustic & chill",
-    country: "ES",
-    languages: ["Spanish", "English"],
-  },
-  {
-    title: "Studio — Dana",
-    time: "Sunday 6:30 PM",
-    slug: "dana",
-    desc: "Behind the scenes",
-    country: "DE",
-    languages: ["German", "English"],
-  },
-  {
-    title: "Workshop — Emi",
-    time: "Monday 5:00 PM",
-    slug: "emi",
-    desc: "Creative workshop",
-    country: "MA",
-    languages: ["Arabic", "French", "English"],
-  },
+  { title: "Showcase — Alice", time: "Tonight 9:00 PM", slug: "alice", desc: "Live showcase + Q&A", country: "US", languages: ["English", "French"] },
+  { title: "VIP Talk — Bella", time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session", country: "FR", languages: ["French"] },
+  { title: "Acoustic Set — Cora", time: "Saturday 7:00 PM", slug: "cora", desc: "Acoustic & chill", country: "ES", languages: ["Spanish", "English"] },
+  { title: "Studio — Dana", time: "Sunday 6:30 PM", slug: "dana", desc: "Behind the scenes", country: "DE", languages: ["German", "English"] },
+  { title: "Workshop — Emi", time: "Monday 5:00 PM", slug: "emi", desc: "Creative workshop", country: "MA", languages: ["Arabic", "French", "English"] },
 ];
 
-/** Small helpers to build dropdown options */
-const allCountries = Array.from(new Set(LIVES.map((x) => x.country))).sort();
-const allLanguages = Array.from(
-  new Set(LIVES.flatMap((x) => x.languages))
-).sort();
+const allCountries = Array.from(new Set(LIVES.map(x => x.country))).sort();
+const allLanguages = Array.from(new Set(LIVES.flatMap(x => x.languages))).sort();
 
 export default function LivePage() {
-  const [country, setCountry] = useState<string>("all");
-  const [language, setLanguage] = useState<string>("all");
-  const [query, setQuery] = useState<string>(""); // free text search (optional)
+  const [country, setCountry] = useState("all");
+  const [language, setLanguage] = useState("all");
+  const [query, setQuery] = useState("");
 
-  /** Filtering logic */
   const results = useMemo(() => {
-    return LIVES.filter((x) => {
+    return LIVES.filter(x => {
       const okCountry = country === "all" ? true : x.country === country;
-      const okLang =
-        language === "all" ? true : x.languages.includes(language);
+      const okLang = language === "all" ? true : x.languages.includes(language);
       const okQuery = query.trim()
         ? (x.title + " " + x.desc).toLowerCase().includes(query.toLowerCase())
         : true;
@@ -74,16 +32,15 @@ export default function LivePage() {
     });
   }, [country, language, query]);
 
-  /** Reusable styles (gold/velours) */
-  const pageStyle: React.CSSProperties = {
+  const pageStyle = {
     minHeight: "100vh",
     background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
     color: "#f5f5f5",
     fontFamily: "system-ui, Segoe UI, sans-serif",
-  };
+  } as const;
 
-  const navStyle: React.CSSProperties = {
-    position: "sticky",
+  const navStyle = {
+    position: "sticky" as const,
     top: 0,
     zIndex: 40,
     backdropFilter: "blur(8px)",
@@ -91,7 +48,7 @@ export default function LivePage() {
     borderBottom: "1px solid rgba(212,175,55,0.18)",
   };
 
-  const shell: React.CSSProperties = {
+  const shell = {
     maxWidth: 1100,
     margin: "0 auto",
     padding: "12px 16px",
@@ -99,33 +56,30 @@ export default function LivePage() {
     justifyContent: "space-between",
     alignItems: "center",
     gap: 12,
-  };
+  } as const;
 
-  const cardStyle: React.CSSProperties = {
+  const cardStyle = {
     textDecoration: "none",
     borderRadius: 14,
     padding: 16,
-    background:
-      "linear-gradient(180deg, rgba(15,15,15,0.45), rgba(15,15,15,0.30))",
+    background: "linear-gradient(180deg, rgba(15,15,15,0.45), rgba(15,15,15,0.30))",
     border: "1px solid rgba(212,175,55,0.22)",
     boxShadow: "0 10px 26px rgba(0,0,0,0.30)",
     color: "#f5f5f5",
     display: "grid",
     gap: 8,
-  };
+  } as const;
 
-  const inputStyle: React.CSSProperties = {
+  const inputStyle = {
     padding: "10px 12px",
     borderRadius: 10,
     border: "1px solid rgba(212,175,55,0.35)",
     background: "rgba(0,0,0,0.35)",
     color: "#f5f5f5",
     outline: "none",
-  };
+  } as const;
 
-  const selectStyle = inputStyle;
-
-  const goldBtn: React.CSSProperties = {
+  const goldBtn = {
     background: "#D4AF37",
     color: "#2c0d0d",
     textDecoration: "none",
@@ -134,10 +88,10 @@ export default function LivePage() {
     borderRadius: 12,
     border: "1px solid #B8860B",
     flex: "1 1 120px",
-    textAlign: "center",
+    textAlign: "center" as const,
   };
 
-  const outlineBtn: React.CSSProperties = {
+  const outlineBtn = {
     textDecoration: "none",
     fontWeight: 800,
     padding: "12px 18px",
@@ -145,17 +99,15 @@ export default function LivePage() {
     border: "2px solid #D4AF37",
     color: "#D4AF37",
     flex: "1 1 120px",
-    textAlign: "center",
+    textAlign: "center" as const,
   };
 
   return (
     <main style={pageStyle}>
-      {/* Header local */}
+      {/* Header */}
       <header style={navStyle}>
         <nav style={shell}>
-          <a href="/" style={{ color: "#D4AF37", fontWeight: 800 }}>
-            Velvet House
-          </a>
+          <a href="/" style={{ color: "#D4AF37", fontWeight: 800 }}>Velvet House</a>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontWeight: 700 }}>
             <a href="/vip">VIP</a>
             <a href="/gifts">Gifts</a>
@@ -168,14 +120,7 @@ export default function LivePage() {
 
       {/* Title */}
       <section style={{ maxWidth: 1100, margin: "24px auto 10px", padding: "0 16px" }}>
-        <h1
-          style={{
-            margin: 0,
-            color: "#D4AF37",
-            fontSize: "clamp(26px, 6vw, 40px)",
-            textAlign: "left",
-          }}
-        >
+        <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>
           Live
         </h1>
         <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
@@ -194,41 +139,26 @@ export default function LivePage() {
           gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
         }}
       >
-        {/* Country filter */}
         <div style={{ display: "grid", gap: 6 }}>
           <label style={{ color: "#D4AF37", fontWeight: 700 }}>Country</label>
-          <select
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-            style={selectStyle}
-          >
+          <select value={country} onChange={(e) => setCountry(e.target.value)} style={inputStyle as any}>
             <option value="all">All countries</option>
             {allCountries.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
+              <option key={c} value={c}>{c}</option>
             ))}
           </select>
         </div>
 
-        {/* Language filter */}
         <div style={{ display: "grid", gap: 6 }}>
           <label style={{ color: "#D4AF37", fontWeight: 700 }}>Language</label>
-          <select
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            style={selectStyle}
-          >
+          <select value={language} onChange={(e) => setLanguage(e.target.value)} style={inputStyle as any}>
             <option value="all">All languages</option>
             {allLanguages.map((l) => (
-              <option key={l} value={l}>
-                {l}
-              </option>
+              <option key={l} value={l}>{l}</option>
             ))}
           </select>
         </div>
 
-        {/* Free text search (optional) */}
         <div style={{ display: "grid", gap: 6 }}>
           <label style={{ color: "#D4AF37", fontWeight: 700 }}>Search</label>
           <input
@@ -272,17 +202,16 @@ export default function LivePage() {
             <div style={{ color: "#d7c9b3" }}>{item.time}</div>
             <div style={{ color: "#e9dfcf", opacity: 0.95 }}>{item.desc}</div>
             <div style={{ color: "#d7c9b3", fontSize: 13 }}>
-              <b>Country:</b> {item.country} · <b>Languages:</b>{" "}
-              {item.languages.join(", ")}
+              <b>Country:</b> {item.country} · <b>Languages:</b> {item.languages.join(", ")}
             </div>
 
             <div style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
-              <span className="goldBtnOutline" style={{ ...outlineBtn }}>View profile</span>
-              <span className="goldBtn" style={{ ...goldBtn }}>Join live</span>
+              <span style={outlineBtn}>View profile</span>
+              <span style={goldBtn}>Join live</span>
             </div>
           </a>
         ))}
       </section>
     </main>
   );
-}
+      }
