@@ -64,7 +64,6 @@ a.goldBtnOutline {
   color: #2c0d0d;
   border: 1px solid #B8860B;
 }
-
 .goldBtn:hover { opacity: .9; }
 
 .goldBtnOutline {
@@ -72,7 +71,6 @@ a.goldBtnOutline {
   color: var(--gold);
   border: 2px solid var(--gold);
 }
-
 .goldBtnOutline:hover {
   background: var(--gold);
   color: #2c0d0d;
