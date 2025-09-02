@@ -5,7 +5,7 @@ function Nav() {
         position: "sticky",
         top: 0,
         backdropFilter: "blur(10px)",
-        background: "rgba(44,13,13,0.9)", // bordeaux semi-transparent
+        background: "rgba(44,13,13,0.9)",
         borderBottom: "1px solid #3a1515",
         zIndex: 50
       }}
@@ -41,7 +41,7 @@ export default function Home() {
     <main>
       <Nav />
 
-      {/* HERO avec logo centré */}
+      {/* HERO avec lotus + nom */}
       <section
         style={{
           minHeight: "75vh",
@@ -52,14 +52,20 @@ export default function Home() {
         }}
       >
         <div style={{ maxWidth: 600 }}>
-          {/* Mets ton logo dans /public/logo.png */}
+          {/* Logo lotus */}
           <img
-            src="/logo.png"
-            alt="Velvet House"
-            style={{ width: "100%", maxWidth: 300, marginBottom: 24 }}
+            src="/logo-lotus.svg"
+            alt="Velvet House Lotus"
+            style={{ width: "100%", maxWidth: 160, marginBottom: 16 }}
           />
 
-          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+          {/* Nom de la marque */}
+          <h1 style={{ margin: 0, fontSize: "2rem", letterSpacing: "2px" }}>
+            VELVET HOUSE
+          </h1>
+
+          {/* Boutons */}
+          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginTop: 24 }}>
             <a
               href="/contact"
               className="btn-gold"
