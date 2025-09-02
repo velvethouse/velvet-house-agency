@@ -5,47 +5,57 @@
       <stop offset="100%" stop-color="#D4A437"/>
     </linearGradient>
     <style>
-      .s { fill:none; stroke:url(#gold); stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
+      .fill { fill: url(#gold); }
+      .stroke { fill: none; stroke: url(#gold); stroke-width: 3; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
     </style>
   </defs>
 
-  <!-- LOTUS (aucun trait ne se croise) -->
+  <!-- LOTUS EN FORMES PLEINES (aucun croisement) -->
   <!-- pétale central -->
-  <path class="s" d="M160 70
-                     C148 102 148 138 160 170
-                     C172 138 172 102 160 70 Z"/>
+  <path class="fill" d="M160 72
+                         C148 102 148 136 160 166
+                         C172 136 172 102 160 72 Z"/>
 
   <!-- pétales intérieurs -->
-  <path class="s" d="M128 102
-                     C114 120 112 143 120 162
-                     C134 152 145 139 152 124
-                     C144 112 136 106 128 102 Z"/>
-  <path class="s" d="M192 102
-                     C184 106 176 112 168 124
-                     C175 139 186 152 200 162
-                     C208 143 206 120 192 102 Z"/>
+  <path class="fill" d="M128 106
+                         C114 122 112 142 120 160
+                         C134 150 146 136 154 120
+                         C145 112 136 108 128 106 Z"/>
+  <path class="fill" d="M192 106
+                         C184 108 175 112 166 120
+                         C174 136 186 150 200 160
+                         C208 142 206 122 192 106 Z"/>
 
-  <!-- pétales extérieurs (profil doux, sans chevauchement au centre) -->
-  <path class="s" d="M96 128
-                     C79 152 72 179 72 206
-                     C101 197 123 183 139 165
-                     C145 156 148 146 148 136
-                     C131 133 113 131 96 128 Z"/>
-  <path class="s" d="M224 128
-                     C207 131 189 133 172 136
-                     C172 146 175 156 181 165
-                     C197 183 219 197 248 206
-                     C248 179 241 152 224 128 Z"/>
+  <!-- pétales extérieurs -->
+  <path class="fill" d="M96 132
+                         C78 156 72 182 72 206
+                         C101 197 123 182 139 164
+                         C145 155 148 144 148 136
+                         C130 134 113 133 96 132 Z"/>
+  <path class="fill" d="M224 132
+                         C207 133 190 134 172 136
+                         C172 144 175 155 181 164
+                         C197 182 219 197 248 206
+                         C248 182 242 156 224 132 Z"/>
 
-  <!-- feuilles de base (séparées, pas de X au centre) -->
-  <path class="s" d="M116 202
-                     C95 206 76 214 60 225
-                     C101 231 143 232 183 225
-                     C162 214 140 206 116 202 Z"/>
-  <path class="s" d="M204 202
-                     C180 206 158 214 137 225
-                     C177 232 219 231 260 225
-                     C244 214 225 206 204 202 Z"/>
+  <!-- feuilles de base -->
+  <path class="fill" d="M116 204
+                         C95 208 76 216 60 226
+                         C101 233 143 233 183 226
+                         C162 216 140 208 116 204 Z"/>
+  <path class="fill" d="M204 204
+                         C180 208 158 216 137 226
+                         C177 233 219 233 260 226
+                         C244 216 225 208 204 204 Z"/>
+
+  <!-- (optionnel) fin contour discret autour du lotus plein -->
+  <path class="stroke" d="M160 72 C148 102 148 136 160 166 C172 136 172 102 160 72 Z"/>
+  <path class="stroke" d="M128 106 C114 122 112 142 120 160 C134 150 146 136 154 120 C145 112 136 108 128 106 Z"/>
+  <path class="stroke" d="M192 106 C184 108 175 112 166 120 C174 136 186 150 200 160 C208 142 206 122 192 106 Z"/>
+  <path class="stroke" d="M96 132 C78 156 72 182 72 206 C101 197 123 182 139 164 C145 155 148 144 148 136 C130 134 113 133 96 132 Z"/>
+  <path class="stroke" d="M224 132 C207 133 190 134 172 136 C172 144 175 155 181 164 C197 182 219 197 248 206 C248 182 242 156 224 132 Z"/>
+  <path class="stroke" d="M116 204 C95 208 76 216 60 226 C101 233 143 233 183 226 C162 216 140 208 116 204 Z"/>
+  <path class="stroke" d="M204 204 C180 208 158 216 137 226 C177 233 219 233 260 226 C244 216 225 208 204 204 Z"/>
 
   <!-- TEXTE -->
   <text x="50%" y="332" text-anchor="middle"
