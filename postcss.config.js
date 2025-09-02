@@ -1,6 +1,7 @@
 module.exports = {
   plugins: {
-    tailwindcss: {},
+    // Tailwind removed to avoid build error
+    // autoprefixer can stay if you want:
     autoprefixer: {},
   },
 };
