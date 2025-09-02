@@ -1,28 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 360">
   <defs>
     <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#FFD700"/>
       <stop offset="100%" stop-color="#D4A437"/>
     </linearGradient>
     <style>
-      .lotus path { vector-effect: non-scaling-stroke; }
+      .lotus * { vector-effect: non-scaling-stroke; }
     </style>
   </defs>
 
-  <!-- Lotus (stroke non scalable) -->
-  <g class="lotus" fill="none" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
-     transform="translate(75,18) scale(2.1)">
-    <path d="M32 10 C29 16 29 22 32 28 C35 22 35 16 32 10 Z"/>
-    <path d="M23 20 C19 23 18 28 19 32 C23 30 26 27 29 24 C27 22 25 21 23 20 Z"/>
-    <path d="M41 20 C39 21 37 22 35 24 C38 27 41 30 45 32 C46 28 45 23 41 20 Z"/>
-    <path d="M16 27 C13 31 11.5 36 11.5 41 C16 39.8 20 37.5 23 34 C24.5 32.3 25.5 30.5 25.5 28.8 C22.3 28.2 19.2 27.6 16 27 Z"/>
-    <path d="M48 27 C44.8 27.6 41.7 28.2 38.5 28.8 C38.5 30.5 39.5 32.3 41 34 C44 37.5 48 39.8 52.5 41 C52.5 36 51 31 48 27 Z"/>
-    <path d="M20 40 C16 41 12.5 42.3 9.8 44.2 C16.5 45.3 24 45.5 31 44 C27.8 42.1 24.3 40.8 20 40 Z"/>
-    <path d="M44 40 C39.7 40.8 36.2 42.1 33 44 C40 45.5 47.5 45.3 54.2 44.2 C51.5 42.3 48 41 44 40 Z"/>
+  <!-- LOTUS : 5 pétales + base, dessinés proprement et symétriquement -->
+  <g class="lotus" fill="none" stroke="url(#gold)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(0,6)">
+    <!-- Pétale central -->
+    <path d="M160 64
+             C146 98 148 135 160 168
+             C172 135 174 98 160 64 Z"/>
+
+    <!-- Pétales intérieurs gauche / droit -->
+    <path d="M126 98
+             C110 116 108 141 116 162
+             C132 152 144 139 152 124
+             C144 112 135 104 126 98 Z"/>
+    <path d="M194 98
+             C185 104 176 112 168 124
+             C176 139 188 152 204 162
+             C212 141 210 116 194 98 Z"/>
+
+    <!-- Pétales extérieurs gauche / droit -->
+    <path d="M95 124
+             C76 147 68 175 68 204
+             C94 196 116 182 132 164
+             C138 156 141 147 141 138
+             C125 134 110 129 95 124 Z"/>
+    <path d="M225 124
+             C210 129 195 134 179 138
+             C179 147 182 156 188 164
+             C204 182 226 196 252 204
+             C252 175 244 147 225 124 Z"/>
+
+    <!-- Feuilles de base -->
+    <path d="M113 200
+             C92 204 73 211 58 222
+             C99 228 142 229 182 222
+             C161 211 138 204 113 200 Z"/>
+    <path d="M207 200
+             C182 204 159 211 138 222
+             C178 229 221 228 262 222
+             C247 211 228 204 207 200 Z"/>
   </g>
 
-  <!-- Texte -->
-  <text x="50%" y="330" text-anchor="middle"
+  <!-- TEXTE -->
+  <text x="50%" y="332" text-anchor="middle"
         font-size="40" font-family="Georgia, 'Times New Roman', serif"
         fill="url(#gold)" font-weight="700" letter-spacing="2">
     VELVET HOUSE
