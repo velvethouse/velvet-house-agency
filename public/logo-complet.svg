@@ -4,10 +4,14 @@
       <stop offset="0%" stop-color="#FFD700"/>
       <stop offset="100%" stop-color="#D4A437"/>
     </linearGradient>
+    <style>
+      .lotus path { vector-effect: non-scaling-stroke; }
+    </style>
   </defs>
 
-  <!-- Lotus -->
-  <g fill="none" stroke="url(#gold)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" transform="translate(75,20) scale(2)">
+  <!-- Lotus (stroke non scalable) -->
+  <g class="lotus" fill="none" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+     transform="translate(75,18) scale(2.1)">
     <path d="M32 10 C29 16 29 22 32 28 C35 22 35 16 32 10 Z"/>
     <path d="M23 20 C19 23 18 28 19 32 C23 30 26 27 29 24 C27 22 25 21 23 20 Z"/>
     <path d="M41 20 C39 21 37 22 35 24 C38 27 41 30 45 32 C46 28 45 23 41 20 Z"/>
@@ -18,7 +22,9 @@
   </g>
 
   <!-- Texte -->
-  <text x="50%" y="330" text-anchor="middle" font-size="40" font-family="Georgia, serif" fill="url(#gold)" font-weight="bold">
+  <text x="50%" y="330" text-anchor="middle"
+        font-size="40" font-family="Georgia, 'Times New Roman', serif"
+        fill="url(#gold)" font-weight="700" letter-spacing="2">
     VELVET HOUSE
   </text>
 </svg>
