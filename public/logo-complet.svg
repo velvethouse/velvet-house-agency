@@ -6,47 +6,35 @@
     </linearGradient>
     <style>
       .f { fill: url(#gold); }
+      .o { fill: none; stroke: url(#gold); stroke-width: 3; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
     </style>
-
-    <!-- On dessine le côté droit une fois, puis on le miroir -->
-    <g id="RIGHT" class="f">
-      <!-- pétale intérieur droit (plein) -->
-      <path d="M36 -20
-               C20 -6 18 16 26 34
-               C38 26 48 12 54 -2
-               C48 -10 42 -16 36 -20 Z"/>
-      <!-- pétale extérieur droit (plein) -->
-      <path d="M70 -5
-               C52 -1 34 3 18 7
-               C18 19 22 31 30 41
-               C46 58 68 72 96 80
-               C96 51 88 23 70 -5 Z"/>
-      <!-- feuille de base droite (pleine) -->
-      <path d="M24 48
-               C6 52 -10 60 -24 70
-               C14 76 54 77 92 70
-               C72 60 50 52 24 48 Z"/>
-    </g>
-
-    <!-- pétale central plein -->
-    <path id="CENTER" class="f"
-          d="M0 -60
-             C -10 -30 -10 10 0 40
-             C 10 10 10 -30 0 -60 Z"/>
   </defs>
 
-  <!-- COMPOSITION (symétrie parfaite + échelle) -->
-  <g transform="translate(160,160) scale(1.45)">
-    <use href="#CENTER"/>
-    <use href="#RIGHT"/>
-    <use href="#RIGHT" transform="scale(-1,1)"/>
-    <!-- base pleine centrale pour une assise douce -->
-    <path class="f"
-          d="M-82 86 C-58 90 -28 92 0 92
-             C28 92 58 90 82 86
-             C60 76 34 68 0 64
-             C-34 68 -60 76 -82 86 Z"/>
-  </g>
+  <!-- LOTUS (coordonnées absolues, symétrie parfaite) -->
+  <!-- pétale central -->
+  <path class="f" d="M160 60 C150 96 150 136 160 172 C170 136 170 96 160 60 Z"/>
+  <path class="o" d="M160 60 C150 96 150 136 160 172 C170 136 170 96 160 60 Z"/>
+
+  <!-- pétales intérieurs -->
+  <path class="f" d="M140 92 C130 105 128 126 132 144 C144 135 152 122 156 110 C151 101 145 95 140 92 Z"/>
+  <path class="o" d="M140 92 C130 105 128 126 132 144 C144 135 152 122 156 110 C151 101 145 95 140 92 Z"/>
+
+  <path class="f" d="M180 92 C175 95 169 101 164 110 C168 122 176 135 188 144 C192 126 190 105 180 92 Z"/>
+  <path class="o" d="M180 92 C175 95 169 101 164 110 C168 122 176 135 188 144 C192 126 190 105 180 92 Z"/>
+
+  <!-- pétales extérieurs -->
+  <path class="f" d="M112 118 C96 140 88 167 88 194 C113 186 133 173 148 156 C153 148 156 139 156 130 C142 126 127 122 112 118 Z"/>
+  <path class="o" d="M112 118 C96 140 88 167 88 194 C113 186 133 173 148 156 C153 148 156 139 156 130 C142 126 127 122 112 118 Z"/>
+
+  <path class="f" d="M208 118 C193 122 178 126 164 130 C164 139 167 148 172 156 C187 173 207 186 232 194 C232 167 224 140 208 118 Z"/>
+  <path class="o" d="M208 118 C193 122 178 126 164 130 C164 139 167 148 172 156 C187 173 207 186 232 194 C232 167 224 140 208 118 Z"/>
+
+  <!-- feuilles de base -->
+  <path class="f" d="M128 196 C108 200 90 208 76 218 C114 224 152 224 188 218 C168 208 148 200 128 196 Z"/>
+  <path class="o" d="M128 196 C108 200 90 208 76 218 C114 224 152 224 188 218 C168 208 148 200 128 196 Z"/>
+
+  <path class="f" d="M192 196 C172 200 152 208 132 218 C168 224 206 224 244 218 C230 208 212 200 192 196 Z"/>
+  <path class="o" d="M192 196 C172 200 152 208 132 218 C168 224 206 224 244 218 C230 208 212 200 192 196 Z"/>
 
   <!-- TEXTE -->
   <text x="50%" y="332" text-anchor="middle"
