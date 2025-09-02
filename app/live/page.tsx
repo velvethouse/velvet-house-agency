@@ -2,9 +2,9 @@
 // @ts-nocheck
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-/** --- Demo data (modifiable) --- */
+/** Data côté Live — pas d’URL photo ici (on va les chercher côté API /profiles) */
 const LIVES = [
   { title: "Showcase — Alice", time: "Tonight 9:00 PM", slug: "alice", desc: "Live showcase + Q&A", country: "US", languages: ["English", "French"], liveNow: true },
   { title: "VIP Talk — Bella", time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session", country: "FR", languages: ["French"] },
@@ -13,17 +13,25 @@ const LIVES = [
   { title: "Workshop — Emi", time: "Monday 5:00 PM", slug: "emi", desc: "Creative workshop", country: "MA", languages: ["Arabic", "French", "English"] },
 ];
 
-/** Options auto à partir des données */
-const allCountries = Array.from(new Set(LIVES.map((x) => x.country))).sort();
-const allLanguages = Array.from(new Set(LIVES.flatMap((x) => x.languages))).sort();
+const allCountries = Array.from(new Set(LIVES.map(x => x.country))).sort();
+const allLanguages = Array.from(new Set(LIVES.flatMap(x => x.languages))).sort();
 
 export default function LivePage() {
   const [country, setCountry] = useState("all");
   const [language, setLanguage] = useState("all");
   const [query, setQuery] = useState("");
+  const [profiles, setProfiles] = useState<Record<string, { imageUrl: string; displayName?: string }>>({});
+
+  // On récupère la source “photo de profil” depuis l’API
+  useEffect(() => {
+    fetch("/api/profiles")
+      .then(r => r.json())
+      .then(setProfiles)
+      .catch(() => setProfiles({})); // fallback
+  }, []);
 
   const results = useMemo(() => {
-    return LIVES.filter((x) => {
+    return LIVES.filter(x => {
       const okCountry = country === "all" ? true : x.country === country;
       const okLang = language === "all" ? true : x.languages.includes(language);
       const okQuery = query.trim()
@@ -33,6 +41,7 @@ export default function LivePage() {
     });
   }, [country, language, query]);
 
+  /** Styles globaux */
   const pageStyle = {
     minHeight: "100vh",
     background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
@@ -60,6 +69,7 @@ export default function LivePage() {
   } as const;
 
   const cardStyle = {
+    position: "relative" as const,
     textDecoration: "none",
     borderRadius: 14,
     padding: 16,
@@ -68,7 +78,8 @@ export default function LivePage() {
     boxShadow: "0 10px 26px rgba(0,0,0,0.30)",
     color: "#f5f5f5",
     display: "grid",
-    gap: 8,
+    gap: 10,
+    overflow: "hidden",
   } as const;
 
   const inputStyle = {
@@ -79,6 +90,26 @@ export default function LivePage() {
     color: "#f5f5f5",
     outline: "none",
   } as const;
+
+  // Avatar rond à droite : anneau bordeaux + liseré doré
+  const avatarWrap = {
+    position: "absolute" as const,
+    top: 16,
+    right: 16,
+    width: 56,
+    height: 56,
+    borderRadius: "50%",
+    border: "2px solid #2e0d0d",    // anneau bordeaux
+    boxShadow: "0 0 0 2px #D4AF37", // liseré doré externe
+    overflow: "hidden",
+  };
+
+  const avatarImg = {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover" as const,
+    display: "block",
+  };
 
   const goldBtn = {
     background: "#D4AF37",
@@ -220,22 +251,35 @@ export default function LivePage() {
           </div>
         )}
 
-        {results.map((item) => (
+        {results.map((item) => {
+          const avatar =
+            profiles[item.slug]?.imageUrl || "/avatars/default.jpg";
+
+        return (
           <a key={item.slug} href={`/u/${item.slug}`} style={cardStyle}>
-            <div style={{ fontWeight: 800, color: "#D4AF37" }}>{item.title}</div>
+            {/* Avatar à droite */}
+            <div style={avatarWrap}>
+              <img src={avatar} alt={item.slug} style={avatarImg} />
+            </div>
+
+            {/* Titre + infos */}
+            <div style={{ fontWeight: 800, color: "#D4AF37", paddingRight: 72 /* espace pour l'avatar */ }}>
+              {item.title}
+            </div>
             <div style={{ color: "#d7c9b3" }}>{item.time}</div>
             <div style={{ color: "#e9dfcf", opacity: 0.95 }}>{item.desc}</div>
             <div style={{ color: "#d7c9b3", fontSize: 13 }}>
               <b>Country:</b> {item.country} · <b>Languages:</b> {item.languages.join(", ")}
             </div>
 
-            <div style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
+            {/* Actions */}
+            <div style={{ display: "flex", gap: 10, marginTop: 6, flexWrap: "wrap" }}>
               <span style={outlineBtn}>View profile</span>
               <span style={goldBtn}>Join live</span>
             </div>
           </a>
-        ))}
+        );})}
       </section>
     </main>
   );
-                       }
+      }
