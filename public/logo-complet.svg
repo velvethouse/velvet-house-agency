@@ -5,49 +5,54 @@
       <stop offset="100%" stop-color="#D4A437"/>
     </linearGradient>
     <style>
-      .lotus * { vector-effect: non-scaling-stroke; }
+      .s { vector-effect: non-scaling-stroke; stroke-linecap:round; stroke-linejoin:round; }
     </style>
   </defs>
 
-  <!-- LOTUS : 5 pétales + base, dessinés proprement et symétriquement -->
-  <g class="lotus" fill="none" stroke="url(#gold)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(0,6)">
-    <!-- Pétale central -->
-    <path d="M160 64
-             C146 98 148 135 160 168
-             C172 135 174 98 160 64 Z"/>
+  <!-- LOTUS — proportions élégantes, sans recouvrement des traits -->
+  <!-- Pétale central -->
+  <path class="s" fill="none" stroke="url(#gold)" stroke-width="3.2"
+        d="M160 64
+           C146 96 146 132 160 164
+           C174 132 174 96 160 64 Z"/>
 
-    <!-- Pétales intérieurs gauche / droit -->
-    <path d="M126 98
-             C110 116 108 141 116 162
-             C132 152 144 139 152 124
-             C144 112 135 104 126 98 Z"/>
-    <path d="M194 98
-             C185 104 176 112 168 124
-             C176 139 188 152 204 162
-             C212 141 210 116 194 98 Z"/>
+  <!-- Pétales intérieurs (gauche / droite) -->
+  <path class="s" fill="none" stroke="url(#gold)" stroke-width="3.2"
+        d="M130 98
+           C116 114 114 138 122 158
+           C136 148 147 134 154 120
+           C147 110 138 103 130 98 Z"/>
+  <path class="s" fill="none" stroke="url(#gold)" stroke-width="3.2"
+        d="M190 98
+           C182 103 173 110 166 120
+           C173 134 184 148 198 158
+           C206 138 204 114 190 98 Z"/>
 
-    <!-- Pétales extérieurs gauche / droit -->
-    <path d="M95 124
-             C76 147 68 175 68 204
-             C94 196 116 182 132 164
-             C138 156 141 147 141 138
-             C125 134 110 129 95 124 Z"/>
-    <path d="M225 124
-             C210 129 195 134 179 138
-             C179 147 182 156 188 164
-             C204 182 226 196 252 204
-             C252 175 244 147 225 124 Z"/>
+  <!-- Pétales extérieurs (gauche / droite) -->
+  <path class="s" fill="none" stroke="url(#gold)" stroke-width="3.2"
+        d="M98 124
+           C80 148 72 176 72 204
+           C100 196 122 182 138 164
+           C144 155 147 145 147 136
+           C130 132 114 128 98 124 Z"/>
+  <path class="s" fill="none" stroke="url(#gold)" stroke-width="3.2"
+        d="M222 124
+           C206 128 190 132 173 136
+           C173 145 176 155 182 164
+           C198 182 220 196 248 204
+           C248 176 240 148 222 124 Z"/>
 
-    <!-- Feuilles de base -->
-    <path d="M113 200
-             C92 204 73 211 58 222
-             C99 228 142 229 182 222
-             C161 211 138 204 113 200 Z"/>
-    <path d="M207 200
-             C182 204 159 211 138 222
-             C178 229 221 228 262 222
-             C247 211 228 204 207 200 Z"/>
-  </g>
+  <!-- Feuilles de base (gauche / droite) -->
+  <path class="s" fill="none" stroke="url(#gold)" stroke-width="3.2"
+        d="M116 200
+           C94 204 75 212 60 223
+           C100 229 142 230 182 223
+           C160 212 138 204 116 200 Z"/>
+  <path class="s" fill="none" stroke="url(#gold)" stroke-width="3.2"
+        d="M204 200
+           C182 204 160 212 138 223
+           C178 230 220 229 260 223
+           C245 212 226 204 204 200 Z"/>
 
   <!-- TEXTE -->
   <text x="50%" y="332" text-anchor="middle"
