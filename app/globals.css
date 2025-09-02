@@ -1,25 +1,27 @@
 /* ====== Core colors ====== */
 :root {
-  --background: #1a0f0f; /* very dark bordeaux */
+  --background: linear-gradient(to bottom, #4b1c1c, #2e0d0d); /* velvet bordeaux gradient */
   --foreground: #f5f5f7;
-  --gold: #D4AF37;       /* luxe gold */
+  --gold: #D4AF37; /* luxe gold */
   --gold-gradient: linear-gradient(90deg, #FFD700, #D4AF37, #B8860B);
 }
 
 /* ====== Base ====== */
 *,
 *::before,
-*::after { box-sizing: border-box; }
+*::after {
+  box-sizing: border-box;
+}
 
 html, body {
   margin: 0;
   padding: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: system-ui, Segoe UI, Roboto, sans-serif;
+  font-family: system-ui, "Playfair Display", serif;
 }
 
-/* Titles */
+/* ====== Titles ====== */
 h1, h2, h3 {
   color: var(--gold);
   font-weight: 700;
@@ -27,7 +29,7 @@ h1, h2, h3 {
   text-align: center;
 }
 
-/* Optional metallic gold effect */
+/* Optional metallic gold effect for big titles */
 .gold-gradient-text {
   background: var(--gold-gradient);
   -webkit-background-clip: text;
@@ -35,7 +37,7 @@ h1, h2, h3 {
   font-weight: 800;
 }
 
-/* Paragraphs */
+/* ====== Paragraphs ====== */
 p {
   font-size: 1.1rem;
   line-height: 1.6;
@@ -44,7 +46,7 @@ p {
   margin: 0 0 2rem 0;
 }
 
-/* Buttons */
+/* ====== Buttons ====== */
 button,
 .goldBtn,
 .goldBtnOutline,
@@ -76,7 +78,7 @@ a.goldBtnOutline {
   color: #2c0d0d;
 }
 
-/* Responsive helpers */
+/* ====== Responsive helper ====== */
 @media (max-width: 520px) {
   .stack-sm {
     display: flex;
