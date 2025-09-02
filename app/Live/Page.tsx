@@ -1,90 +1,119 @@
-function Nav() {
-  return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        backdropFilter: "blur(10px)",
-        background: "rgba(11,11,15,0.8)",
-        borderBottom: "1px solid #1f1f25",
-        zIndex: 50
-      }}
-    >
-      <nav
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          padding: "14px 20px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between"
-        }}
-      >
-        <div style={{ fontWeight: 700, letterSpacing: 0.5, fontSize: 18 }}>
-          <span style={{ opacity: 0.8, marginRight: 8 }}>🌸</span>
-          Velvet House Agency
-          <span style={{ opacity: 0.8, marginLeft: 8 }}>🦋</span>
-        </div>
-        <div style={{ display: "flex", gap: 18, fontSize: 15, flexWrap: "wrap" }}>
-          <a href="/live" style={{ color: "#cfcfd6", textDecoration: "none" }}>Live</a>
-          <a href="/vip" style={{ color: "#cfcfd6", textDecoration: "none" }}>VIP</a>
-          <a href="/gifts" style={{ color: "#cfcfd6", textDecoration: "none" }}>Gifts</a>
-          <a href="/dashboard" style={{ color: "#cfcfd6", textDecoration: "none" }}>Dashboard</a>
-          <a href="/#about" style={{ color: "#cfcfd6", textDecoration: "none" }}>About</a>
-          <a href="/contact" style={{ color: "#cfcfd6", textDecoration: "none" }}>Contact</a>
-        </div>
-      </nav>
-    </header>
-  );
-}
-
 export const metadata = { title: "Live | Velvet House Agency" };
 
+type LiveCard = {
+  title: string;
+  time: string;
+  slug: string;
+  desc: string;
+};
+
+const lives: LiveCard[] = [
+  { title: "Showcase — Alice", time: "Tonight 9:00 PM", slug: "alice", desc: "Live showcase + Q&A" },
+  { title: "VIP Talk — Bella", time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session" },
+  { title: "Acoustic Set — Cora", time: "Saturday 7:00 PM", slug: "cora", desc: "Acoustic & chill" }
+];
+
 export default function LivePage() {
-  const lives = [
-    { title: "Live Showcase — Alice", time: "Ce soir 21:00", slug: "alice", desc: "Showcase + Q&A" },
-    { title: "VIP Talk — Bella", time: "Demain 20:30", slug: "bella", desc: "Session VIP privée" }
-  ];
-
   return (
-    <main>
-      <Nav />
+    <main
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
+        color: "#f5f5f5",
+        fontFamily: "system-ui, Segoe UI, sans-serif",
+      }}
+    >
+      {/* Header local simple */}
+      <header
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 40,
+          backdropFilter: "blur(8px)",
+          background: "rgba(43,13,13,0.88)",
+          borderBottom: "1px solid rgba(212,175,55,0.18)",
+        }}
+      >
+        <nav
+          style={{
+            maxWidth: 1100,
+            margin: "0 auto",
+            padding: "12px 16px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 12,
+          }}
+        >
+          <a href="/" style={{ color: "#D4AF37", fontWeight: 800 }}>Velvet House</a>
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontWeight: 700 }}>
+            <a href="/vip">VIP</a>
+            <a href="/gifts">Gifts</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/contact">Contact</a>
+            <a href="/cgu">Terms</a>
+          </div>
+        </nav>
+      </header>
 
-      <section style={{maxWidth:1100,margin:"0 auto",padding:"32px 20px",color:"#f5f5f7"}}>
-        <header style={{display:"grid",gap:6,marginBottom:16}}>
-          <h1 style={{margin:0}}>Lives</h1>
-          <p style={{color:"#cfcfd6",margin:0}}>Liste des lives en cours et programmés.</p>
-        </header>
+      {/* Title */}
+      <section style={{ maxWidth: 1100, margin: "24px auto 10px", padding: "0 16px" }}>
+        <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>
+          Live
+        </h1>
+        <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
+          Upcoming & current live sessions from our creators.
+        </p>
+      </section>
 
-        <div style={{
-          display:"grid",
-          gap:14,
-          gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))"
-        }}>
-          {lives.map((x,i)=>(
-            <a
-              key={i}
-              href={`/u/${x.slug}`}
-              style={{
-                textDecoration:"none",
-                border:"1px solid #1f1f25",
-                borderRadius:14,
-                padding:16,
-                background:"rgba(15,15,21,0.6)"
-              }}
-            >
-              <div style={{display:"grid",gap:6}}>
-                <div style={{fontWeight:700}}>{x.title}</div>
-                <div style={{color:"#cfcfd6"}}>{x.time}</div>
-                <div style={{color:"#a9a9b8",fontSize:14}}>{x.desc}</div>
-              </div>
-              <div style={{display:"flex",gap:10,marginTop:12,flexWrap:"wrap"}}>
-                <span style={{padding:"8px 12px",border:"1px solid #2a2a33",borderRadius:10,color:"#e7e7ee"}}>Voir le profil</span>
-                <span style={{padding:"8px 12px",background:"#8257e6",borderRadius:10,color:"#fff"}}>Rejoindre</span>
-              </div>
-            </a>
-          ))}
-        </div>
+      {/* Grid of lives */}
+      <section
+        style={{
+          maxWidth: 1100,
+          margin: "16px auto 40px",
+          padding: "0 16px",
+          display: "grid",
+          gap: 14,
+          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+        }}
+      >
+        {lives.map((item) => (
+          <a
+            key={item.slug}
+            href={`/u/${item.slug}`}
+            style={{
+              textDecoration: "none",
+              borderRadius: 14,
+              padding: 16,
+              background:
+                "linear-gradient(180deg, rgba(15,15,15,0.45), rgba(15,15,15,0.30))",
+              border: "1px solid rgba(212,175,55,0.22)",
+              boxShadow: "0 10px 26px rgba(0,0,0,0.30)",
+              color: "#f5f5f5",
+              display: "grid",
+              gap: 8,
+            }}
+          >
+            <div style={{ fontWeight: 800, color: "#D4AF37" }}>{item.title}</div>
+            <div style={{ color: "#d7c9b3" }}>{item.time}</div>
+            <div style={{ color: "#e9dfcf", opacity: 0.95 }}>{item.desc}</div>
+
+            <div style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
+              <span
+                className="goldBtnOutline"
+                style={{ flex: "1 1 120px", textAlign: "center" }}
+              >
+                View profile
+              </span>
+              <span
+                className="goldBtn"
+                style={{ flex: "1 1 120px", textAlign: "center" }}
+              >
+                Join live
+              </span>
+            </div>
+          </a>
+        ))}
       </section>
     </main>
   );
