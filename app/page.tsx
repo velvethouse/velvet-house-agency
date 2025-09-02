@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Velvet House Agency",
-  description: "Plateforme de live & expériences VIP",
+  description: "Premium live platform with VIP experiences and animated gifts",
 };
 
 export default function HomePage() {
@@ -13,7 +13,7 @@ export default function HomePage() {
         fontFamily: "system-ui, Segoe UI, sans-serif",
       }}
     >
-      {/* HERO en background cover (responsive) */}
+      {/* HERO: background cover with your image */}
       <section
         style={{
           position: "relative",
@@ -21,7 +21,6 @@ export default function HomePage() {
           display: "grid",
           placeItems: "center",
           padding: "20px",
-          // ⬇️ ton image en fond, responsive
           backgroundImage:
             "linear-gradient(to bottom, rgba(44,13,13,0.55), rgba(26,0,0,0.75)), url('/hero.png')",
           backgroundSize: "cover",
@@ -29,7 +28,7 @@ export default function HomePage() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        {/* Carte de contenu (logo texte + boutons) */}
+        {/* Content card */}
         <div
           style={{
             width: "min(92vw, 640px)",
@@ -42,6 +41,7 @@ export default function HomePage() {
             backdropFilter: "blur(2px)",
           }}
         >
+          {/* Golden headline + short mystery tagline */}
           <h1
             style={{
               margin: 0,
@@ -51,21 +51,23 @@ export default function HomePage() {
               textAlign: "left",
             }}
           >
-            VELVET HOUSE
+            Velvet House — more than a platform
           </h1>
 
           <p
             style={{
-              margin: "10px 0 14px",
+              margin: "10px 0 16px",
               fontSize: "clamp(14px, 3.6vw, 18px)",
               lineHeight: 1.6,
-              color: "#f1e9d7",
+              color: "#D4AF37", // golden text
+              opacity: 0.95,
             }}
           >
-            Plateforme de live & expériences VIP. Cadeaux animés, suivi
-            personnalisé et univers luxe.
+            An exclusive universe where elegance meets mystery.  
+            Every creator shines. Every viewer becomes privileged.
           </p>
 
+          {/* CTA buttons */}
           <div
             style={{
               display: "flex",
@@ -74,7 +76,7 @@ export default function HomePage() {
             }}
           >
             <a
-              href="/contact"
+              href="/signup"
               style={{
                 background: "#D4AF37",
                 color: "#2c0d0d",
@@ -87,10 +89,10 @@ export default function HomePage() {
                 textAlign: "center",
               }}
             >
-              Nous contacter
+              Sign up
             </a>
             <a
-              href="#about"
+              href="/login"
               style={{
                 textDecoration: "none",
                 fontWeight: 700,
@@ -102,13 +104,29 @@ export default function HomePage() {
                 textAlign: "center",
               }}
             >
-              En savoir plus
+              Log in
+            </a>
+            <a
+              href="#about"
+              style={{
+                textDecoration: "none",
+                fontWeight: 700,
+                padding: "12px 18px",
+                borderRadius: 12,
+                border: "1px solid rgba(212,175,55,0.6)",
+                color: "#D4AF37",
+                flex: "1 1 180px",
+                textAlign: "center",
+                opacity: 0.95,
+              }}
+            >
+              Learn more
             </a>
           </div>
         </div>
       </section>
 
-      {/* ABOUT */}
+      {/* ABOUT section in EN */}
       <section
         id="about"
         style={{
@@ -120,16 +138,16 @@ export default function HomePage() {
         }}
       >
         <h2 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(22px,5vw,28px)" }}>
-          À propos
+          About
         </h2>
         <p style={{ color: "#e9dfcf", lineHeight: 1.7 }}>
-          Velvet House propose un espace premium avec accès VIP, jeux exclusifs
-          et monétisation transparente pour créatrices et agences.
+          Velvet House is a premium live platform with VIP access, animated gifts,
+          and transparent monetization for creators and agencies.
         </p>
         <ul style={{ color: "#d7c9b3", margin: 0, paddingLeft: 18, lineHeight: 1.7 }}>
-          <li>Commissions transparentes</li>
-          <li>Paiements automatiques</li>
-          <li>Sécurité & modération strictes</li>
+          <li>Transparent commissions</li>
+          <li>Automatic payouts</li>
+          <li>Strict safety & moderation rules</li>
         </ul>
       </section>
     </main>
