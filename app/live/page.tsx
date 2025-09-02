@@ -1,51 +1,161 @@
+/* eslint-disable react/no-unknown-property */
+// @ts-nocheck
+"use client";
+
+import { useMemo, useState } from "react";
+
 export const metadata = { title: "Live | Velvet House Agency" };
 
-type LiveCard = {
-  title: string;
-  time: string;
-  slug: string;
-  desc: string;
-};
-
-const lives: LiveCard[] = [
-  { title: "Showcase — Alice", time: "Tonight 9:00 PM", slug: "alice", desc: "Live showcase + Q&A" },
-  { title: "VIP Talk — Bella", time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session" },
-  { title: "Acoustic Set — Cora", time: "Saturday 7:00 PM", slug: "cora", desc: "Acoustic & chill" }
+/** Demo data — add/modify as you like */
+const LIVES = [
+  {
+    title: "Showcase — Alice",
+    time: "Tonight 9:00 PM",
+    slug: "alice",
+    desc: "Live showcase + Q&A",
+    country: "US",
+    languages: ["English", "French"],
+  },
+  {
+    title: "VIP Talk — Bella",
+    time: "Tomorrow 8:30 PM",
+    slug: "bella",
+    desc: "Private VIP session",
+    country: "FR",
+    languages: ["French"],
+  },
+  {
+    title: "Acoustic Set — Cora",
+    time: "Saturday 7:00 PM",
+    slug: "cora",
+    desc: "Acoustic & chill",
+    country: "ES",
+    languages: ["Spanish", "English"],
+  },
+  {
+    title: "Studio — Dana",
+    time: "Sunday 6:30 PM",
+    slug: "dana",
+    desc: "Behind the scenes",
+    country: "DE",
+    languages: ["German", "English"],
+  },
+  {
+    title: "Workshop — Emi",
+    time: "Monday 5:00 PM",
+    slug: "emi",
+    desc: "Creative workshop",
+    country: "MA",
+    languages: ["Arabic", "French", "English"],
+  },
 ];
 
+/** Small helpers to build dropdown options */
+const allCountries = Array.from(new Set(LIVES.map((x) => x.country))).sort();
+const allLanguages = Array.from(
+  new Set(LIVES.flatMap((x) => x.languages))
+).sort();
+
 export default function LivePage() {
+  const [country, setCountry] = useState<string>("all");
+  const [language, setLanguage] = useState<string>("all");
+  const [query, setQuery] = useState<string>(""); // free text search (optional)
+
+  /** Filtering logic */
+  const results = useMemo(() => {
+    return LIVES.filter((x) => {
+      const okCountry = country === "all" ? true : x.country === country;
+      const okLang =
+        language === "all" ? true : x.languages.includes(language);
+      const okQuery = query.trim()
+        ? (x.title + " " + x.desc).toLowerCase().includes(query.toLowerCase())
+        : true;
+      return okCountry && okLang && okQuery;
+    });
+  }, [country, language, query]);
+
+  /** Reusable styles (gold/velours) */
+  const pageStyle: React.CSSProperties = {
+    minHeight: "100vh",
+    background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
+    color: "#f5f5f5",
+    fontFamily: "system-ui, Segoe UI, sans-serif",
+  };
+
+  const navStyle: React.CSSProperties = {
+    position: "sticky",
+    top: 0,
+    zIndex: 40,
+    backdropFilter: "blur(8px)",
+    background: "rgba(43,13,13,0.88)",
+    borderBottom: "1px solid rgba(212,175,55,0.18)",
+  };
+
+  const shell: React.CSSProperties = {
+    maxWidth: 1100,
+    margin: "0 auto",
+    padding: "12px 16px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 12,
+  };
+
+  const cardStyle: React.CSSProperties = {
+    textDecoration: "none",
+    borderRadius: 14,
+    padding: 16,
+    background:
+      "linear-gradient(180deg, rgba(15,15,15,0.45), rgba(15,15,15,0.30))",
+    border: "1px solid rgba(212,175,55,0.22)",
+    boxShadow: "0 10px 26px rgba(0,0,0,0.30)",
+    color: "#f5f5f5",
+    display: "grid",
+    gap: 8,
+  };
+
+  const inputStyle: React.CSSProperties = {
+    padding: "10px 12px",
+    borderRadius: 10,
+    border: "1px solid rgba(212,175,55,0.35)",
+    background: "rgba(0,0,0,0.35)",
+    color: "#f5f5f5",
+    outline: "none",
+  };
+
+  const selectStyle = inputStyle;
+
+  const goldBtn: React.CSSProperties = {
+    background: "#D4AF37",
+    color: "#2c0d0d",
+    textDecoration: "none",
+    fontWeight: 800,
+    padding: "12px 18px",
+    borderRadius: 12,
+    border: "1px solid #B8860B",
+    flex: "1 1 120px",
+    textAlign: "center",
+  };
+
+  const outlineBtn: React.CSSProperties = {
+    textDecoration: "none",
+    fontWeight: 800,
+    padding: "12px 18px",
+    borderRadius: 12,
+    border: "2px solid #D4AF37",
+    color: "#D4AF37",
+    flex: "1 1 120px",
+    textAlign: "center",
+  };
+
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
-        color: "#f5f5f5",
-        fontFamily: "system-ui, Segoe UI, sans-serif",
-      }}
-    >
-      {/* Header local simple */}
-      <header
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 40,
-          backdropFilter: "blur(8px)",
-          background: "rgba(43,13,13,0.88)",
-          borderBottom: "1px solid rgba(212,175,55,0.18)",
-        }}
-      >
-        <nav
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            padding: "12px 16px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 12,
-          }}
-        >
-          <a href="/" style={{ color: "#D4AF37", fontWeight: 800 }}>Velvet House</a>
+    <main style={pageStyle}>
+      {/* Header local */}
+      <header style={navStyle}>
+        <nav style={shell}>
+          <a href="/" style={{ color: "#D4AF37", fontWeight: 800 }}>
+            Velvet House
+          </a>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontWeight: 700 }}>
             <a href="/vip">VIP</a>
             <a href="/gifts">Gifts</a>
@@ -58,7 +168,14 @@ export default function LivePage() {
 
       {/* Title */}
       <section style={{ maxWidth: 1100, margin: "24px auto 10px", padding: "0 16px" }}>
-        <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>
+        <h1
+          style={{
+            margin: 0,
+            color: "#D4AF37",
+            fontSize: "clamp(26px, 6vw, 40px)",
+            textAlign: "left",
+          }}
+        >
           Live
         </h1>
         <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
@@ -66,51 +183,102 @@ export default function LivePage() {
         </p>
       </section>
 
-      {/* Grid of lives */}
+      {/* Filters */}
       <section
         style={{
           maxWidth: 1100,
-          margin: "16px auto 40px",
+          margin: "12px auto 10px",
+          padding: "0 16px",
+          display: "grid",
+          gap: 10,
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+        }}
+      >
+        {/* Country filter */}
+        <div style={{ display: "grid", gap: 6 }}>
+          <label style={{ color: "#D4AF37", fontWeight: 700 }}>Country</label>
+          <select
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            style={selectStyle}
+          >
+            <option value="all">All countries</option>
+            {allCountries.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Language filter */}
+        <div style={{ display: "grid", gap: 6 }}>
+          <label style={{ color: "#D4AF37", fontWeight: 700 }}>Language</label>
+          <select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            style={selectStyle}
+          >
+            <option value="all">All languages</option>
+            {allLanguages.map((l) => (
+              <option key={l} value={l}>
+                {l}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Free text search (optional) */}
+        <div style={{ display: "grid", gap: 6 }}>
+          <label style={{ color: "#D4AF37", fontWeight: 700 }}>Search</label>
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="title or description…"
+            style={inputStyle}
+          />
+        </div>
+      </section>
+
+      {/* Results */}
+      <section
+        style={{
+          maxWidth: 1100,
+          margin: "12px auto 40px",
           padding: "0 16px",
           display: "grid",
           gap: 14,
           gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
         }}
       >
-        {lives.map((item) => (
-          <a
-            key={item.slug}
-            href={`/u/${item.slug}`}
+        {results.length === 0 && (
+          <div
             style={{
-              textDecoration: "none",
-              borderRadius: 14,
-              padding: 16,
-              background:
-                "linear-gradient(180deg, rgba(15,15,15,0.45), rgba(15,15,15,0.30))",
+              gridColumn: "1 / -1",
+              color: "#d7c9b3",
+              padding: "14px",
+              borderRadius: 12,
               border: "1px solid rgba(212,175,55,0.22)",
-              boxShadow: "0 10px 26px rgba(0,0,0,0.30)",
-              color: "#f5f5f5",
-              display: "grid",
-              gap: 8,
+              background: "rgba(0,0,0,0.25)",
             }}
           >
+            No live found with these filters.
+          </div>
+        )}
+
+        {results.map((item) => (
+          <a key={item.slug} href={`/u/${item.slug}`} style={cardStyle}>
             <div style={{ fontWeight: 800, color: "#D4AF37" }}>{item.title}</div>
             <div style={{ color: "#d7c9b3" }}>{item.time}</div>
             <div style={{ color: "#e9dfcf", opacity: 0.95 }}>{item.desc}</div>
+            <div style={{ color: "#d7c9b3", fontSize: 13 }}>
+              <b>Country:</b> {item.country} · <b>Languages:</b>{" "}
+              {item.languages.join(", ")}
+            </div>
 
             <div style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
-              <span
-                className="goldBtnOutline"
-                style={{ flex: "1 1 120px", textAlign: "center" }}
-              >
-                View profile
-              </span>
-              <span
-                className="goldBtn"
-                style={{ flex: "1 1 120px", textAlign: "center" }}
-              >
-                Join live
-              </span>
+              <span className="goldBtnOutline" style={{ ...outlineBtn }}>View profile</span>
+              <span className="goldBtn" style={{ ...goldBtn }}>Join live</span>
             </div>
           </a>
         ))}
