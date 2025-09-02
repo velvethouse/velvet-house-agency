@@ -1,70 +1,88 @@
-/* ====== Couleurs principales ====== */
+/* ====== Core colors ====== */
 :root {
-  --background: #1a0f0f; /* Bordeaux très sombre */
+  --background: #1a0f0f; /* very dark bordeaux */
   --foreground: #f5f5f7;
-  --gold: #D4AF37; /* Or luxe métallique */
+  --gold: #D4AF37;       /* luxe gold */
   --gold-gradient: linear-gradient(90deg, #FFD700, #D4AF37, #B8860B);
 }
 
-/* ====== Style global ====== */
-body {
+/* ====== Base ====== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
   margin: 0;
   padding: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Playfair Display', serif;
+  font-family: system-ui, Segoe UI, Roboto, sans-serif;
 }
 
-/* ====== Titres ====== */
+/* Titles */
 h1, h2, h3 {
   color: var(--gold);
-  font-weight: bold;
-  margin-bottom: 1rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
   text-align: center;
 }
 
-/* Optionnel : effet doré métallique sur les grands titres */
+/* Optional metallic gold effect */
 .gold-gradient-text {
   background: var(--gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: bold;
+  font-weight: 800;
 }
 
-/* ====== Paragraphes ====== */
+/* Paragraphs */
 p {
   font-size: 1.1rem;
   line-height: 1.6;
   color: var(--gold);
   text-align: center;
-  margin-bottom: 2rem;
+  margin: 0 0 2rem 0;
 }
 
-/* ====== Boutons ====== */
-button {
-  background-color: var(--gold);
-  color: #1a0f0f;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: bold;
+/* Buttons */
+button,
+.goldBtn,
+.goldBtnOutline,
+a.goldBtn,
+a.goldBtnOutline {
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
+  transition: .2s ease;
 }
 
-button:hover {
-  opacity: 0.85;
+.goldBtn {
+  background: var(--gold);
+  color: #2c0d0d;
+  border: 1px solid #B8860B;
 }
 
-/* Bouton transparent avec contour or */
-.button-outline {
+.goldBtn:hover { opacity: .9; }
+
+.goldBtnOutline {
   background: transparent;
   color: var(--gold);
   border: 2px solid var(--gold);
 }
 
-.button-outline:hover {
+.goldBtnOutline:hover {
   background: var(--gold);
-  color: #1a0f0f;
+  color: #2c0d0d;
+}
+
+/* Responsive helpers */
+@media (max-width: 520px) {
+  .stack-sm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 }
