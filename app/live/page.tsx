@@ -3,36 +3,37 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import GiftButton from "../../components/GiftButton";
+import GiftButton from "@/components/GiftButton"; // ✅ alias vers /components
 
 /** Demo data (modifiable) */
 const LIVES = [
   { title: "Showcase — Alice", time: "Tonight 9:00 PM", slug: "alice", desc: "Live showcase + Q&A", country: "US", languages: ["English", "French"] },
-  { title: "VIP Talk — Bella", time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session", country: "FR", languages: ["French"] },
-  { title: "Acoustic Set — Cora", time: "Saturday 7:00 PM", slug: "cora", desc: "Acoustic & chill", country: "ES", languages: ["Spanish", "English"] },
-  { title: "Studio — Dana", time: "Sunday 6:30 PM", slug: "dana", desc: "Behind the scenes", country: "DE", languages: ["German", "English"] },
-  { title: "Workshop — Emi", time: "Monday 5:00 PM", slug: "emi", desc: "Creative workshop", country: "MA", languages: ["Arabic", "French", "English"] },
+  { title: "VIP Talk — Bella",  time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session",    country: "FR", languages: ["French"] },
+  { title: "Acoustic Set — Cora", time: "Saturday 7:00 PM", slug: "cora", desc: "Acoustic & chill",       country: "ES", languages: ["Spanish", "English"] },
+  { title: "Studio — Dana",      time: "Sunday 6:30 PM",   slug: "dana", desc: "Behind the scenes",       country: "DE", languages: ["German", "English"] },
+  { title: "Workshop — Emi",     time: "Monday 5:00 PM",   slug: "emi",  desc: "Creative workshop",       country: "MA", languages: ["Arabic", "French", "English"] },
 ];
 
 const allCountries = Array.from(new Set(LIVES.map(x => x.country))).sort();
 const allLanguages = Array.from(new Set(LIVES.flatMap(x => x.languages))).sort();
 
 export default function LivePage() {
-  const [country, setCountry] = useState("all");
+  const [country, setCountry]   = useState("all");
   const [language, setLanguage] = useState("all");
-  const [query, setQuery] = useState("");
+  const [query, setQuery]       = useState("");
 
   const results = useMemo(() => {
     return LIVES.filter(x => {
       const okCountry = country === "all" ? true : x.country === country;
-      const okLang = language === "all" ? true : x.languages.includes(language);
-      const okQuery = query.trim()
+      const okLang    = language === "all" ? true : x.languages.includes(language);
+      const okQuery   = query.trim()
         ? (x.title + " " + x.desc).toLowerCase().includes(query.toLowerCase())
         : true;
       return okCountry && okLang && okQuery;
     });
   }, [country, language, query]);
 
+  /** Styles */
   const pageStyle = {
     minHeight: "100vh",
     background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
@@ -50,13 +51,8 @@ export default function LivePage() {
   };
 
   const shell = {
-    maxWidth: 1100,
-    margin: "0 auto",
-    padding: "12px 16px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 12,
+    maxWidth: 1100, margin: "0 auto", padding: "12px 16px",
+    display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12,
   } as const;
 
   const cardStyle = {
@@ -103,6 +99,8 @@ export default function LivePage() {
     textAlign: "center" as const,
   };
 
+  const resetFilters = () => { setCountry("all"); setLanguage("all"); setQuery(""); };
+
   return (
     <main style={pageStyle}>
       {/* Header */}
@@ -121,23 +119,15 @@ export default function LivePage() {
 
       {/* Title */}
       <section style={{ maxWidth: 1100, margin: "24px auto 10px", padding: "0 16px" }}>
-        <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>
-          Live
-        </h1>
-        <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
-          Upcoming & current live sessions from our creators.
-        </p>
+        <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>Live</h1>
+        <p  style={{ margin: "8px 0 0", color: "#e9dfcf" }}>Upcoming & current live sessions from our creators.</p>
       </section>
 
       {/* Filters */}
       <section
         style={{
-          maxWidth: 1100,
-          margin: "12px auto 10px",
-          padding: "0 16px",
-          display: "grid",
-          gap: 10,
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          maxWidth: 1100, margin: "12px auto 10px", padding: "0 16px",
+          display: "grid", gap: 10, gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
         }}
       >
         <div style={{ display: "grid", gap: 6 }}>
@@ -165,28 +155,30 @@ export default function LivePage() {
             style={inputStyle}
           />
         </div>
+
+        <div style={{ display: "grid", gap: 6, alignContent: "end" }}>
+          <span style={{ color: "#d7c9b3", fontSize: 14 }}>
+            {results.length} result{results.length !== 1 ? "s" : ""}
+          </span>
+          <button onClick={resetFilters} style={{ ...outlineBtn, borderRadius: 10, padding: "8px 12px", fontWeight: 700 }}>
+            Reset filters
+          </button>
+        </div>
       </section>
 
       {/* Results */}
       <section
         style={{
-          maxWidth: 1100,
-          margin: "12px auto 40px",
-          padding: "0 16px",
-          display: "grid",
-          gap: 14,
-          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          maxWidth: 1100, margin: "12px auto 40px", padding: "0 16px",
+          display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
         }}
       >
         {results.length === 0 && (
           <div
             style={{
               gridColumn: "1 / -1",
-              color: "#d7c9b3",
-              padding: "14px",
-              borderRadius: 12,
-              border: "1px solid rgba(212,175,55,0.22)",
-              background: "rgba(0,0,0,0.25)",
+              color: "#d7c9b3", padding: "14px", borderRadius: 12,
+              border: "1px solid rgba(212,175,55,0.22)", background: "rgba(0,0,0,0.25)",
             }}
           >
             No live found with these filters.
@@ -202,9 +194,10 @@ export default function LivePage() {
               <b>Country:</b> {item.country} · <b>Languages:</b> {item.languages.join(", ")}
             </div>
 
+            {/* Actions (with GiftButton) */}
             <div style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
-              <a href={`/u/${item.slug}`}     style={outlineBtn}>View profile</a>
-              <a href={`/u/${item.slug}/live`} style={goldBtn}>Join live</a>
+              <a href={`/u/${item.slug}`}       style={outlineBtn}>View profile</a>
+              <a href={`/u/${item.slug}/live`}  style={goldBtn}>Join live</a>
               <div style={{ flex: "1 1 120px", display: "flex", justifyContent: "center" }}>
                 <GiftButton target={item.slug} />
               </div>
@@ -214,4 +207,4 @@ export default function LivePage() {
       </section>
     </main>
   );
-      }
+                                          }
