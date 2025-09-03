@@ -3,19 +3,18 @@
 
 import MediaCard from "../../../components/MediaCard";
 
-const DEMO_PROFILES: Record<
-  string,
-  {
-    displayName: string;
-    avatar: string;
-    country: string;
-    languages: string[];
-    bio?: string;
-    followers?: number;
-    likes?: number;
-    posts?: number;
-  }
-> = {
+type Profile = {
+  displayName: string;
+  avatar: string;
+  country: string;
+  languages: string[];
+  bio?: string;
+  followers?: number;
+  likes?: number;
+  posts?: number;
+};
+
+const DEMO_PROFILES: Record<string, Profile> = {
   alice: {
     displayName: "Alice",
     avatar: "/avatars/alice.jpg",
@@ -70,7 +69,7 @@ const DEMO_PROFILES: Record<
 
 export default function CreatorPage({ params }: { params: { username: string } }) {
   const user = (params.username || "").toLowerCase();
-  const data =
+  const data: Profile =
     DEMO_PROFILES[user] || {
       displayName: user,
       avatar: "/avatars/default.jpg",
@@ -82,7 +81,7 @@ export default function CreatorPage({ params }: { params: { username: string } }
       posts: 0,
     };
 
-  // Galerie démo : certaines entrées verrouillées
+  // Galerie démo (certains médias verrouillés)
   const GALLERY: Array<{ src: string; type: "image" | "video"; locked: boolean; gift: string }> = [
     { src: data.avatar, type: "image", locked: false, gift: "" },
     { src: "/media/sample1.jpg", type: "image", locked: true, gift: "Lotus ✨" },
@@ -134,7 +133,7 @@ export default function CreatorPage({ params }: { params: { username: string } }
         </nav>
       </header>
 
-      {/* Hero cover + avatar + stats */}
+      {/* Hero cover */}
       <section style={{ maxWidth: 1000, margin: "16px auto", padding: "0 16px" }}>
         <div
           style={{
@@ -150,59 +149,65 @@ export default function CreatorPage({ params }: { params: { username: string } }
               src={data.avatar}
               alt={data.displayName}
               onError={(e) => {
-                e.currentTarget.src = "/avatars/default.jpg";
-                e.currentTarget.onerror = null;
+                (e.currentTarget as HTMLImageElement).src = "/avatars/default.jpg";
+                (e.currentTarget as HTMLImageElement).onerror = null;
               }}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
-                filter: "saturate(1.05)",
-              }}
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "saturate(1.05)" }}
             />
-            {/* gradient bas */}
             <div
               style={{
                 position: "absolute",
                 inset: 0,
-                background:
-                  "linear-gradient(to top, rgba(0,0,0,.6) 30%, rgba(0,0,0,0) 70%)",
+                background: "linear-gradient(to top, rgba(0,0,0,.6) 30%, rgba(0,0,0,0) 70%)",
               }}
             />
-            {/* avatar rond */}
-            <div className="avatar-ring">
-              <img
-                src={data.avatar}
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = "/avatars/default.jpg";
-                  (e.currentTarget as HTMLImageElement).onerror = null;
-                }}
-                alt={data.displayName}
-              />
-            </div>
-            {/* nom + meta */}
-            <div style={{ position: "absolute", left: 120, bottom: 12, right: 16 }}>
-              <h1
-                style={{
-                  margin: 0,
-                  fontSize: "clamp(20px,6vw,32px)",
-                  color: "#D4AF37",
-                }}
-              >
-                {data.displayName}
-              </h1>
-              <div style={{ fontSize: 14, color: "#e9dfcf", opacity: 0.95 }}>
-                Country: {data.country} · Languages:{" "}
-                {data.languages.join(", ") || "—"}
+
+            {/* LIGNE: avatar + pseudo à gauche */}
+            <div
+              style={{
+                position: "absolute",
+                left: 16,
+                bottom: 12,
+                right: 16,
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                flexWrap: "wrap",
+              }}
+            >
+              <div className="avatar-ring">
+                <img
+                  src={data.avatar}
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = "/avatars/default.jpg";
+                    (e.currentTarget as HTMLImageElement).onerror = null;
+                  }}
+                  alt={data.displayName}
+                />
               </div>
-              <div style={{ fontSize: 13, color: "#d7c9b3", opacity: 0.9 }}>
-                {data.bio}
-              </div>
-              <div className="stats-row">
-                <span className="stat-pill">Followers: {data.followers?.toLocaleString()}</span>
-                <span className="stat-pill">Likes: {data.likes?.toLocaleString()}</span>
-                <span className="stat-pill">Posts: {data.posts?.toLocaleString()}</span>
+
+              <div style={{ minWidth: 220 }}>
+                <h1
+                  style={{
+                    margin: 0,
+                    fontSize: "clamp(20px,6vw,32px)",
+                    color: "#D4AF37",
+                    lineHeight: 1.1,
+                  }}
+                >
+                  {data.displayName}
+                </h1>
+                <div style={{ fontSize: 14, color: "#e9dfcf", opacity: 0.95 }}>
+                  Country: {data.country} · Languages: {data.languages.join(", ") || "—"}
+                </div>
+                <div style={{ fontSize: 13, color: "#d7c9b3", opacity: 0.9 }}>{data.bio}</div>
+
+                {/* Stats */}
+                <div className="stats-row">
+                  <span className="stat-pill">Followers: {data.followers?.toLocaleString()}</span>
+                  <span className="stat-pill">Likes: {data.likes?.toLocaleString()}</span>
+                  <span className="stat-pill">Posts: {data.posts?.toLocaleString()}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -253,4 +258,4 @@ export default function CreatorPage({ params }: { params: { username: string } }
       </section>
     </main>
   );
-            }
+          }
