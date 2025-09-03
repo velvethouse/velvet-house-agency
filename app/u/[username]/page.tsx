@@ -15,56 +15,11 @@ type Profile = {
 };
 
 const DEMO_PROFILES: Record<string, Profile> = {
-  alice: {
-    displayName: "Alice",
-    avatar: "/avatars/alice.jpg",
-    country: "US",
-    languages: ["English", "French"],
-    bio: "Showcase & Q&A lover.",
-    followers: 13300,
-    likes: 512000,
-    posts: 84,
-  },
-  bella: {
-    displayName: "Bella",
-    avatar: "/avatars/bella.jpg",
-    country: "FR",
-    languages: ["French"],
-    bio: "VIP talks & lifestyle.",
-    followers: 21400,
-    likes: 820000,
-    posts: 91,
-  },
-  cora: {
-    displayName: "Cora",
-    avatar: "/avatars/cora.jpg",
-    country: "ES",
-    languages: ["Spanish", "English"],
-    bio: "Acoustic vibes.",
-    followers: 9400,
-    likes: 233000,
-    posts: 48,
-  },
-  dana: {
-    displayName: "Dana",
-    avatar: "/avatars/dana.jpg",
-    country: "DE",
-    languages: ["German", "English"],
-    bio: "Studio behind-the-scenes.",
-    followers: 7800,
-    likes: 154000,
-    posts: 41,
-  },
-  emi: {
-    displayName: "Emi",
-    avatar: "/avatars/emi.jpg",
-    country: "MA",
-    languages: ["Arabic", "French", "English"],
-    bio: "Creative workshops.",
-    followers: 15600,
-    likes: 364000,
-    posts: 66,
-  },
+  alice: { displayName: "Alice", avatar: "/avatars/alice.jpg", country: "US", languages: ["English","French"], bio: "Showcase & Q&A lover.", followers: 13300, likes: 512000, posts: 84 },
+  bella: { displayName: "Bella", avatar: "/avatars/bella.jpg", country: "FR", languages: ["French"], bio: "VIP talks & lifestyle.", followers: 21400, likes: 820000, posts: 91 },
+  cora:  { displayName: "Cora",  avatar: "/avatars/cora.jpg",  country: "ES", languages: ["Spanish","English"], bio: "Acoustic vibes.", followers: 9400,  likes: 233000, posts: 48 },
+  dana:  { displayName: "Dana",  avatar: "/avatars/dana.jpg",  country: "DE", languages: ["German","English"],  bio: "Studio behind-the-scenes.", followers: 7800,  likes: 154000, posts: 41 },
+  emi:   { displayName: "Emi",   avatar: "/avatars/emi.jpg",   country: "MA", languages: ["Arabic","French","English"], bio: "Creative workshops.", followers: 15600, likes: 364000, posts: 66 },
 };
 
 export default function CreatorPage({ params }: { params: { username: string } }) {
@@ -81,13 +36,12 @@ export default function CreatorPage({ params }: { params: { username: string } }
       posts: 0,
     };
 
-  // Galerie démo (certains médias verrouillés)
   const GALLERY: Array<{ src: string; type: "image" | "video"; locked: boolean; gift: string }> = [
-    { src: data.avatar, type: "image", locked: false, gift: "" },
-    { src: "/media/sample1.jpg", type: "image", locked: true, gift: "Lotus ✨" },
+    { src: data.avatar,          type: "image", locked: false, gift: "" },
+    { src: "/media/sample1.jpg", type: "image", locked: true,  gift: "Lotus ✨" },
     { src: "/media/sample2.jpg", type: "image", locked: false, gift: "" },
-    { src: "/media/teaser1.mp4", type: "video", locked: true, gift: "Butterfly 🦋" },
-    { src: "/media/sample3.jpg", type: "image", locked: true, gift: "Diamond 💎" },
+    { src: "/media/teaser1.mp4", type: "video", locked: true,  gift: "Butterfly 🦋" },
+    { src: "/media/sample3.jpg", type: "image", locked: true,  gift: "Diamond 💎" },
     { src: "/media/sample4.jpg", type: "image", locked: false, gift: "" },
   ];
 
@@ -122,18 +76,14 @@ export default function CreatorPage({ params }: { params: { username: string } }
             gap: 12,
           }}
         >
-          <a href="/live" style={{ color: "#D4AF37", fontWeight: 800 }}>
-            ← Back to Live
-          </a>
+          <a href="/live" style={{ color: "#D4AF37", fontWeight: 800 }}>← Back to Live</a>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontWeight: 700 }}>
-            <a href="/vip">VIP</a>
-            <a href="/gifts">Gifts</a>
-            <a href="/dashboard">Dashboard</a>
+            <a href="/vip">VIP</a><a href="/gifts">Gifts</a><a href="/dashboard">Dashboard</a>
           </div>
         </nav>
       </header>
 
-      {/* Hero cover */}
+      {/* Hero */}
       <section style={{ maxWidth: 1000, margin: "16px auto", padding: "0 16px" }}>
         <div
           style={{
@@ -154,25 +104,16 @@ export default function CreatorPage({ params }: { params: { username: string } }
               }}
               style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "saturate(1.05)" }}
             />
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background: "linear-gradient(to top, rgba(0,0,0,.6) 30%, rgba(0,0,0,0) 70%)",
-              }}
-            />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.6) 30%, rgba(0,0,0,0) 70%)" }} />
 
-            {/* LIGNE: avatar + pseudo à gauche */}
+            {/* ✅ LIGNE: avatar + pseudo (ligne unique) */}
             <div
+              className="hero-row"
               style={{
                 position: "absolute",
                 left: 16,
-                bottom: 12,
                 right: 16,
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                flexWrap: "wrap",
+                bottom: 12,
               }}
             >
               <div className="avatar-ring">
@@ -186,44 +127,35 @@ export default function CreatorPage({ params }: { params: { username: string } }
                 />
               </div>
 
-              <div style={{ minWidth: 220 }}>
-                <h1
-                  style={{
-                    margin: 0,
-                    fontSize: "clamp(20px,6vw,32px)",
-                    color: "#D4AF37",
-                    lineHeight: 1.1,
-                  }}
-                >
+              <div className="hero-text">
+                <h1 style={{ margin: 0, fontSize: "clamp(20px,6vw,32px)", color: "#D4AF37", lineHeight: 1.1 }}>
                   {data.displayName}
                 </h1>
-                <div style={{ fontSize: 14, color: "#e9dfcf", opacity: 0.95 }}>
+                <div style={{ fontSize: 14, color: "#e9dfcf", opacity: 0.95, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                   Country: {data.country} · Languages: {data.languages.join(", ") || "—"}
                 </div>
-                <div style={{ fontSize: 13, color: "#d7c9b3", opacity: 0.9 }}>{data.bio}</div>
-
-                {/* Stats */}
-                <div className="stats-row">
-                  <span className="stat-pill">Followers: {data.followers?.toLocaleString()}</span>
-                  <span className="stat-pill">Likes: {data.likes?.toLocaleString()}</span>
-                  <span className="stat-pill">Posts: {data.posts?.toLocaleString()}</span>
+                <div style={{ fontSize: 13, color: "#d7c9b3", opacity: 0.9, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  {data.bio}
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Stats sous la ligne pour éviter la casse */}
+          <div style={{ padding: "12px 16px" }}>
+            <div className="stats-row">
+              <span className="stat-pill">Followers: {data.followers?.toLocaleString()}</span>
+              <span className="stat-pill">Likes: {data.likes?.toLocaleString()}</span>
+              <span className="stat-pill">Posts: {data.posts?.toLocaleString()}</span>
             </div>
           </div>
 
           {/* Actions */}
           <div style={{ padding: 16 }}>
             <div className="btn-row-3">
-              <a className="btn3d btn3d--velvet" href={`/u/${user}`}>
-                Follow
-              </a>
-              <a className="btn3d btn3d--gold" href={`/u/${user}/chat`}>
-                Chat
-              </a>
-              <a className="btn3d btn3d--platinum" href="#gallery">
-                Send gift
-              </a>
+              <a className="btn3d btn3d--velvet" href={`/u/${user}`}>Follow</a>
+              <a className="btn3d btn3d--gold"   href={`/u/${user}/chat`}>Chat</a>
+              <a className="btn3d btn3d--platinum" href="#gallery">Send gift</a>
             </div>
           </div>
         </div>
@@ -258,4 +190,4 @@ export default function CreatorPage({ params }: { params: { username: string } }
       </section>
     </main>
   );
-          }
+                  }
