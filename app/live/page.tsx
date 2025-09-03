@@ -5,13 +5,13 @@
 import { useMemo, useState } from "react";
 import GiftButton from "../../components/GiftButton"; // components à la racine
 
-/** Demo data (modifiable) */
+/** Demo data (modifiable + remplaçable par /api/lives plus tard) */
 const LIVES = [
-  { title: "Showcase — Alice",  time: "Tonight 9:00 PM",  slug: "alice", desc: "Live showcase + Q&A",    country: "US", languages: ["English", "French"] },
-  { title: "VIP Talk — Bella",  time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session",     country: "FR", languages: ["French"] },
-  { title: "Acoustic Set — Cora", time: "Saturday 7:00 PM", slug: "cora",  desc: "Acoustic & chill",      country: "ES", languages: ["Spanish", "English"] },
-  { title: "Studio — Dana",     time: "Sunday 6:30 PM",   slug: "dana",  desc: "Behind the scenes",       country: "DE", languages: ["German", "English"] },
-  { title: "Workshop — Emi",    time: "Monday 5:00 PM",   slug: "emi",   desc: "Creative workshop",       country: "MA", languages: ["Arabic", "French", "English"] },
+  { title: "Showcase — Alice",   time: "Tonight 9:00 PM",  slug: "alice", desc: "Live showcase + Q&A",    country: "US", languages: ["English", "French"] },
+  { title: "VIP Talk — Bella",   time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session",     country: "FR", languages: ["French"] },
+  { title: "Acoustic Set — Cora",time: "Saturday 7:00 PM", slug: "cora",  desc: "Acoustic & chill",       country: "ES", languages: ["Spanish", "English"] },
+  { title: "Studio — Dana",      time: "Sunday 6:30 PM",   slug: "dana",  desc: "Behind the scenes",       country: "DE", languages: ["German", "English"] },
+  { title: "Workshop — Emi",     time: "Monday 5:00 PM",   slug: "emi",   desc: "Creative workshop",       country: "MA", languages: ["Arabic", "French", "English"] },
 ];
 
 const allCountries = Array.from(new Set(LIVES.map(x => x.country))).sort();
@@ -95,8 +95,10 @@ export default function LivePage() {
 
       {/* Title */}
       <section style={{ maxWidth: 1100, margin: "24px auto 10px", padding: "0 16px" }}>
-        <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>Live</h1>
-        <p  style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
+        <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>
+          Live
+        </h1>
+        <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
           Upcoming & current live sessions from our creators.
         </p>
       </section>
@@ -138,9 +140,7 @@ export default function LivePage() {
           <span style={{ color: "#d7c9b3", fontSize: 14 }}>
             {results.length} result{results.length !== 1 ? "s" : ""}
           </span>
-          <button className="btn3d btn3d--outline-gold" onClick={resetFilters}>
-            Reset filters
-          </button>
+          <button className="btn3d btn3d--outline-gold">Reset filters</button>
         </div>
       </section>
 
@@ -172,13 +172,27 @@ export default function LivePage() {
               <b>Country:</b> {item.country} · <b>Languages:</b> {item.languages.join(", ")}
             </div>
 
-            {/* Actions avec boutons 3D */}
-            <div className="stack-sm" style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
-              <a href={`/u/${item.slug}`}      className="btn3d btn3d--outline-gold" style={{ flex: "1 1 120px" }}>View profile</a>
-              <a href={`/u/${item.slug}/live`} className="btn3d btn3d--gold"         style={{ flex: "1 1 120px" }}>Join live</a>
-              <div style={{ flex: "1 1 120px", display: "flex", justifyContent: "center" }}>
-                <GiftButton target={item.slug} />
-              </div>
+            {/* Actions – boutons 3D uniformes */}
+            <div className="actions-3col">
+              <a
+                href={`/u/${item.slug}`}
+                className="btn3d btn3d--velvet"
+              >
+                View profile
+              </a>
+
+              <a
+                href={`/u/${item.slug}/live`}
+                className="btn3d btn3d--gold"
+              >
+                Join live
+              </a>
+
+              <GiftButton
+                target={item.slug}
+                className="btn3d btn3d--platinum"
+                label="Send gift"
+              />
             </div>
           </a>
         ))}
