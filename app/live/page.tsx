@@ -1,186 +1,173 @@
-/* eslint-disable react/no-unknown-property */
-// @ts-nocheck
+// app/live/page.tsx
 "use client";
 
-import { useMemo, useState } from "react";
-import GiftButton from "../../components/GiftButton"; // components à la racine
+import { useState, useMemo } from "react";
+import GiftButton from "../../components/GiftButton";
 
-/** Demo data (modifiable) */
-const LIVES = [
-  { title: "Showcase — Alice",   time: "Tonight 9:00 PM",  slug: "alice", desc: "Live showcase + Q&A",    country: "US", languages: ["English", "French"] },
-  { title: "VIP Talk — Bella",   time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session",     country: "FR", languages: ["French"] },
-  { title: "Acoustic Set — Cora",time: "Saturday 7:00 PM", slug: "cora",  desc: "Acoustic & chill",       country: "ES", languages: ["Spanish", "English"] },
-  { title: "Studio — Dana",      time: "Sunday 6:30 PM",   slug: "dana",  desc: "Behind the scenes",       country: "DE", languages: ["German", "English"] },
-  { title: "Workshop — Emi",     time: "Monday 5:00 PM",   slug: "emi",   desc: "Creative workshop",       country: "MA", languages: ["Arabic", "French", "English"] },
+type Live = {
+  title: string;
+  time: string;
+  description: string;
+  country: string;
+  languages: string[];
+  slug: string;
+};
+
+const LIVES: Live[] = [
+  {
+    title: "Showcase — Alice",
+    time: "Tonight 9:00 PM",
+    description: "Live showcase + Q&A",
+    country: "US",
+    languages: ["English", "French"],
+    slug: "alice",
+  },
+  {
+    title: "VIP Talk — Bella",
+    time: "Tomorrow 8:30 PM",
+    description: "Private VIP session",
+    country: "FR",
+    languages: ["French"],
+    slug: "bella",
+  },
+  {
+    title: "Acoustic Set — Cora",
+    time: "Saturday 7:00 PM",
+    description: "Acoustic & chill",
+    country: "ES",
+    languages: ["Spanish", "English"],
+    slug: "cora",
+  },
+  {
+    title: "Studio — Dana",
+    time: "Sunday 6:30 PM",
+    description: "Behind the scenes",
+    country: "DE",
+    languages: ["German", "English"],
+    slug: "dana",
+  },
+  {
+    title: "Workshop — Emi",
+    time: "Monday 5:00 PM",
+    description: "Creative workshop",
+    country: "MA",
+    languages: ["Arabic", "French", "English"],
+    slug: "emi",
+  },
 ];
 
-const allCountries = Array.from(new Set(LIVES.map(x => x.country))).sort();
-const allLanguages = Array.from(new Set(LIVES.flatMap(x => x.languages))).sort();
-
 export default function LivePage() {
-  const [country, setCountry]   = useState("all");
-  const [language, setLanguage] = useState("all");
-  const [query, setQuery]       = useState("");
+  const [country, setCountry] = useState("");
+  const [language, setLanguage] = useState("");
+  const [query, setQuery] = useState("");
 
   const results = useMemo(() => {
-    return LIVES.filter(x => {
-      const okCountry = country === "all" ? true : x.country === country;
-      const okLang    = language === "all" ? true : x.languages.includes(language);
-      const okQuery   = query.trim()
-        ? (x.title + " " + x.desc).toLowerCase().includes(query.toLowerCase())
+    return LIVES.filter((live) => {
+      const matchCountry = country ? live.country === country : true;
+      const matchLanguage = language
+        ? live.languages.includes(language)
         : true;
-      return okCountry && okLang && okQuery;
+      const matchQuery = query
+        ? live.title.toLowerCase().includes(query.toLowerCase()) ||
+          live.description.toLowerCase().includes(query.toLowerCase())
+        : true;
+      return matchCountry && matchLanguage && matchQuery;
     });
   }, [country, language, query]);
 
-  /** Styles */
-  const pageStyle = {
-    minHeight: "100vh",
-    background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
-    color: "#f5f5f5",
-    fontFamily: "system-ui, Segoe UI, sans-serif",
-  } as const;
-
-  const navStyle = {
-    position: "sticky" as const,
-    top: 0, zIndex: 40,
-    backdropFilter: "blur(8px)",
-    background: "rgba(43,13,13,0.88)",
-    borderBottom: "1px solid rgba(212,175,55,0.18)",
-  };
-
-  const shell = {
-    maxWidth: 1100, margin: "0 auto", padding: "12px 16px",
-    display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12,
-  } as const;
-
-  const cardStyle = {
-    textDecoration: "none",
-    borderRadius: 14,
-    padding: 16,
-    background: "linear-gradient(180deg, rgba(15,15,15,0.45), rgba(15,15,15,0.30))",
-    border: "1px solid rgba(212,175,55,0.22)",
-    boxShadow: "0 10px 26px rgba(0,0,0,0.30)",
-    color: "#f5f5f5",
-    display: "grid",
-    gap: 8,
-  } as const;
-
-  const inputStyle = {
-    padding: "10px 12px",
-    borderRadius: 10,
-    border: "1px solid rgba(212,175,55,0.35)",
-    background: "rgba(0,0,0,0.35)",
-    color: "#f5f5f5",
-    outline: "none",
-  } as const;
-
-  const resetFilters = () => { setCountry("all"); setLanguage("all"); setQuery(""); };
-
   return (
-    <main style={pageStyle}>
-      {/* Header */}
-      <header style={navStyle}>
-        <nav style={shell}>
-          <a href="/" style={{ color: "#D4AF37", fontWeight: 800 }}>Velvet House</a>
-          <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontWeight: 700 }}>
-            <a href="/vip">VIP</a>
-            <a href="/gifts">Gifts</a>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/contact">Contact</a>
-            <a href="/cgu">Terms</a>
-          </div>
-        </nav>
-      </header>
-
-      {/* Title */}
-      <section style={{ maxWidth: 1100, margin: "24px auto 10px", padding: "0 16px" }}>
-        <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>
-          Live
-        </h1>
-        <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
-          Upcoming & current live sessions from our creators.
-        </p>
-      </section>
+    <main className="p-6 space-y-6">
+      <h1 className="text-2xl font-bold text-gold">Live</h1>
+      <p className="text-sm opacity-80">
+        Upcoming & current live sessions from our creators.
+      </p>
 
       {/* Filters */}
-      <section
-        style={{
-          maxWidth: 1100, margin: "12px auto 10px", padding: "0 16px",
-          display: "grid", gap: 10, gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+      <div className="grid gap-3 md:grid-cols-3">
+        <select
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+          className="p-2 rounded bg-[#2c0d0d] text-gold border border-gold"
+        >
+          <option value="">All countries</option>
+          {[...new Set(LIVES.map((l) => l.country))].map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+          className="p-2 rounded bg-[#2c0d0d] text-gold border border-gold"
+        >
+          <option value="">All languages</option>
+          {[...new Set(LIVES.flatMap((l) => l.languages))].map((lang) => (
+            <option key={lang} value={lang}>
+              {lang}
+            </option>
+          ))}
+        </select>
+
+        <input
+          type="text"
+          placeholder="Search title or description..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="p-2 rounded bg-[#2c0d0d] text-gold border border-gold"
+        />
+      </div>
+
+      <button
+        onClick={() => {
+          setCountry("");
+          setLanguage("");
+          setQuery("");
         }}
+        className="btn3d btn3d--outline-gold w-full md:w-auto"
       >
-        <div style={{ display: "grid", gap: 6 }}>
-          <label style={{ color: "#D4AF37", fontWeight: 700 }}>Country</label>
-          <select value={country} onChange={(e) => setCountry(e.target.value)} style={inputStyle as any}>
-            <option value="all">All countries</option>
-            {allCountries.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </div>
-
-        <div style={{ display: "grid", gap: 6 }}>
-          <label style={{ color: "#D4AF37", fontWeight: 700 }}>Language</label>
-          <select value={language} onChange={(e) => setLanguage(e.target.value)} style={inputStyle as any}>
-            <option value="all">All languages</option>
-            {allLanguages.map((l) => <option key={l} value={l}>{l}</option>)}
-          </select>
-        </div>
-
-        <div style={{ display: "grid", gap: 6 }}>
-          <label style={{ color: "#D4AF37", fontWeight: 700 }}>Search</label>
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="title or description…"
-            style={inputStyle}
-          />
-        </div>
-
-        <div style={{ display: "grid", gap: 6, alignContent: "end" }}>
-          <span style={{ color: "#d7c9b3", fontSize: 14 }}>
-            {results.length} result{results.length !== 1 ? "s" : ""}
-          </span>
-          <button className="btn3d btn3d--outline-gold">Reset filters</button>
-        </div>
-      </section>
+        Reset filters
+      </button>
 
       {/* Results */}
-      <section
-        style={{
-          maxWidth: 1100, margin: "12px auto 40px", padding: "0 16px",
-          display: "grid", gap: 14, gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-        }}
-      >
-        {results.length === 0 && (
-          <div
-            style={{
-              gridColumn: "1 / -1",
-              color: "#d7c9b3", padding: "14px", borderRadius: 12,
-              border: "1px solid rgba(212,175,55,0.22)", background: "rgba(0,0,0,0.25)",
-            }}
-          >
-            No live found with these filters.
-          </div>
-        )}
-
+      <div className="space-y-4">
         {results.map((item) => (
-          <a key={item.slug} href={`/u/${item.slug}`} style={cardStyle}>
-            <div style={{ fontWeight: 800, color: "#D4AF37" }}>{item.title}</div>
-            <div style={{ color: "#d7c9b3" }}>{item.time}</div>
-            <div style={{ color: "#e9dfcf", opacity: 0.95 }}>{item.desc}</div>
-            <div style={{ color: "#d7c9b3", fontSize: 13 }}>
-              <b>Country:</b> {item.country} · <b>Languages:</b> {item.languages.join(", ")}
-            </div>
+          <div
+            key={item.slug}
+            className="p-4 rounded-lg bg-gradient-to-b from-[#2c0d0d] to-[#1a0808] border border-[#3d0e0e] shadow-lg space-y-3"
+          >
+            <h2 className="text-lg font-semibold text-gold">{item.title}</h2>
+            <p className="text-sm">{item.time}</p>
+            <p className="opacity-80">{item.description}</p>
+            <p className="text-xs opacity-70">
+              <strong>Country:</strong> {item.country} ·{" "}
+              <strong>Languages:</strong> {item.languages.join(", ")}
+            </p>
 
-            {/* Actions – 3 boutons 3D uniformes */}
-            <div className="actions-3col">
-              <a href={`/u/${item.slug}`}      className="btn3d btn3d--velvet">View profile</a>
-              <a href={`/u/${item.slug}/live`} className="btn3d btn3d--gold">Join live</a>
-              <GiftButton target={item.slug}   className="btn3d btn3d--platinum" label="Send gift" />
+            {/* Buttons rangés sur 3 colonnes */}
+            <div className="btn-row-3 actions-3col">
+              <a
+                href={`/u/${item.slug}`}
+                className="btn3d btn3d--velvet"
+              >
+                View profile
+              </a>
+              <a
+                href={`/u/${item.slug}/live`}
+                className="btn3d btn3d--gold"
+              >
+                Join live
+              </a>
+              <GiftButton
+                target={item.slug}
+                className="btn3d btn3d--platinum"
+                label="Send gift"
+              />
             </div>
-          </a>
+          </div>
         ))}
-      </section>
+      </div>
     </main>
   );
-        }
+}
