@@ -2,58 +2,28 @@
 // @ts-nocheck
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import GiftButton from "../../components/GiftButton";
+import { useMemo, useState } from "react";
+import GiftButton from "../../components/GiftButton"; // components à la racine
 
-type LiveItem = {
-  slug: string;
-  title: string;
-  desc: string;
-  country: string;
-  languages: string[];
-  imageUrl?: string;
-  liveNow?: boolean;
-  start?: string | null;
-};
+/** Demo data (modifiable) */
+const LIVES = [
+  { title: "Showcase — Alice",  time: "Tonight 9:00 PM",  slug: "alice", desc: "Live showcase + Q&A",    country: "US", languages: ["English", "French"] },
+  { title: "VIP Talk — Bella",  time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session",     country: "FR", languages: ["French"] },
+  { title: "Acoustic Set — Cora", time: "Saturday 7:00 PM", slug: "cora",  desc: "Acoustic & chill",      country: "ES", languages: ["Spanish", "English"] },
+  { title: "Studio — Dana",     time: "Sunday 6:30 PM",   slug: "dana",  desc: "Behind the scenes",       country: "DE", languages: ["German", "English"] },
+  { title: "Workshop — Emi",    time: "Monday 5:00 PM",   slug: "emi",   desc: "Creative workshop",       country: "MA", languages: ["Arabic", "French", "English"] },
+];
+
+const allCountries = Array.from(new Set(LIVES.map(x => x.country))).sort();
+const allLanguages = Array.from(new Set(LIVES.flatMap(x => x.languages))).sort();
 
 export default function LivePage() {
-  const [lives, setLives] = useState<LiveItem[]>([]);
   const [country, setCountry]   = useState("all");
   const [language, setLanguage] = useState("all");
   const [query, setQuery]       = useState("");
 
-  // fetch depuis l'API (remplaçable par DB plus tard sans toucher cette page)
-  useEffect(() => {
-    fetch("/api/lives")
-      .then(r => r.json())
-      .then((data: LiveItem[]) => setLives(Array.isArray(data) ? data : []))
-      .catch(() => setLives([]));
-  }, []);
-
-  // options auto depuis les données reçues
-  const allCountries = useMemo(
-    () => Array.from(new Set(lives.map(x => x.country))).sort(),
-    [lives]
-  );
-  const allLanguages = useMemo(
-    () => Array.from(new Set(lives.flatMap(x => x.languages))).sort(),
-    [lives]
-  );
-
-  // tri : liveNow d’abord, puis date de début
-  function sortLives(list: LiveItem[]) {
-    return [...list].sort((a,b) => {
-      if (a.liveNow && !b.liveNow) return -1;
-      if (!a.liveNow && b.liveNow) return 1;
-      const at = a.start ? Date.parse(a.start) : Infinity;
-      const bt = b.start ? Date.parse(b.start) : Infinity;
-      return at - bt;
-    });
-  }
-
-  // filtres client
   const results = useMemo(() => {
-    const filtered = lives.filter(x => {
+    return LIVES.filter(x => {
       const okCountry = country === "all" ? true : x.country === country;
       const okLang    = language === "all" ? true : x.languages.includes(language);
       const okQuery   = query.trim()
@@ -61,8 +31,7 @@ export default function LivePage() {
         : true;
       return okCountry && okLang && okQuery;
     });
-    return sortLives(filtered);
-  }, [lives, country, language, query]);
+  }, [country, language, query]);
 
   /** Styles */
   const pageStyle = {
@@ -74,8 +43,7 @@ export default function LivePage() {
 
   const navStyle = {
     position: "sticky" as const,
-    top: 0,
-    zIndex: 40,
+    top: 0, zIndex: 40,
     backdropFilter: "blur(8px)",
     background: "rgba(43,13,13,0.88)",
     borderBottom: "1px solid rgba(212,175,55,0.18)",
@@ -87,7 +55,6 @@ export default function LivePage() {
   } as const;
 
   const cardStyle = {
-    position: "relative" as const,
     textDecoration: "none",
     borderRadius: 14,
     padding: 16,
@@ -96,8 +63,7 @@ export default function LivePage() {
     boxShadow: "0 10px 26px rgba(0,0,0,0.30)",
     color: "#f5f5f5",
     display: "grid",
-    gap: 10,
-    overflow: "hidden",
+    gap: 8,
   } as const;
 
   const inputStyle = {
@@ -108,28 +74,6 @@ export default function LivePage() {
     color: "#f5f5f5",
     outline: "none",
   } as const;
-
-  const avatarWrap = {
-    position: "absolute" as const,
-    top: 16, right: 16,
-    width: 56, height: 56,
-    borderRadius: "50%",
-    border: "2px solid #2e0d0d",    // anneau bordeaux
-    boxShadow: "0 0 0 2px #D4AF37", // liseré doré
-    overflow: "hidden",
-  };
-  const avatarImg = { width: "100%", height: "100%", objectFit: "cover" as const, display: "block" };
-
-  const outlineBtn = {
-    textDecoration: "none", fontWeight: 800, padding: "12px 18px",
-    borderRadius: 12, border: "2px solid #D4AF37", color: "#D4AF37",
-    flex: "1 1 120px", textAlign: "center" as const,
-  };
-  const goldBtn = {
-    background: "#D4AF37", color: "#2c0d0d", textDecoration: "none",
-    fontWeight: 800, padding: "12px 18px", borderRadius: 12,
-    border: "1px solid #B8860B", flex: "1 1 120px", textAlign: "center" as const,
-  };
 
   const resetFilters = () => { setCountry("all"); setLanguage("all"); setQuery(""); };
 
@@ -150,11 +94,9 @@ export default function LivePage() {
       </header>
 
       {/* Title */}
-      <section style={{ maxWidth: 1100, margin: "24px auto 8px", padding: "0 16px" }}>
-        <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>
-          Live
-        </h1>
-        <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
+      <section style={{ maxWidth: 1100, margin: "24px auto 10px", padding: "0 16px" }}>
+        <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>Live</h1>
+        <p  style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
           Upcoming & current live sessions from our creators.
         </p>
       </section>
@@ -196,13 +138,13 @@ export default function LivePage() {
           <span style={{ color: "#d7c9b3", fontSize: 14 }}>
             {results.length} result{results.length !== 1 ? "s" : ""}
           </span>
-          <button onClick={resetFilters} style={{ ...outlineBtn, borderRadius: 10, padding: "8px 12px", fontWeight: 700 }}>
+          <button className="btn3d btn3d--outline-gold" onClick={resetFilters}>
             Reset filters
           </button>
         </div>
       </section>
 
-      {/* Cards */}
+      {/* Results */}
       <section
         style={{
           maxWidth: 1100, margin: "12px auto 40px", padding: "0 16px",
@@ -223,31 +165,17 @@ export default function LivePage() {
 
         {results.map((item) => (
           <a key={item.slug} href={`/u/${item.slug}`} style={cardStyle}>
-            {/* Avatar à droite */}
-            <div style={avatarWrap}>
-              <img
-                src={item.imageUrl || "/avatars/default.jpg"}
-                alt={item.slug}
-                style={avatarImg}
-              />
-            </div>
-
-            {/* Titre + infos */}
-            <div style={{ fontWeight: 800, color: "#D4AF37", paddingRight: 72 }}>
-              {item.title}
-            </div>
-            <div style={{ color: "#d7c9b3" }}>
-              {item.liveNow ? "On air" : item.start ? new Date(item.start).toLocaleString() : "Scheduled"}
-            </div>
+            <div style={{ fontWeight: 800, color: "#D4AF37" }}>{item.title}</div>
+            <div style={{ color: "#d7c9b3" }}>{item.time}</div>
             <div style={{ color: "#e9dfcf", opacity: 0.95 }}>{item.desc}</div>
             <div style={{ color: "#d7c9b3", fontSize: 13 }}>
               <b>Country:</b> {item.country} · <b>Languages:</b> {item.languages.join(", ")}
             </div>
 
-            {/* Actions */}
-            <div style={{ display: "flex", gap: 10, marginTop: 6, flexWrap: "wrap" }}>
-              <a href={`/u/${item.slug}`}      style={outlineBtn}>View profile</a>
-              <a href={`/u/${item.slug}/live`} style={goldBtn}>Join live</a>
+            {/* Actions avec boutons 3D */}
+            <div className="stack-sm" style={{ display: "flex", gap: 10, marginTop: 12, flexWrap: "wrap" }}>
+              <a href={`/u/${item.slug}`}      className="btn3d btn3d--outline-gold" style={{ flex: "1 1 120px" }}>View profile</a>
+              <a href={`/u/${item.slug}/live`} className="btn3d btn3d--gold"         style={{ flex: "1 1 120px" }}>Join live</a>
               <div style={{ flex: "1 1 120px", display: "flex", justifyContent: "center" }}>
                 <GiftButton target={item.slug} />
               </div>
@@ -257,4 +185,4 @@ export default function LivePage() {
       </section>
     </main>
   );
-    }
+      }
