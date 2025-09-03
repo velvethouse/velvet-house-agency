@@ -12,10 +12,9 @@ const countryName = (code: string) =>
 const countryFlag = (code: string) =>
   code.toUpperCase().replace(/./g, c => String.fromCodePoint(127397 + c.charCodeAt(0)));
 
-/** Demo data compacte avec cover (à remplacer plus tard par /api/lives) */
 const LIVES = [
-  { slug:"alice", title:"Showcase — Alice", cover:"/avatars/alice.jpg",  liveNow:true,  time:"Tonight 9:00 PM",  country:"US", languages:["English","French"] },
-  { slug:"bella", title:"VIP Talk — Bella", cover:"/avatars/bella.jpg",  liveNow:false, time:"Tomorrow 8:30 PM", country:"FR", languages:["French"] },
+  { slug:"alice", title:"Showcase — Alice",  cover:"/avatars/alice.jpg",  liveNow:true,  time:"Tonight 9:00 PM",  country:"US", languages:["English","French"] },
+  { slug:"bella", title:"VIP Talk — Bella",  cover:"/avatars/bella.jpg",  liveNow:false, time:"Tomorrow 8:30 PM", country:"FR", languages:["French"] },
   { slug:"cora",  title:"Acoustic Set — Cora",cover:"/avatars/cora.jpg", liveNow:false, time:"Saturday 7:00 PM", country:"ES", languages:["Spanish","English"] },
   { slug:"dana",  title:"Studio — Dana",      cover:"/avatars/dana.jpg", liveNow:false, time:"Sunday 6:30 PM",   country:"DE", languages:["German","English"] },
   { slug:"emi",   title:"Workshop — Emi",     cover:"/avatars/emi.jpg",  liveNow:false, time:"Monday 5:00 PM",   country:"MA", languages:["Arabic","French","English"] },
@@ -47,7 +46,7 @@ export default function LivePage() {
         fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
       }}
     >
-      {/* Header simple */}
+      {/* Header */}
       <header
         style={{
           position: "sticky", top: 0, zIndex: 40, backdropFilter: "blur(8px)",
@@ -78,7 +77,7 @@ export default function LivePage() {
         </h1>
       </section>
 
-      {/* Filters compact */}
+      {/* Filters */}
       <section style={{ maxWidth: 1100, margin: "10px auto", padding: "0 16px" }}>
         <div className="cards-grid" style={{ gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))" }}>
           <select className="select-velvet" value={country} onChange={e=>setCountry(e.target.value)}>
@@ -107,14 +106,18 @@ export default function LivePage() {
         </div>
       </section>
 
-      {/* Grid of compact cards */}
+      {/* Grid */}
       <section style={{ maxWidth: 1100, margin: "14px auto 30px", padding: "0 16px" }}>
         <div className="cards-grid">
           {results.map(live => (
             <article key={live.slug} className="card">
-              {/* Cover + overlays */}
+              {/* Cover */}
               <a href={`/u/${live.slug}`} className="card-cover" aria-label={`Open ${live.slug} profile`}>
-                <img src={live.cover || "/avatars/default.jpg"} alt={live.slug} />
+                <img
+                  src={live.cover || "/avatars/default.jpg"}
+                  alt={live.slug}
+                  onError={(e) => { e.currentTarget.src = "/avatars/default.jpg"; e.currentTarget.onerror = null; }}
+                />
                 <div className="card-gradient" />
                 {live.liveNow && <span className="badge-live">LIVE</span>}
                 <span className="badge-flag">{countryFlag(live.country)}</span>
@@ -122,7 +125,10 @@ export default function LivePage() {
 
               {/* Body */}
               <div className="card-body">
-                <a href={`/u/${live.slug}`} style={{ textDecoration:"none", color:"#D4AF37", fontWeight:800 }}>
+                <a
+                  href={`/u/${live.slug}`}
+                  style={{ textDecoration:"none", color:"#D4AF37", fontWeight:800 }}
+                >
                   {live.title}
                 </a>
                 <div style={{ color:"#e9dfcf" }}>{live.time}</div>
@@ -133,11 +139,11 @@ export default function LivePage() {
                   {live.languages.length > 2 && <span className="pill">+{live.languages.length-2}</span>}
                 </div>
 
-                {/* Actions compactes */}
+                {/* Actions */}
                 <div className="actions-3col">
-                  <a href={`/u/${live.slug}`} className="btn3d btn3d--velvet btn3d--sm">Profile</a>
-                  <a href={`/u/${live.slug}/live`} className="btn3d btn3d--gold btn3d--sm">Join</a>
-                  <GiftButton target={live.slug} className="btn3d btn3d--platinum btn3d--sm" label="Gift" />
+                  <a href={`/u/${live.slug}`}      className="btn3d btn3d--velvet btn3d--sm">Profile</a>
+                  <a href={`/u/${live.slug}/live`} className="btn3d btn3d--gold   btn3d--sm">Join</a>
+                  <GiftButton target={live.slug}   className="btn3d btn3d--platinum btn3d--sm" label="Gift" />
                 </div>
               </div>
             </article>
@@ -159,4 +165,4 @@ export default function LivePage() {
       </section>
     </main>
   );
-}
+      }
