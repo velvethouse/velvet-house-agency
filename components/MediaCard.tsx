@@ -3,33 +3,33 @@
 import { useState } from "react";
 import GiftButton from "./GiftButton";
 
-/**
- * Tuile média avec :
- * - image/vidéo
- * - filigrane unique centré en diagonale (watermark + @username)
- * - flou si verrouillé + overlay "Unlock with ..."
- * - bouton demo pour déverrouiller sans paiement
- */
 export default function MediaCard({
   src,
-  type = "image",         // "image" | "video"
+  type = "image",           // "image" | "video"
   alt = "media",
   watermark = "VELVET HOUSE",
   username = "",
-  locked = false,
+  // Règles d'accès
+  isNSFW = false,           // 🔴 dénudé ?
+  giftUnlocked = false,     // ← à true après paiement du gift
   requiredGiftLabel = "Lotus ✨",
-  target = "",
+  target = "",              // slug/id de la créatrice
 }: {
   src: string;
   type?: "image" | "video";
   alt?: string;
-  watermark?: string;      // texte principal du filigrane
-  username?: string;       // @username dans le filigrane
-  locked?: boolean;
+  watermark?: string;
+  username?: string;
+  isNSFW?: boolean;
+  giftUnlocked?: boolean;
   requiredGiftLabel?: string;
-  target?: string;         // slug/id de la créatrice
+  target?: string;
 }) {
-  const [isLocked, setLocked] = useState(locked);
+  // Démo : bouton "(Demo) Unlock now" pour tester sans backend
+  const [manualUnlock, setManualUnlock] = useState(false);
+
+  // 🔒 Règle: si NSFW et pas giftUnlocked → lock, même pour VIP
+  const effectiveLocked = isNSFW && !giftUnlocked && !manualUnlock;
 
   const wmText = `${watermark} @${username || "creator"}`;
 
@@ -40,14 +40,14 @@ export default function MediaCard({
           src={src}
           muted
           playsInline
-          controls={!isLocked}
-          className={isLocked ? "media-blur" : ""}
+          controls={!effectiveLocked}
+          className={effectiveLocked ? "media-blur" : ""}
         />
       ) : (
         <img
           src={src}
           alt={alt}
-          className={isLocked ? "media-blur" : ""}
+          className={effectiveLocked ? "media-blur" : ""}
           onError={(e) => {
             (e.currentTarget as HTMLImageElement).src = "/avatars/default.jpg";
             (e.currentTarget as HTMLImageElement).onerror = null;
@@ -55,28 +55,48 @@ export default function MediaCard({
         />
       )}
 
-      {/* ✅ Filigrane unique centré */}
+      {/* Filigrane unique centré en diagonale */}
       <div className="wm-tiles">
         <span>{wmText}</span>
       </div>
 
-      {/* Overlay lock si verrouillé */}
-      {isLocked && (
+      {/* Badge 18+ si NSFW */}
+      {isNSFW && (
+        <div
+          style={{
+            position: "absolute",
+            top: 8,
+            left: 8,
+            padding: "4px 8px",
+            borderRadius: 999,
+            background: "#2c0d0d",
+            color: "#f5f5f5",
+            border: "1px solid rgba(212,175,55,.35)",
+            fontSize: 12,
+            fontWeight: 800,
+          }}
+        >
+          18+
+        </div>
+      )}
+
+      {/* Overlay lock: toujours gift pour NSFW */}
+      {effectiveLocked && (
         <div className="media-lock">
           <div style={{ display: "grid", gap: 10, width: "80%", maxWidth: 260 }}>
             <div style={{ textAlign: "center", color: "#f5f5f5", fontWeight: 800 }}>
-              Locked content
+              NSFW — Locked content
             </div>
+
+            {/* 🔑 Gift obligatoire */}
             <GiftButton
               target={target}
               className="btn3d btn3d--gold"
               label={`Unlock with ${requiredGiftLabel}`}
             />
-            {/* DEMO : retrait quand backend branché */}
-            <button
-              className="btn3d btn3d--outline-gold"
-              onClick={() => setLocked(false)}
-            >
+
+            {/* DEMO : enlever quand backend branché */}
+            <button className="btn3d btn3d--outline-gold" onClick={() => setManualUnlock(true)}>
               (Demo) Unlock now
             </button>
           </div>
