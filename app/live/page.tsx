@@ -3,7 +3,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import GiftButton from "../../components/GiftButton"; // ✅ chemin relatif (components à la racine)
+import GiftButton from "../../components/GiftButton"; // <-- components à la racine
 
 /** Demo data (modifiable) */
 const LIVES = [
@@ -211,4 +211,4 @@ export default function LivePage() {
       </section>
     </main>
   );
-}
+      }
