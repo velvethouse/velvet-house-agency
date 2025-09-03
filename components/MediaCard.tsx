@@ -3,6 +3,13 @@
 import { useState } from "react";
 import GiftButton from "./GiftButton";
 
+/**
+ * Tuile média avec :
+ * - image/vidéo
+ * - filigrane unique centré en diagonale (watermark + @username)
+ * - flou si verrouillé + overlay "Unlock with ..."
+ * - bouton demo pour déverrouiller sans paiement
+ */
 export default function MediaCard({
   src,
   type = "image",         // "image" | "video"
@@ -16,11 +23,11 @@ export default function MediaCard({
   src: string;
   type?: "image" | "video";
   alt?: string;
-  watermark?: string;      // base du filigrane
+  watermark?: string;      // texte principal du filigrane
   username?: string;       // @username dans le filigrane
   locked?: boolean;
   requiredGiftLabel?: string;
-  target?: string;
+  target?: string;         // slug/id de la créatrice
 }) {
   const [isLocked, setLocked] = useState(locked);
 
@@ -42,20 +49,18 @@ export default function MediaCard({
           alt={alt}
           className={isLocked ? "media-blur" : ""}
           onError={(e) => {
-            e.currentTarget.src = "/avatars/default.jpg";
-            e.currentTarget.onerror = null;
+            (e.currentTarget as HTMLImageElement).src = "/avatars/default.jpg";
+            (e.currentTarget as HTMLImageElement).onerror = null;
           }}
         />
       )}
 
-      {/* Filigrane diagonal (3 lignes) */}
+      {/* ✅ Filigrane unique centré */}
       <div className="wm-tiles">
-        <span>{wmText}</span>
-        <span>{wmText}</span>
         <span>{wmText}</span>
       </div>
 
-      {/* Overlay de verrouillage */}
+      {/* Overlay lock si verrouillé */}
       {isLocked && (
         <div className="media-lock">
           <div style={{ display: "grid", gap: 10, width: "80%", maxWidth: 260 }}>
@@ -67,7 +72,7 @@ export default function MediaCard({
               className="btn3d btn3d--gold"
               label={`Unlock with ${requiredGiftLabel}`}
             />
-            {/* DEMO: retire ce bouton quand on branchera le backend */}
+            {/* DEMO : retrait quand backend branché */}
             <button
               className="btn3d btn3d--outline-gold"
               onClick={() => setLocked(false)}
