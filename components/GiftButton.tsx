@@ -6,17 +6,12 @@ import GiftsMenu from "./GiftsMenu";
 export default function GiftButton({
   target,
   label = "Send gift",
-  className = "btn3d btn3d--velvet"
-}: {
-  target: string;
-  label?: string;
-  className?: string;
-}) {
+  className = "btn3d btn3d--gold"
+}: { target: string; label?: string; className?: string }) {
   const [open, setOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
   function handleSend(gift: { id: string; name: string; price: number }, tgt: string) {
-    // TODO: brancher backend (Stripe/credits) plus tard
     setOpen(false);
     setToast(`✅ ${gift.name} sent to ${tgt} (${gift.price.toFixed(2)} €)`);
     setTimeout(() => setToast(null), 2500);
@@ -27,9 +22,7 @@ export default function GiftButton({
       <button onClick={() => setOpen(true)} className={className} style={{ width: "100%" }}>
         {label}
       </button>
-
       <GiftsMenu open={open} onClose={() => setOpen(false)} onSend={handleSend} target={target} />
-
       {toast && (
         <div style={{
           position: "fixed", bottom: 20, left: "50%", transform: "translateX(-50%)",
