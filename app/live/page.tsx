@@ -3,15 +3,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import GiftButton from "@/components/GiftButton"; // ✅ alias vers /components
+import GiftButton from "../../components/GiftButton"; // ✅ chemin relatif (components à la racine)
 
 /** Demo data (modifiable) */
 const LIVES = [
-  { title: "Showcase — Alice", time: "Tonight 9:00 PM", slug: "alice", desc: "Live showcase + Q&A", country: "US", languages: ["English", "French"] },
-  { title: "VIP Talk — Bella",  time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session",    country: "FR", languages: ["French"] },
-  { title: "Acoustic Set — Cora", time: "Saturday 7:00 PM", slug: "cora", desc: "Acoustic & chill",       country: "ES", languages: ["Spanish", "English"] },
-  { title: "Studio — Dana",      time: "Sunday 6:30 PM",   slug: "dana", desc: "Behind the scenes",       country: "DE", languages: ["German", "English"] },
-  { title: "Workshop — Emi",     time: "Monday 5:00 PM",   slug: "emi",  desc: "Creative workshop",       country: "MA", languages: ["Arabic", "French", "English"] },
+  { title: "Showcase — Alice",  time: "Tonight 9:00 PM",  slug: "alice", desc: "Live showcase + Q&A",    country: "US", languages: ["English", "French"] },
+  { title: "VIP Talk — Bella",  time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session",     country: "FR", languages: ["French"] },
+  { title: "Acoustic Set — Cora", time: "Saturday 7:00 PM", slug: "cora",  desc: "Acoustic & chill",      country: "ES", languages: ["Spanish", "English"] },
+  { title: "Studio — Dana",     time: "Sunday 6:30 PM",   slug: "dana",  desc: "Behind the scenes",       country: "DE", languages: ["German", "English"] },
+  { title: "Workshop — Emi",    time: "Monday 5:00 PM",   slug: "emi",   desc: "Creative workshop",       country: "MA", languages: ["Arabic", "French", "English"] },
 ];
 
 const allCountries = Array.from(new Set(LIVES.map(x => x.country))).sort();
@@ -119,8 +119,12 @@ export default function LivePage() {
 
       {/* Title */}
       <section style={{ maxWidth: 1100, margin: "24px auto 10px", padding: "0 16px" }}>
-        <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>Live</h1>
-        <p  style={{ margin: "8px 0 0", color: "#e9dfcf" }}>Upcoming & current live sessions from our creators.</p>
+        <h1 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(26px, 6vw, 40px)", textAlign: "left" }}>
+          Live
+        </h1>
+        <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
+          Upcoming & current live sessions from our creators.
+        </p>
       </section>
 
       {/* Filters */}
@@ -207,4 +211,4 @@ export default function LivePage() {
       </section>
     </main>
   );
-                                          }
+}
