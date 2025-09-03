@@ -105,3 +105,72 @@ p {
 @media (max-width: 520px) {
   .stack-sm { display: flex; flex-direction: column; gap: 10px; }
 }
+/* === 3D buttons – unified height/width + new color variants === */
+.actions-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (max-width: 520px) {
+  .actions-3col { grid-template-columns: 1fr; }
+}
+
+/* Base 3D (déjà présent, on le rappelle au cas où) */
+.btn3d {
+  position: relative;
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  text-align: center;
+  min-height: 48px;              /* même hauteur pour tous */
+}
+.btn3d::before {
+  content: "";
+  position: absolute;
+  inset: 2px 2px auto 2px;
+  height: 48%;
+  border-radius: 14px 14px 10px 10px;
+  background: linear-gradient(to bottom, rgba(255,255,255,.55), rgba(255,255,255,0));
+  pointer-events: none;
+}
+.btn3d:hover  { transform: translateY(-1px); }
+.btn3d:active { transform: translateY(0); filter: brightness(.97); }
+
+/* Variantes couleur cohérentes Velvet House */
+.btn3d--velvet { /* bordeaux rempli, texte or */
+  color: var(--gold);
+  background: linear-gradient(#6a1d1d, #3d0e0e);
+  border: 1px solid #7a2a2a;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.20),
+    0 6px 12px rgba(0,0,0,.24);
+}
+.btn3d--gold { /* or rempli, texte bordeaux */
+  color: #2c0d0d;
+  background: linear-gradient(#f7df7a, var(--gold));
+  border: 1px solid var(--gold-deep);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.45),
+    0 6px 12px rgba(0,0,0,.25);
+}
+.btn3d--platinum { /* platine/silver pour varier */
+  color: #2c0d0d;
+  background: linear-gradient(#f0f0f3, #c8c8ce);
+  border: 1px solid #adadbb;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.55),
+    0 6px 12px rgba(0,0,0,.22);
+}
+.btn3d--outline-gold { /* contour or (transparent) */
+  color: var(--gold);
+  background: linear-gradient(rgba(212,175,55,.06), rgba(212,175,55,.02));
+  border: 2px solid var(--gold);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 6px 12px rgba(0,0,0,.18);
+}
+.btn3d--sm { padding: 10px 16px; border-radius: 14px; }
