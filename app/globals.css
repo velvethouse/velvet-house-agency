@@ -1,10 +1,18 @@
+/* =========================================================
+   Velvet House – Global Styles (velours + or)
+   ========================================================= */
+
 /* ====== Core colors & background ====== */
 :root {
   --background: linear-gradient(to bottom, #4b1c1c, #2e0d0d);
   --foreground: #f5f5f7;
+
   --gold: #D4AF37;
   --gold-deep: #B8860B;
   --gold-gradient: linear-gradient(90deg, #FFD700, #D4AF37, #B8860B);
+
+  --velvet-1: #6a1d1d;
+  --velvet-2: #3d0e0e;
 }
 
 /* ====== Reset / base ====== */
@@ -21,10 +29,20 @@ html, body {
 }
 
 /* neutraliser le rendu natif des boutons (iOS/Android) */
-button { appearance: none; -webkit-appearance: none; background: transparent; border: none; color: inherit; }
+button {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  color: inherit;
+}
 
 /* ====== Titles ====== */
-h1, h2, h3 { color: var(--gold); font-weight: 700; margin: 0 0 1rem 0; }
+h1, h2, h3 {
+  color: var(--gold);
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+}
 .gold-gradient-text {
   background: var(--gold-gradient);
   -webkit-background-clip: text;
@@ -44,11 +62,15 @@ h1, h2, h3 { color: var(--gold); font-weight: 700; margin: 0 0 1rem 0; }
 }
 .input-velvet::placeholder { color: rgba(245,245,245,.7); }
 
-/* ====== Boutons 3D luxe ====== */
+/* =========================================================
+   3D LUXE BUTTONS
+   ========================================================= */
 .btn-row-2, .btn-row-3 { display: grid; gap: 10px; }
 .btn-row-2 { grid-template-columns: repeat(2, 1fr); }
 .btn-row-3 { grid-template-columns: repeat(3, 1fr); }
-@media (max-width: 520px) { .btn-row-2, .btn-row-3 { grid-template-columns: 1fr; } }
+@media (max-width: 520px) {
+  .btn-row-2, .btn-row-3 { grid-template-columns: 1fr; }
+}
 
 .btn3d {
   position: relative;
@@ -64,10 +86,13 @@ h1, h2, h3 { color: var(--gold); font-weight: 700; margin: 0 0 1rem 0; }
   transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  border: none;
+
+  border: none;        /* on gère via les variantes */
   color: inherit;
   background: transparent;
 }
+
+/* glossy highlight */
 .btn3d::before {
   content: "";
   position: absolute;
@@ -77,33 +102,41 @@ h1, h2, h3 { color: var(--gold); font-weight: 700; margin: 0 0 1rem 0; }
   background: linear-gradient(to bottom, rgba(255,255,255,.55), rgba(255,255,255,0));
   pointer-events: none;
 }
+
+/* Interactions */
 .btn3d:hover  { transform: translateY(-1px); }
 .btn3d:active { transform: translateY(0); filter: brightness(.97); }
-.btn3d:focus-visible { outline: 2px solid rgba(212,175,55,.85); outline-offset: 2px; box-shadow: 0 0 0 2px rgba(212,175,55,.25); }
+.btn3d:focus-visible {
+  outline: 2px solid rgba(212,175,55,.85);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(212,175,55,.25);
+}
 .btn3d[disabled], .btn3d.is-disabled { opacity: .55; cursor: not-allowed; filter: grayscale(.15); }
 
+/* tailles */
 .btn3d--sm { min-height: 42px; padding: 10px 14px; border-radius: 12px; font-size: .95rem; }
 .btn3d--lg { min-height: 56px; padding: 14px 26px; border-radius: 18px; }
 
-.btn3d--velvet {
+/* variantes luxe */
+.btn3d--velvet {                /* bordeaux rempli, texte or */
   color: var(--gold);
-  background: linear-gradient(#6a1d1d, #3d0e0e);
+  background: linear-gradient(var(--velvet-1), var(--velvet-2));
   box-shadow: inset 0 1px 0 rgba(255,255,255,.20), 0 6px 12px rgba(0,0,0,.24);
   border: 1px solid #7a2a2a;
 }
-.btn3d--gold {
+.btn3d--gold {                  /* or rempli, texte bordeaux */
   color: #2c0d0d;
   background: linear-gradient(#f7df7a, var(--gold));
   border: 1px solid var(--gold-deep);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 6px 12px rgba(0,0,0,.25);
 }
-.btn3d--platinum {
+.btn3d--platinum {              /* platine/silver */
   color: #2c0d0d;
   background: linear-gradient(#f0f0f3, #c8c8ce);
   border: 1px solid #adadbb;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 6px 12px rgba(0,0,0,.22);
 }
-.btn3d--outline-gold {
+.btn3d--outline-gold {          /* contour or (transparent) */
   color: var(--gold);
   background: linear-gradient(rgba(212,175,55,.06), rgba(212,175,55,.02));
   border: 2px solid var(--gold);
@@ -111,7 +144,9 @@ h1, h2, h3 { color: var(--gold); font-weight: 700; margin: 0 0 1rem 0; }
 }
 .btn3d--outline-gold::before { display: none; }
 
-/* ====== Cartes / grilles compactes (Live) ====== */
+/* =========================================================
+   Cartes & Grilles (Live)
+   ========================================================= */
 .cards-grid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 600px)  { .cards-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 900px)  { .cards-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
@@ -126,7 +161,7 @@ h1, h2, h3 { color: var(--gold); font-weight: 700; margin: 0 0 1rem 0; }
   box-shadow: 0 10px 26px rgba(0,0,0,.30);
   color: #f5f5f5;
 }
-.card-cover { position: relative; aspect-ratio: 4/5; background: #2c0d0d; display: block; }
+.card-cover { position: relative; aspect-ratio: 4/5; background: var(--velvet-2); display: block; }
 .card-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .card-gradient { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.55) 35%, rgba(0,0,0,.0) 70%); }
 .card-body { padding: 10px; display: grid; gap: 6px; }
@@ -134,7 +169,7 @@ h1, h2, h3 { color: var(--gold); font-weight: 700; margin: 0 0 1rem 0; }
 .badge-live {
   position: absolute; top: 8px; left: 8px;
   padding: 4px 8px; border-radius: 999px;
-  background: #D4AF37; color: #2c0d0d; font-weight: 800; font-size: 12px;
+  background: var(--gold); color: #2c0d0d; font-weight: 800; font-size: 12px;
 }
 .badge-flag {
   position: absolute; top: 8px; right: 8px;
@@ -154,19 +189,38 @@ h1, h2, h3 { color: var(--gold); font-weight: 700; margin: 0 0 1rem 0; }
   font-size: 12px;
 }
 
-/* ====== Avatar + stats (hero profil) ====== */
+/* =========================================================
+   Hero profil (avatar à gauche du pseudo)
+   ========================================================= */
+.hero-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;   /* 🔒 garde sur une seule ligne */
+}
+.hero-text {
+  min-width: 0;        /* autorise la réduction sur mobile */
+  flex: 1 1 auto;
+}
+
 .avatar-ring {
-  position: absolute;
-  left: 16px;
-  bottom: -44px;        /* ✅ descendu proprement sous le bandeau */
-  width: 88px; height: 88px;
+  display: inline-block;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid #3d0e0e;     /* velours */
-  box-shadow: 0 0 0 3px #D4AF37; /* liseré or */
+  margin-right: 12px;
+  flex: 0 0 64px;                 /* 🔒 largeur fixe */
+  border: 2px solid #3d0e0e;      /* velours */
+  box-shadow: 0 0 0 2px var(--gold);  /* liseré or */
   background: #2e0d0d;
 }
-.avatar-ring img { width:100%; height:100%; object-fit: cover; display:block; }
+.avatar-ring img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
 .stats-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
 .stat-pill {
@@ -178,7 +232,9 @@ h1, h2, h3 { color: var(--gold); font-weight: 700; margin: 0 0 1rem 0; }
   font-size: 12px; font-weight: 700;
 }
 
-/* ====== Galerie média Profil (filigrane + lock) ====== */
+/* =========================================================
+   Galerie média (profil) – filigrane & verrouillage
+   ========================================================= */
 .media-grid { display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 780px) { .media-grid { grid-template-columns: repeat(3, 1fr); } }
 
@@ -212,4 +268,4 @@ h1, h2, h3 { color: var(--gold); font-weight: 700; margin: 0 0 1rem 0; }
   position: absolute; inset: 0; display: grid; place-items: center;
   background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.55));
   border: 1px dashed rgba(212,175,55,.35);
-}
+  }
