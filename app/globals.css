@@ -2,7 +2,7 @@
 :root {
   --background: linear-gradient(to bottom, #4b1c1c, #2e0d0d); /* velvet bordeaux */
   --foreground: #f5f5f7;
-  --gold: #D4AF37;                      /* luxe gold */
+  --gold: #D4AF37;         /* luxe gold */
   --gold-deep: #B8860B;
   --gold-gradient: linear-gradient(90deg, #FFD700, #D4AF37, #B8860B);
 }
@@ -18,6 +18,15 @@ html, body {
   background: var(--background);
   color: var(--foreground);
   font-family: system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* neutralise le rendu "blanc iOS" sur <button> */
+button {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  color: inherit;
 }
 
 /* ====== Titles ====== */
@@ -36,7 +45,7 @@ h1, h2, h3 {
   font-weight: 800;
 }
 
-/* ====== Paragraphs ====== */
+/* Paragraphs */
 p {
   font-size: 1.1rem;
   line-height: 1.6;
@@ -45,91 +54,35 @@ p {
   margin: 0 0 2rem 0;
 }
 
-/* ====== 3D LUXE BUTTONS (Velvet + Gold) ===== */
-.btn3d {
-  position: relative;
-  display: inline-block;
-  padding: 12px 22px;
-  border-radius: 16px;
-  font-weight: 800;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  text-align: center;
-}
-
-/* glossy highlight */
-.btn3d::before {
-  content: "";
-  position: absolute;
-  inset: 2px 2px auto 2px;      /* glossy top bar */
-  height: 48%;
-  border-radius: 14px 14px 10px 10px;
-  background: linear-gradient(to bottom, rgba(255,255,255,.55), rgba(255,255,255,0));
-  pointer-events: none;
-}
-
-/* Gold (filled) */
-.btn3d--gold {
-  color: #2c0d0d;
-  background: linear-gradient(#f7df7a, var(--gold));
-  border: 1px solid var(--gold-deep);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.45),
-    inset 0 -2px 0 rgba(0,0,0,.08),
-    0 6px 12px rgba(0,0,0,.25),
-    0 1px 0 rgba(255,255,255,.15);
-}
-
-/* Gold outline (transparent) */
-.btn3d--outline-gold {
-  color: var(--gold);
-  background: linear-gradient(rgba(212,175,55,.06), rgba(212,175,55,.02));
-  border: 2px solid var(--gold);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.25),
-    0 6px 12px rgba(0,0,0,.18);
-}
-.btn3d--outline-gold::before { display: none; }
-
-/* Hover/active */
-.btn3d:hover  { transform: translateY(-1px); }
-.btn3d:active { transform: translateY(0); filter: brightness(.97); }
-
-/* Small variant */
-.btn3d--sm { padding: 10px 16px; border-radius: 14px; }
-
-/* ====== Responsive helper ====== */
-@media (max-width: 520px) {
-  .stack-sm { display: flex; flex-direction: column; gap: 10px; }
-}
-/* === 3D buttons – unified height/width + new color variants === */
+/* ====== Actions bar : 3 colonnes sur desktop / 1 col sur mobile ====== */
 .actions-3col {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  margin-top: 12px;
 }
 @media (max-width: 520px) {
   .actions-3col { grid-template-columns: 1fr; }
 }
 
-/* Base 3D (déjà présent, on le rappelle au cas où) */
+/* ====== 3D LUXE BUTTONS (Velvet + Gold + Platinum) ====== */
 .btn3d {
   position: relative;
   display: inline-block;
+  width: 100%;
+  min-height: 48px;
   padding: 12px 22px;
   border-radius: 16px;
   font-weight: 800;
   text-decoration: none;
+  text-align: center;
   cursor: pointer;
   transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  text-align: center;
-  min-height: 48px;              /* même hauteur pour tous */
 }
+
+/* glossy highlight */
 .btn3d::before {
   content: "";
   position: absolute;
@@ -139,10 +92,8 @@ p {
   background: linear-gradient(to bottom, rgba(255,255,255,.55), rgba(255,255,255,0));
   pointer-events: none;
 }
-.btn3d:hover  { transform: translateY(-1px); }
-.btn3d:active { transform: translateY(0); filter: brightness(.97); }
 
-/* Variantes couleur cohérentes Velvet House */
+/* variants */
 .btn3d--velvet { /* bordeaux rempli, texte or */
   color: var(--gold);
   background: linear-gradient(#6a1d1d, #3d0e0e);
@@ -151,6 +102,7 @@ p {
     inset 0 1px 0 rgba(255,255,255,.20),
     0 6px 12px rgba(0,0,0,.24);
 }
+
 .btn3d--gold { /* or rempli, texte bordeaux */
   color: #2c0d0d;
   background: linear-gradient(#f7df7a, var(--gold));
@@ -159,7 +111,8 @@ p {
     inset 0 1px 0 rgba(255,255,255,.45),
     0 6px 12px rgba(0,0,0,.25);
 }
-.btn3d--platinum { /* platine/silver pour varier */
+
+.btn3d--platinum { /* platine/silver */
   color: #2c0d0d;
   background: linear-gradient(#f0f0f3, #c8c8ce);
   border: 1px solid #adadbb;
@@ -167,10 +120,18 @@ p {
     inset 0 1px 0 rgba(255,255,255,.55),
     0 6px 12px rgba(0,0,0,.22);
 }
+
 .btn3d--outline-gold { /* contour or (transparent) */
   color: var(--gold);
   background: linear-gradient(rgba(212,175,55,.06), rgba(212,175,55,.02));
   border: 2px solid var(--gold);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 6px 12px rgba(0,0,0,.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.25),
+    0 6px 12px rgba(0,0,0,.18);
 }
+.btn3d--outline-gold::before { display: none; }
+
+.btn3d:hover  { transform: translateY(-1px); }
+.btn3d:active { transform: translateY(0); filter: brightness(.97); }
+
 .btn3d--sm { padding: 10px 16px; border-radius: 14px; }
