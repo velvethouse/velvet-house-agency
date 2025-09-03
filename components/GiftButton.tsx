@@ -8,7 +8,7 @@ export default function GiftButton({ target, label = "Send gift" }: { target: st
   const [toast, setToast] = useState<string | null>(null);
 
   function handleSend(gift: { id: string; name: string; price: number }, tgt: string) {
-    // TODO: appeler le backend (Stripe/credits) plus tard
+    // TODO: call backend (Stripe/credits) later
     setOpen(false);
     setToast(`✅ ${gift.name} sent to ${tgt} (${gift.price.toFixed(2)} €)`);
     setTimeout(() => setToast(null), 2500);
@@ -18,11 +18,8 @@ export default function GiftButton({ target, label = "Send gift" }: { target: st
     <>
       <button
         onClick={() => setOpen(true)}
-        style={{
-          background: "#D4AF37", color: "#2c0d0d",
-          border: "1px solid #B8860B", borderRadius: 12,
-          padding: "12px 18px", fontWeight: 800, cursor: "pointer"
-        }}
+        className="btn3d btn3d--gold"
+        style={{ width: "100%" }}
       >
         {label}
       </button>
