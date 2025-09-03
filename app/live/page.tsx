@@ -5,7 +5,7 @@
 import { useMemo, useState } from "react";
 import GiftButton from "../../components/GiftButton"; // components à la racine
 
-/** Demo data (modifiable + remplaçable par /api/lives plus tard) */
+/** Demo data (modifiable) */
 const LIVES = [
   { title: "Showcase — Alice",   time: "Tonight 9:00 PM",  slug: "alice", desc: "Live showcase + Q&A",    country: "US", languages: ["English", "French"] },
   { title: "VIP Talk — Bella",   time: "Tomorrow 8:30 PM", slug: "bella", desc: "Private VIP session",     country: "FR", languages: ["French"] },
@@ -172,31 +172,15 @@ export default function LivePage() {
               <b>Country:</b> {item.country} · <b>Languages:</b> {item.languages.join(", ")}
             </div>
 
-            {/* Actions – boutons 3D uniformes */}
+            {/* Actions – 3 boutons 3D uniformes */}
             <div className="actions-3col">
-              <a
-                href={`/u/${item.slug}`}
-                className="btn3d btn3d--velvet"
-              >
-                View profile
-              </a>
-
-              <a
-                href={`/u/${item.slug}/live`}
-                className="btn3d btn3d--gold"
-              >
-                Join live
-              </a>
-
-              <GiftButton
-                target={item.slug}
-                className="btn3d btn3d--platinum"
-                label="Send gift"
-              />
+              <a href={`/u/${item.slug}`}      className="btn3d btn3d--velvet">View profile</a>
+              <a href={`/u/${item.slug}/live`} className="btn3d btn3d--gold">Join live</a>
+              <GiftButton target={item.slug}   className="btn3d btn3d--platinum" label="Send gift" />
             </div>
           </a>
         ))}
       </section>
     </main>
   );
-      }
+        }
