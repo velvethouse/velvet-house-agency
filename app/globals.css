@@ -171,3 +171,67 @@ h1, h2, h3 { color: var(--gold); font-weight: 700; margin: 0 0 1rem 0; }
   background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.55));
   border: 1px dashed rgba(212,175,55,.35);
     }
+/* ===== Avatar + stats (hero) ===== */
+.avatar-ring {
+  position: absolute;
+  left: 16px;
+  bottom: -36px;
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #3d0e0e;              /* velours */
+  box-shadow: 0 0 0 3px #D4AF37;          /* or externe */
+}
+.avatar-ring img { width:100%; height:100%; object-fit: cover; display:block; }
+
+.stats-row {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin-top: 8px;
+}
+.stat-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(212,175,55,.35);
+  color: #e9dfcf;
+  font-size: 12px; font-weight: 700;
+}
+
+/* ===== Media gallery (watermark + lock) ===== */
+.media-grid { display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 780px) { .media-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.media-card {
+  position: relative; overflow: hidden; border-radius: 14px;
+  border: 1px solid rgba(212,175,55,0.22);
+  background: rgba(0,0,0,.25);
+  aspect-ratio: 1/1;   /* carré */
+}
+.media-card img, .media-card video {
+  width:100%; height:100%; object-fit: cover; display:block;
+}
+.media-blur { filter: blur(14px) saturate(.7) brightness(.85); transform: scale(1.03); }
+
+/* filigrane diagonal (3 bandeaux) */
+.wm-tiles {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+.wm-tiles span {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%) rotate(-28deg);
+  color: rgba(255,255,255,.18);
+  font-weight: 900; letter-spacing: .06em;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+  white-space: nowrap;
+}
+.wm-tiles span:nth-child(1) { transform: translate(-50%, -120%) rotate(-28deg); font-size: 26px; }
+.wm-tiles span:nth-child(2) { transform: translate(-50%,   -5%) rotate(-28deg); font-size: 28px; }
+.wm-tiles span:nth-child(3) { transform: translate(-50%,  110%) rotate(-28deg); font-size: 26px; }
+
+/* overlay verrouillé */
+.media-lock {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.55));
+  border: 1px dashed rgba(212,175,55,.35);
+}
