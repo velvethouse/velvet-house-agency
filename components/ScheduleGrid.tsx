@@ -13,7 +13,6 @@ export default function ScheduleGrid({ username, isOwner }: Props) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  // heures 8 -> 23 (modifiable)
   const HOURS = useMemo(() => Array.from({ length: 16 }, (_, i) => 8 + i), []);
 
   useEffect(() => {
@@ -55,27 +54,16 @@ export default function ScheduleGrid({ username, isOwner }: Props) {
 
   if (loading) return <div style={{ color: "#d7c9b3" }}>Loading schedule…</div>;
 
-  // rendu grille
   return (
     <div style={{ display: "grid", gap: 10 }}>
       <div style={{ color: "#D4AF37", fontWeight: 800, fontSize: 18 }}>Weekly Schedule</div>
 
-      <div
-        style={{
-          overflowX: "auto",
-          border: "1px solid rgba(212,175,55,.22)",
-          borderRadius: 12,
-          padding: 8,
-          background: "rgba(0,0,0,.2)",
-        }}
-      >
+      <div style={{ overflowX: "auto", border: "1px solid rgba(212,175,55,.22)", borderRadius: 12 }}>
         <table style={{ borderCollapse: "collapse", width: "100%", minWidth: 780 }}>
           <thead>
             <tr>
               <th style={th}>Time</th>
-              {DAYS.map((d) => (
-                <th key={d} style={th}>{d}</th>
-              ))}
+              {DAYS.map((d) => <th key={d} style={th}>{d}</th>)}
             </tr>
           </thead>
           <tbody>
@@ -94,7 +82,6 @@ export default function ScheduleGrid({ username, isOwner }: Props) {
                         background: active ? "rgba(212,175,55,.22)" : "transparent",
                         border: "1px solid rgba(212,175,55,.18)",
                       }}
-                      title={isOwner ? "Click to toggle" : ""}
                     />
                   );
                 })}
@@ -105,21 +92,10 @@ export default function ScheduleGrid({ username, isOwner }: Props) {
       </div>
 
       {isOwner && (
-        <button
-          onClick={save}
-          disabled={saving}
-          className="btn3d btn3d--gold"
-          style={{ maxWidth: 220 }}
-        >
+        <button onClick={save} disabled={saving} className="btn3d btn3d--gold" style={{ maxWidth: 220 }}>
           {saving ? "Saving…" : "Save schedule"}
         </button>
       )}
-
-      <div style={{ color: "#d7c9b3", fontSize: 12 }}>
-        {isOwner
-          ? "Tip: click on slots to mark availability, then Save."
-          : "Displayed times are local to your device."}
-      </div>
     </div>
   );
 }
