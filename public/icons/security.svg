@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <defs>
+    <linearGradient id="goldShield" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#D4AF37"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Bouclier -->
+  <path d="M12 3l7 3v6c0 5-3.5 9-7 9s-7-4-7-9V6l7-3z"
+        fill="none" stroke="url(#goldShield)" stroke-width="1.8" stroke-linejoin="round"/>
+
+  <!-- Étoile / badge central -->
+  <path d="M12 10l1.2 2.4 2.6.4-1.9 1.9.4 2.6L12 16.5l-2.3 1.8.4-2.6-1.9-1.9 2.6-.4L12 10z"
+        fill="url(#goldShield)" opacity=".9"/>
+</svg>
