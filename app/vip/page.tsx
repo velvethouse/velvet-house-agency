@@ -10,41 +10,6 @@ export default function VipPage() {
         fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
       }}
     >
-      {/* Top bar */}
-      <header
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 40,
-          backdropFilter: "blur(8px)",
-          background: "rgba(43,13,13,0.88)",
-          borderBottom: "1px solid rgba(212,175,55,0.18)",
-        }}
-      >
-        <nav
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            padding: "12px 16px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 12,
-          }}
-        >
-          <a href="/" style={{ color: "#D4AF37", fontWeight: 800 }}>
-            Velvet House
-          </a>
-          <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontWeight: 700 }}>
-            <a href="/live">Live</a>
-            <a href="/gifts">Gifts</a>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/contact">Contact</a>
-            <a href="/cgu">Terms</a>
-          </div>
-        </nav>
-      </header>
-
       {/* Hero */}
       <section style={{ maxWidth: 1100, margin: "24px auto 12px", padding: "0 16px", textAlign: "center" }}>
         <h1 className="gold-gradient-text" style={{ fontSize: "clamp(28px,6.5vw,44px)", margin: 0 }}>
@@ -56,7 +21,7 @@ export default function VipPage() {
         </p>
       </section>
 
-      {/* Subscription tiers */}
+      {/* Tiers */}
       <section style={{ maxWidth: 1100, margin: "18px auto 10px", padding: "0 16px" }}>
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
           {/* Monthly */}
@@ -132,36 +97,6 @@ export default function VipPage() {
         </div>
       </section>
 
-      {/* FAQ */}
-      <section style={{ maxWidth: 1100, margin: "8px auto 30px", padding: "0 16px" }}>
-        <h2 style={{ margin: "0 0 10px 0", color: "#D4AF37", textAlign: "center", fontSize: "clamp(20px,4.5vw,28px)" }}>
-          FAQ
-        </h2>
-
-        <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
-          <article className="card" style={{ padding: 14 }}>
-            <div style={{ fontWeight: 800, color: "#D4AF37", marginBottom: 6 }}>What does VIP unlock?</div>
-            <div style={{ color: "#d7c9b3" }}>
-              Full access to non-NSFW galleries (100 photos / 20 videos), priority in live & chat, and exclusive VIP rewards.
-            </div>
-          </article>
-
-          <article className="card" style={{ padding: 14 }}>
-            <div style={{ fontWeight: 800, color: "#D4AF37", marginBottom: 6 }}>What about NSFW content?</div>
-            <div style={{ color: "#d7c9b3" }}>
-              NSFW stays <b>gift-unlock only</b> for everyone (including VIP). Creators choose the exact gift to unlock.
-            </div>
-          </article>
-
-          <article className="card" style={{ padding: 14 }}>
-            <div style={{ fontWeight: 800, color: "#D4AF37", marginBottom: 6 }}>Can I cancel anytime?</div>
-            <div style={{ color: "#d7c9b3" }}>
-              Yes. VIP can be canceled anytime; your access remains active until the end of the billing period.
-            </div>
-          </article>
-        </div>
-      </section>
-
       {/* CTA bottom */}
       <section style={{ maxWidth: 900, margin: "0 auto 36px", padding: "0 16px", textAlign: "center" }}>
         <div className="btn-row-2" style={{ maxWidth: 560, margin: "0 auto" }}>
@@ -174,4 +109,4 @@ export default function VipPage() {
       </section>
     </main>
   );
-                                           }
+      }
