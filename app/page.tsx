@@ -1,7 +1,4 @@
-export const metadata = {
-  title: "Velvet House Agency",
-  description: "Premium live platform with VIP experiences and animated gifts",
-};
+// app/page.tsx
 
 export default function HomePage() {
   return (
@@ -10,173 +7,77 @@ export default function HomePage() {
         minHeight: "100vh",
         background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
         color: "#f5f5f5",
-        fontFamily: "system-ui, Segoe UI, sans-serif",
-        display: "flex",
-        flexDirection: "column",
+        fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
       }}
     >
-      {/* Top bar */}
-      <header
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 50,
-          backdropFilter: "blur(8px)",
-          background: "rgba(43,13,13,0.88)",
-          borderBottom: "1px solid rgba(212,175,55,0.18)",
-        }}
-      >
-        <nav
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            padding: "10px 16px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 12,
-          }}
-        >
-          {/* Logo text (romantic look via simple cursive fallback) */}
-          <div style={{ fontSize: 24, color: "#D4AF37", fontFamily: "'Georgia', 'Times New Roman', serif" }}>
-            Velvet House
-          </div>
-
-          <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontWeight: 700 }}>
-            <a href="/live">Live</a>
-            <a href="/vip">VIP</a>
-            <a href="/gifts">Gifts</a>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/contact">Contact</a>
-            {/* Route exists as /cgu – we label it “Terms” for EN */}
-            <a href="/cgu">Terms</a>
-          </div>
-        </nav>
-      </header>
-
-      {/* HERO with background cover + darker overlay to match logo */}
+      {/* Hero */}
       <section
         style={{
-          position: "relative",
-          minHeight: "78vh",
-          display: "grid",
-          placeItems: "center",
-          padding: "24px 16px",
-          backgroundImage:
-            "linear-gradient(to bottom, rgba(43,13,13,0.60), rgba(30,8,8,0.86)), url('/hero.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          maxWidth: 1100,
+          margin: "28px auto 20px",
+          padding: "0 16px",
         }}
       >
-        {/* Content card */}
         <div
+          className="card"
           style={{
-            width: "min(92vw, 680px)",
-            borderRadius: 16,
-            padding: "26px 22px 28px",
-            background:
-              "linear-gradient(180deg, rgba(15,15,15,0.45), rgba(15,15,15,0.28))",
-            border: "1px solid rgba(212,175,55,0.22)",
-            boxShadow: "0 12px 32px rgba(0,0,0,0.35)",
-            backdropFilter: "blur(2px)",
+            padding: 18,
+            borderRadius: 18,
+            background: "linear-gradient(180deg, rgba(15,15,15,.42), rgba(15,15,15,.28))",
+            border: "1px solid rgba(212,175,55,.22)",
+            boxShadow: "0 10px 26px rgba(0,0,0,.30)",
           }}
         >
-          {/* Title */}
           <h1
-            style={{
-              margin: 0,
-              fontSize: "clamp(30px, 8vw, 48px)",
-              letterSpacing: "2px",
-              color: "#D4AF37",
-              textAlign: "center",
-            }}
+            className="gold-gradient-text"
+            style={{ fontSize: "clamp(30px,7vw,52px)", margin: "8px 0 10px" }}
           >
             Velvet House
           </h1>
 
-          {/* Tagline (moved down a bit, golden) */}
-          <p
-            style={{
-              margin: "16px auto 22px",
-              fontSize: "clamp(15px, 3.6vw, 18px)",
-              lineHeight: 1.6,
-              color: "#D4AF37",
-              textAlign: "center",
-              maxWidth: 620,
-            }}
-          >
-            More than a platform: an exclusive universe where elegance meets
-            mystery. Every creator shines. Every viewer becomes privileged.
+          <p style={{ margin: 0, color: "#e9dfcf", lineHeight: 1.7, maxWidth: 820 }}>
+            More than a platform: an exclusive universe where elegance meets mystery.  
+            Every creator shines. Every viewer becomes privileged.
           </p>
 
-          {/* CTAs */}
-          <div
-            style={{
-              display: "flex",
-              gap: 12,
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
-            <a
-              href="/signup"
-              style={{
-                background: "#D4AF37",
-                color: "#2c0d0d",
-                textDecoration: "none",
-                fontWeight: 800,
-                padding: "12px 18px",
-                borderRadius: 12,
-                border: "1px solid #B8860B",
-                flex: "1 1 180px",
-                textAlign: "center",
-              }}
-            >
-              Sign up
-            </a>
-
-            <a
-              href="/login"
-              style={{
-                textDecoration: "none",
-                fontWeight: 800,
-                padding: "12px 18px",
-                borderRadius: 12,
-                border: "2px solid #D4AF37",
-                color: "#D4AF37",
-                flex: "1 1 180px",
-                textAlign: "center",
-              }}
-            >
-              Log in
-            </a>
+          <div className="btn-row-2" style={{ maxWidth: 560, marginTop: 18 }}>
+            <a href="/signup" className="btn3d btn3d--gold btn3d--lg">Sign up</a>
+            <a href="/login"  className="btn3d btn3d--outline-gold btn3d--lg">Log in</a>
           </div>
         </div>
       </section>
 
-      {/* ABOUT */}
-      <section
-        id="about"
-        style={{
-          maxWidth: 1100,
-          margin: "40px auto 30px",
-          padding: "0 16px",
-          display: "grid",
-          gap: 10,
-        }}
-      >
-        <h2 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(22px,5vw,28px)" }}>
-          About
-        </h2>
-        <p style={{ color: "#e9dfcf", lineHeight: 1.7, margin: "6px 0 12px" }}>
-          Velvet House is a premium live platform with VIP access, animated gifts,
-          and transparent monetization for creators and agencies.
-        </p>
-        <ul style={{ color: "#d7c9b3", margin: 0, paddingLeft: 18, lineHeight: 1.7 }}>
-          <li>Transparent commissions</li>
-          <li>Automatic payouts</li>
-          <li>Strict safety & moderation rules</li>
-        </ul>
+      {/* Quick sections */}
+      <section style={{ maxWidth: 1100, margin: "4px auto 28px", padding: "0 16px" }}>
+        <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
+          <a href="/live" className="card" style={{ padding: 16, textDecoration: "none", color: "#f5f5f5" }}>
+            <h2 style={{ margin: 0, color: "#D4AF37" }}>Live</h2>
+            <p style={{ margin: "8px 0 0", color: "#d7c9b3" }}>
+              Discover upcoming & current live sessions. Send gifts, unlock moments.
+            </p>
+          </a>
+
+          <a href="/vip" className="card" style={{ padding: 16, textDecoration: "none", color: "#f5f5f5" }}>
+            <h2 style={{ margin: 0, color: "#D4AF37" }}>VIP</h2>
+            <p style={{ margin: "8px 0 0", color: "#d7c9b3" }}>
+              Full non-NSFW galleries, priority in lives & chats. NSFW stays gift-unlock only.
+            </p>
+          </a>
+
+          <a href="/gifts" className="card" style={{ padding: 16, textDecoration: "none", color: "#f5f5f5" }}>
+            <h2 style={{ margin: 0, color: "#D4AF37" }}>Gifts</h2>
+            <p style={{ margin: "8px 0 0", color: "#d7c9b3" }}>
+              Choose animated gifts. Creators may set goal gifts for private sessions.
+            </p>
+          </a>
+
+          <a href="/lotus" className="card" style={{ padding: 16, textDecoration: "none", color: "#f5f5f5" }}>
+            <h2 style={{ margin: 0, color: "#D4AF37" }}>Lotus</h2>
+            <p style={{ margin: "8px 0 0", color: "#d7c9b3" }}>
+              Buy Lotus packs (transparent pricing, no additional taxes).
+            </p>
+          </a>
+        </div>
       </section>
     </main>
   );
