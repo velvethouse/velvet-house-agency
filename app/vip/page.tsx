@@ -56,21 +56,14 @@ export default function VipPage() {
         </p>
       </section>
 
-      {/* Tiers */}
+      {/* Subscription tiers */}
       <section style={{ maxWidth: 1100, margin: "18px auto 10px", padding: "0 16px" }}>
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
           {/* Monthly */}
-          <article
-            className="card"
-            style={{
-              display: "grid",
-              gap: 12,
-              padding: 18,
-            }}
-          >
+          <article className="card" style={{ display: "grid", gap: 12, padding: 18 }}>
             <h2 style={{ margin: 0, color: "#D4AF37" }}>VIP Monthly</h2>
             <div style={{ fontSize: 32, fontWeight: 800 }}>
-              19,90€ <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ month</span>
+              9,90€ <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ month</span>
             </div>
             <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.8, color: "#d7c9b3" }}>
               <li>Access up to <b>100 photos</b> & <b>20 videos</b> (non-NSFW)</li>
@@ -94,7 +87,7 @@ export default function VipPage() {
           >
             <h2 style={{ margin: 0, color: "#D4AF37" }}>VIP Annual</h2>
             <div style={{ fontSize: 32, fontWeight: 800 }}>
-              199€ <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ year</span>
+              99€ <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ year</span>
             </div>
             <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.8, color: "#d7c9b3" }}>
               <li><b>2 months free</b> vs monthly</li>
@@ -107,17 +100,17 @@ export default function VipPage() {
         </div>
       </section>
 
-      {/* Reminder NSFW rule */}
+      {/* Condition Lotus */}
       <section style={{ maxWidth: 1100, margin: "8px auto 18px", padding: "0 16px" }}>
         <div className="card" style={{ padding: 14 }}>
           <p style={{ margin: 0, color: "#d7c9b3" }}>
-            <b>Note:</b> NSFW media are always <b>gift-unlock only</b>, including for VIP members. Creators select the
-            gift required to unlock (e.g., Lotus ✨, Butterfly 🦋).
+            <b>Note:</b> Becoming VIP requires an <b>active subscription</b> (monthly or annual)
+            <br />and a <b>minimum purchase of 100,000 Lotus</b>.
           </p>
         </div>
       </section>
 
-      {/* Benefits grid */}
+      {/* Benefits */}
       <section style={{ maxWidth: 1100, margin: "8px auto 22px", padding: "0 16px" }}>
         <h2 style={{ margin: "0 0 10px 0", color: "#D4AF37", textAlign: "center", fontSize: "clamp(20px,4.5vw,28px)" }}>
           VIP benefits
@@ -181,4 +174,4 @@ export default function VipPage() {
       </section>
     </main>
   );
-      }
+                                           }
