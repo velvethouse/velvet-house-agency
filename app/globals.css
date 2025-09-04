@@ -1,5 +1,5 @@
 /* =========================================================
-   Velvet House – Global Styles (velours + or)
+   Velvet House — Global Styles (velours + or)
    ========================================================= */
 
 /* ====== Core colors & background ====== */
@@ -28,7 +28,7 @@ html, body {
   font-family: system-ui, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-/* neutraliser le rendu natif des boutons (iOS/Android) */
+/* Neutraliser le rendu natif des boutons (iOS/Android) */
 button {
   appearance: none;
   -webkit-appearance: none;
@@ -87,7 +87,7 @@ h1, h2, h3 {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 
-  border: none;        /* on gère via les variantes */
+  border: none;        /* géré via variantes */
   color: inherit;
   background: transparent;
 }
@@ -145,7 +145,7 @@ h1, h2, h3 {
 .btn3d--outline-gold::before { display: none; }
 
 /* =========================================================
-   Cartes & Grilles (Live)
+   Cartes & Grilles (Live / Packs)
    ========================================================= */
 .cards-grid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 600px)  { .cards-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -233,7 +233,7 @@ h1, h2, h3 {
 }
 
 /* =========================================================
-   Galerie média (profil) – filigrane & verrouillage
+   Galerie média (profil) — filigrane & verrouillage
    ========================================================= */
 .media-grid { display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 780px) { .media-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -247,7 +247,7 @@ h1, h2, h3 {
 .media-card img, .media-card video { width:100%; height:100%; object-fit: cover; display:block; }
 .media-blur { filter: blur(14px) saturate(.7) brightness(.85); transform: scale(1.03); }
 
-/* ✅ Filigrane unique centré en diagonale */
+/* Filigrane unique centré en diagonale */
 .wm-tiles {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
@@ -263,9 +263,44 @@ h1, h2, h3 {
   font-size: 28px;
 }
 
-/* overlay lock */
+/* Overlay lock */
 .media-lock {
   position: absolute; inset: 0; display: grid; place-items: center;
   background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.55));
   border: 1px dashed rgba(212,175,55,.35);
-  }
+}
+
+/* =========================================================
+   Announcement / GOD banner (persistant)
+   ========================================================= */
+.god-banner {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.15),
+    rgba(212, 175, 55, 0.35),
+    rgba(212, 175, 55, 0.15)
+  );
+  border-bottom: 1px solid rgba(212, 175, 55, 0.45);
+  color: #f5f5f5;
+  text-align: center;
+  padding: 10px 12px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  animation: godShine 2.8s linear infinite;
+}
+.god-banner .small {
+  display: block;
+  font-weight: 600;
+  font-size: 12px;
+  color: #d7c9b3;
+  letter-spacing: 0.2px;
+  margin-top: 2px;
+}
+@keyframes godShine {
+  0%   { box-shadow: 0 0 0 rgba(212,175,55,0); }
+  50%  { box-shadow: 0 0 24px rgba(212,175,55,0.35); }
+  100% { box-shadow: 0 0 0 rgba(212,175,55,0); }
+}
