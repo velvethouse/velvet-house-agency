@@ -16,7 +16,6 @@ type Profile = {
   posts?: number;
 };
 
-// Démo de quelques profils (tu peux garder/ajuster)
 const DEMO_PROFILES: Record<string, Profile> = {
   alice: {
     displayName: "Alice",
@@ -57,7 +56,6 @@ export default function CreatorPage({ params }: { params: { username: string } }
     [user]
   );
 
-  // Détecter un mode "propriétaire" pour éditer le planning (URL ?owner=1)
   const isOwner =
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("owner") === "1";
@@ -71,197 +69,26 @@ export default function CreatorPage({ params }: { params: { username: string } }
         fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
       }}
     >
-      {/* Hero cover + titre */}
+      {/* Profil */}
       <section style={{ maxWidth: 1000, margin: "16px auto", padding: "0 16px" }}>
-        <div
-          style={{
-            borderRadius: 16,
-            overflow: "hidden",
-            border: "1px solid rgba(212,175,55,0.22)",
-            boxShadow: "0 10px 26px rgba(0,0,0,.30)",
-            background: "linear-gradient(180deg, rgba(15,15,15,.45), rgba(15,15,15,.30))",
-          }}
-        >
-          <div style={{ position: "relative", height: 220, background: "#2c0d0d" }}>
-            <Image
-              src={data.avatar}
-              alt={data.displayName}
-              fill
-              sizes="100vw"
-              style={{ objectFit: "cover", filter: "saturate(1.05)" }}
-              onError={(e) => {
-                (e.currentTarget as any).src = "/avatars/default.jpg";
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background:
-                  "linear-gradient(to top, rgba(0,0,0,.6) 30%, rgba(0,0,0,0) 70%)",
-              }}
-            />
+        <h1 style={{ color: "#D4AF37" }}>{data.displayName}</h1>
+        <p style={{ color: "#d7c9b3" }}>{data.bio}</p>
+      </section>
 
-            {/* Ligne avatar + pseudo */}
-            <div
-              style={{
-                position: "absolute",
-                left: 16,
-                right: 16,
-                bottom: 12,
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                flexWrap: "nowrap",
-              }}
-            >
-              <div
-                style={{
-                  width: 64,
-                  height: 64,
-                  borderRadius: "50%",
-                  overflow: "hidden",
-                  border: "2px solid #3d0e0e",
-                  boxShadow: "0 0 0 2px #D4AF37",
-                  background: "#2e0d0d",
-                  flex: "0 0 64px",
-                }}
-              >
-                <Image
-                  src={data.avatar}
-                  alt={data.displayName}
-                  width={64}
-                  height={64}
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
-
-              <div style={{ minWidth: 0, flex: "1 1 auto" }}>
-                <h1
-                  style={{
-                    margin: 0,
-                    fontSize: "clamp(20px,6vw,32px)",
-                    color: "#D4AF37",
-                    lineHeight: 1.1,
-                  }}
-                >
-                  {data.displayName}
-                </h1>
-                <div
-                  style={{
-                    fontSize: 14,
-                    color: "#e9dfcf",
-                    opacity: 0.95,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  Country: {data.country} · Languages:{" "}
-                  {data.languages.join(", ") || "—"}
-                </div>
-                <div
-                  style={{
-                    fontSize: 13,
-                    color: "#d7c9b3",
-                    opacity: 0.9,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  {data.bio}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div style={{ padding: "12px 16px" }}>
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <span className="stat-pill">
-                Followers: {data.followers?.toLocaleString()}
-              </span>
-              <span className="stat-pill">
-                Likes: {data.likes?.toLocaleString()}
-              </span>
-              <span className="stat-pill">
-                Posts: {data.posts?.toLocaleString()}
-              </span>
-            </div>
-          </div>
+      {/* Galerie (placeholder) */}
+      <section style={{ maxWidth: 1000, margin: "16px auto", padding: "0 16px" }}>
+        <h2 style={{ color: "#D4AF37" }}>Gallery</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
+          <div style={{ aspectRatio: "1/1", background: "#3d0e0e", borderRadius: 8 }} />
+          <div style={{ aspectRatio: "1/1", background: "#3d0e0e", borderRadius: 8 }} />
+          <div style={{ aspectRatio: "1/1", background: "#3d0e0e", borderRadius: 8 }} />
         </div>
       </section>
 
-      {/* (Optionnel) Galerie – placeholder minimal; garde la tienne si tu en as déjà une */}
-      <section style={{ maxWidth: 1000, margin: "10px auto", padding: "0 16px" }}>
-        <h2
-          className="gold-gradient-text"
-          style={{ fontSize: "clamp(18px,4.2vw,26px)", marginBottom: 10 }}
-        >
-          Gallery
-        </h2>
-        <div
-          className="media-grid"
-          style={{
-            display: "grid",
-            gap: 10,
-            gridTemplateColumns: "repeat(3, 1fr)",
-          }}
-        >
-          {/* Tu peux supprimer ce bloc si tu as déjà ta vraie galerie */}
-          <div
-            className="media-card"
-            style={{
-              aspectRatio: "1/1",
-              border: "1px solid rgba(212,175,55,0.22)",
-              borderRadius: 14,
-              background: "rgba(0,0,0,.25)",
-              display: "grid",
-              placeItems: "center",
-              color: "#d7c9b3",
-              fontSize: 13,
-            }}
-          >
-            (Placeholder) Add media here
-          </div>
-          <div
-            className="media-card"
-            style={{
-              aspectRatio: "1/1",
-              border: "1px solid rgba(212,175,55,0.22)",
-              borderRadius: 14,
-              background: "rgba(0,0,0,.25)",
-              display: "grid",
-              placeItems: "center",
-              color: "#d7c9b3",
-              fontSize: 13,
-            }}
-          >
-            (Placeholder)
-          </div>
-          <div
-            className="media-card"
-            style={{
-              aspectRatio: "1/1",
-              border: "1px solid rgba(212,175,55,0.22)",
-              borderRadius: 14,
-              background: "rgba(0,0,0,.25)",
-              display: "grid",
-              placeItems: "center",
-              color: "#d7c9b3",
-              fontSize: 13,
-            }}
-          >
-            (Placeholder)
-          </div>
-        </div>
-      </section>
-
-      {/* 📅 Planning hebdo */}
+      {/* 📅 Planning */}
       <section style={{ maxWidth: 1000, margin: "16px auto 40px", padding: "0 16px" }}>
         <ScheduleGrid username={user} isOwner={isOwner} />
       </section>
     </main>
   );
-                  }
+}
