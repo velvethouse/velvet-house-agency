@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <defs>
+    <linearGradient id="goldGift" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#D4AF37"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Boîte cadeau -->
+  <rect x="4" y="9" width="16" height="11" rx="2"
+        fill="none" stroke="url(#goldGift)" stroke-width="1.8"/>
+
+  <!-- Ruban vertical -->
+  <path d="M12 9v11" stroke="url(#goldGift)" stroke-width="1.8"/>
+
+  <!-- Ruban horizontal (couvercle) -->
+  <rect x="3" y="7" width="18" height="3" rx="1"
+        fill="url(#goldGift)" opacity=".7"/>
+
+  <!-- Nœud gauche -->
+  <path d="M12 7c-1.5-2-4-2-5 0 1.5 0 3 .5 5 0z"
+        fill="url(#goldGift)" opacity=".9"/>
+
+  <!-- Nœud droit -->
+  <path d="M12 7c1.5-2 4-2 5 0-1.5 0-3 .5-5 0z"
+        fill="url(#goldGift)" opacity=".9"/>
+</svg>
