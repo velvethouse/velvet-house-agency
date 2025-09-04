@@ -1,0 +1,147 @@
+// app/lotus/page.tsx
+
+type Pack = {
+  id: string;
+  name: string;
+  lotus: number;
+  price: number; // EUR (référence Tango +5%)
+  badge?: "Popular" | "Best" | "Hot" | "VIP" | "Elite" | "Whale";
+  note?: string;
+};
+
+const PACKS: Pack[] = [
+  { id: "lotus-1k",       name: "Starter", lotus: 1_000,       price: 4.62,   note: "Entry pack" },
+  { id: "lotus-2k",       name: "Mini",    lotus: 2_000,       price: 9.24,   note: "Light top-up" },
+  { id: "lotus-5k",       name: "Small",   lotus: 5_000,       price: 23.10,  note: "Better value" },
+  { id: "lotus-10k",      name: "Medium",  lotus: 10_000,      price: 46.19,  badge: "Popular" },
+  { id: "lotus-20k",      name: "Large",   lotus: 20_000,      price: 92.39 },
+  { id: "lotus-50k",      name: "XL",      lotus: 50_000,      price: 230.99, badge: "Best" },
+  { id: "lotus-100k",     name: "VIP",     lotus: 100_000,     price: 461.99, badge: "VIP", note: "VIP threshold (Lotus)" },
+  { id: "lotus-500k",     name: "Elite",   lotus: 500_000,     price: 2309.99, badge: "Elite" },
+  { id: "lotus-1000k",    name: "Whale 🐳",lotus: 1_000_000,   price: 4619.00, badge: "Whale" },
+];
+
+export default function LotusPage() {
+  return (
+    <main
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
+        color: "#f5f5f5",
+        fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
+      }}
+    >
+      {/* Top bar */}
+      <header
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 40,
+          backdropFilter: "blur(8px)",
+          background: "rgba(43,13,13,0.88)",
+          borderBottom: "1px solid rgba(212,175,55,0.18)",
+        }}
+      >
+        <nav
+          style={{
+            maxWidth: 1100,
+            margin: "0 auto",
+            padding: "12px 16px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 12,
+          }}
+        >
+          <a href="/" style={{ color: "#D4AF37", fontWeight: 800 }}>
+            Velvet House
+          </a>
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontWeight: 700 }}>
+            <a href="/live">Live</a>
+            <a href="/vip">VIP</a>
+            <a href="/gifts">Gifts</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/contact">Contact</a>
+            <a href="/cgu">Terms</a>
+          </div>
+        </nav>
+      </header>
+
+      {/* Hero */}
+      <section style={{ maxWidth: 1100, margin: "24px auto 12px", padding: "0 16px", textAlign: "center" }}>
+        <h1 className="gold-gradient-text" style={{ fontSize: "clamp(28px,6.5vw,44px)", margin: 0 }}>
+          Buy Lotus
+        </h1>
+        <p style={{ margin: "10px auto 0", maxWidth: 820, color: "#e9dfcf", lineHeight: 1.7 }}>
+          Lotus is the currency used across Velvet House — to send gifts, unlock NSFW media, and support creators.
+          VIP requires an active subscription <b>and</b> a minimum purchase of <b>100,000 Lotus</b>.
+        </p>
+      </section>
+
+      {/* Packs grid */}
+      <section style={{ maxWidth: 1100, margin: "18px auto 30px", padding: "0 16px" }}>
+        <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
+          {PACKS.map((p) => (
+            <article
+              key={p.id}
+              className="card"
+              style={{
+                display: "grid",
+                gap: 10,
+                padding: 16,
+                borderColor: p.badge ? "rgba(212,175,55,0.38)" : undefined,
+                boxShadow: p.badge ? "0 10px 34px rgba(0,0,0,.36)" : undefined,
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                <h2 style={{ margin: 0, color: "#D4AF37" }}>{p.name}</h2>
+                {p.badge && (
+                  <span
+                    style={{
+                      padding: "4px 8px",
+                      borderRadius: 999,
+                      background: "#D4AF37",
+                      color: "#2c0d0d",
+                      fontSize: 12,
+                      fontWeight: 800,
+                    }}
+                  >
+                    {p.badge}
+                  </span>
+                )}
+              </div>
+
+              <div style={{ fontSize: 26, fontWeight: 800 }}>
+                {p.lotus.toLocaleString("en-US")}{" "}
+                <span style={{ fontSize: 14, color: "#d7c9b3" }}>Lotus</span>
+              </div>
+
+              <div style={{ fontSize: 18, fontWeight: 700 }}>
+                {p.price.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
+              </div>
+
+              {p.note && <div style={{ color: "#d7c9b3", fontSize: 13 }}>{p.note}</div>}
+
+              <a
+                className="btn3d btn3d--gold"
+                href={`/checkout/lotus?pack=${encodeURIComponent(p.id)}`}
+              >
+                Buy now
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Info block */}
+      <section style={{ maxWidth: 1100, margin: "0 auto 34px", padding: "0 16px" }}>
+        <div className="card" style={{ padding: 14 }}>
+          <p style={{ margin: 0, color: "#d7c9b3" }}>
+            <b>Tips:</b> gifts can unlock NSFW media set by creators (e.g., Lotus ✨, Butterfly 🦋).
+            Buying larger packs offers the best value. Your Lotus balance is visible in your Dashboard.
+          </p>
+        </div>
+      </section>
+    </main>
+  );
+}
