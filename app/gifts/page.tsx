@@ -10,66 +10,81 @@ type Gift = {
   name: string;
   lotus: number;
   animated?: boolean;
-  file?: string;   // /public/gifts/xxx.(mp4|webm|gif|webp|png|svg)
+  file?: string;     // /public/gifts/xxx.(mp4|webm|gif|webp|png|svg)
   poster?: string;
   emoji?: string;
   note?: string;
 };
 
-// ====== 50 gifts (exemple) ======
+// ====== 50 gifts ======
 const GIFTS: Gift[] = [
-  { id: "lotus", name: "Lotus", lotus: 1000, animated: true, emoji: "🌸" },
-  { id: "butterfly", name: "Butterfly", lotus: 2000, animated: true, emoji: "🦋" },
-  { id: "star", name: "Star", lotus: 500, animated: true, emoji: "⭐" },
-  { id: "heart", name: "Heart", lotus: 800, animated: true, emoji: "❤️" },
-  { id: "rose", name: "Rose", lotus: 1500, animated: true, emoji: "🌹" },
-  { id: "crown", name: "Crown", lotus: 7000, animated: false, emoji: "👑" },
-  { id: "diamond", name: "Diamond", lotus: 10000, animated: true, emoji: "💎" },
-  { id: "velvetbox", name: "Velvet Box", lotus: 5000, animated: true, emoji: "🎁" },
-  { id: "fireworks", name: "Fireworks", lotus: 8000, animated: true, emoji: "🎆" },
-  { id: "lightning", name: "Lightning", lotus: 2500, animated: true, emoji: "⚡" },
+  // 🌸 Signature
+  { id: "lotus",      name: "Lotus",        lotus: 1000,   animated: true,  emoji: "🌸", note: "Signature" },
+  { id: "butterfly",  name: "Butterfly",    lotus: 2000,   animated: true,  emoji: "🦋" },
+  { id: "star",       name: "Star",         lotus: 500,    animated: true,  emoji: "⭐"  },
+  { id: "heart",      name: "Heart",        lotus: 800,    animated: true,  emoji: "❤️" },
+  { id: "rose",       name: "Rose",         lotus: 1500,   animated: true,  emoji: "🌹" },
+  { id: "crown",      name: "Crown",        lotus: 7000,   animated: false, emoji: "👑" },
+  { id: "diamond",    name: "Diamond",      lotus: 10000,  animated: true,  emoji: "💎" },
+  { id: "velvetbox",  name: "Velvet Box",   lotus: 5000,   animated: true,  emoji: "🎁" },
+  { id: "fireworks",  name: "Fireworks",    lotus: 8000,   animated: true,  emoji: "🎆" },
+  { id: "lightning",  name: "Lightning",    lotus: 2500,   animated: true,  emoji: "⚡" },
 
-  { id: "musicnotes", name: "Music Notes", lotus: 1200, animated: true, emoji: "🎶" },
-  { id: "guitar", name: "Guitar", lotus: 3000, animated: true, emoji: "🎸" },
-  { id: "microphone", name: "Microphone", lotus: 2000, animated: false, emoji: "🎤" },
-  { id: "piano", name: "Piano", lotus: 4000, animated: false, emoji: "🎹" },
-  { id: "drum", name: "Drum", lotus: 2500, animated: true, emoji: "🥁" },
+  // 🎶 Music & Fun
+  { id: "musicnotes", name: "Music Notes",  lotus: 1200,   animated: true,  emoji: "🎶" },
+  { id: "guitar",     name: "Guitar",       lotus: 3000,   animated: true,  emoji: "🎸" },
+  { id: "microphone", name: "Microphone",   lotus: 2000,   animated: false, emoji: "🎤" },
+  { id: "piano",      name: "Piano",        lotus: 4000,   animated: false, emoji: "🎹" },
+  { id: "drum",       name: "Drum",         lotus: 2500,   animated: true,  emoji: "🥁" },
 
-  { id: "champagne", name: "Champagne", lotus: 3000, animated: false, emoji: "🥂" },
-  { id: "wine", name: "Wine", lotus: 2000, animated: false, emoji: "🍷" },
-  { id: "cocktail", name: "Cocktail", lotus: 1800, animated: true, emoji: "🍸" },
-  { id: "beer", name: "Beer", lotus: 1500, animated: false, emoji: "🍺" },
-  { id: "coffee", name: "Coffee", lotus: 800, animated: false, emoji: "☕" },
+  // 🍹 Drinks & Party
+  { id: "champagne",  name: "Champagne",    lotus: 3000,   animated: false, emoji: "🥂" },
+  { id: "wine",       name: "Wine",         lotus: 2000,   animated: false, emoji: "🍷" },
+  { id: "cocktail",   name: "Cocktail",     lotus: 1800,   animated: true,  emoji: "🍸" },
+  { id: "beer",       name: "Beer",         lotus: 1500,   animated: false, emoji: "🍺" },
+  { id: "coffee",     name: "Coffee",       lotus: 800,    animated: false, emoji: "☕" },
 
-  { id: "cat", name: "Cat", lotus: 2200, animated: true, emoji: "🐱" },
-  { id: "dog", name: "Dog", lotus: 2200, animated: true, emoji: "🐶" },
-  { id: "unicorn", name: "Unicorn", lotus: 4000, animated: true, emoji: "🦄" },
-  { id: "panda", name: "Panda", lotus: 2500, animated: true, emoji: "🐼" },
-  { id: "penguin", name: "Penguin", lotus: 2000, animated: false, emoji: "🐧" },
+  // 🐾 Cute & Animals
+  { id: "cat",        name: "Cat",          lotus: 2200,   animated: true,  emoji: "🐱" },
+  { id: "dog",        name: "Dog",          lotus: 2200,   animated: true,  emoji: "🐶" },
+  { id: "unicorn",    name: "Unicorn",      lotus: 4000,   animated: true,  emoji: "🦄" },
+  { id: "panda",      name: "Panda",        lotus: 2500,   animated: true,  emoji: "🐼" },
+  { id: "penguin",    name: "Penguin",      lotus: 2000,   animated: false, emoji: "🐧" },
 
-  { id: "car", name: "Car", lotus: 12000, animated: true, emoji: "🚗" },
-  { id: "plane", name: "Plane", lotus: 15000, animated: true, emoji: "✈️" },
-  { id: "yacht", name: "Yacht", lotus: 20000, animated: true, emoji: "🛥️" },
-  { id: "motorbike", name: "Motorbike", lotus: 9000, animated: false, emoji: "🏍️" },
-  { id: "watch", name: "Luxury Watch", lotus: 7000, animated: false, emoji: "⌚" },
+  // 🌍 Travel & Lifestyle
+  { id: "car",        name: "Car",          lotus: 12000,  animated: true,  emoji: "🚗" },
+  { id: "plane",      name: "Plane",        lotus: 15000,  animated: true,  emoji: "✈️" },
+  { id: "yacht",      name: "Yacht",        lotus: 20000,  animated: true,  emoji: "🛥️" },
+  { id: "motorbike",  name: "Motorbike",    lotus: 9000,   animated: false, emoji: "🏍️" },
+  { id: "watch",      name: "Luxury Watch", lotus: 7000,   animated: false, emoji: "⌚" },
 
-  { id: "ring", name: "Ring", lotus: 8000, animated: true, emoji: "💍" },
-  { id: "necklace", name: "Necklace", lotus: 10000, animated: false, emoji: "📿" },
-  { id: "shoes", name: "Shoes", lotus: 3000, animated: false, emoji: "👠" },
-  { id: "bag", name: "Luxury Bag", lotus: 6000, animated: true, emoji: "👜" },
-  { id: "perfume", name: "Perfume", lotus: 4000, animated: false, emoji: "🌸" },
+  // 💎 Luxe & Spéciaux
+  { id: "ring",       name: "Ring",         lotus: 8000,   animated: true,  emoji: "💍" },
+  { id: "necklace",   name: "Necklace",     lotus: 10000,  animated: false, emoji: "📿" },
+  { id: "shoes",      name: "Shoes",        lotus: 3000,   animated: false, emoji: "👠" },
+  { id: "bag",        name: "Luxury Bag",   lotus: 6000,   animated: true,  emoji: "👜" },
+  { id: "perfume",    name: "Perfume",      lotus: 4000,   animated: false, emoji: "🌸" },
 
-  { id: "dice", name: "Lucky Dice", lotus: 1500, animated: true, emoji: "🎲" },
-  { id: "gamepad", name: "Gamepad", lotus: 2500, animated: true, emoji: "🎮" },
-  { id: "teddy", name: "Teddy Bear", lotus: 2000, animated: true, emoji: "🧸" },
-  { id: "balloon", name: "Balloon", lotus: 1200, animated: true, emoji: "🎈" },
-  { id: "cake", name: "Cake", lotus: 1800, animated: true, emoji: "🎂" },
+  // 🎮 Fun & Surprise
+  { id: "dice",       name: "Lucky Dice",   lotus: 1500,   animated: true,  emoji: "🎲" },
+  { id: "gamepad",    name: "Gamepad",      lotus: 2500,   animated: true,  emoji: "🎮" },
+  { id: "teddy",      name: "Teddy Bear",   lotus: 2000,   animated: true,  emoji: "🧸" },
+  { id: "balloon",    name: "Balloon",      lotus: 1200,   animated: true,  emoji: "🎈" },
+  { id: "cake",       name: "Cake",         lotus: 1800,   animated: true,  emoji: "🎂" },
 
-  { id: "vipbadge", name: "VIP Badge", lotus: 25000, animated: true, emoji: "💫" },
-  { id: "goldcar", name: "Gold Car", lotus: 50000, animated: true, emoji: "🚘" },
-  { id: "castle", name: "Castle", lotus: 100000, animated: true, emoji: "🏰" },
-  { id: "island", name: "Private Island", lotus: 500000, animated: true, emoji: "🏝️" },
-  { id: "godpack", name: "GOD Pack", lotus: 1000000, animated: true, emoji: "⚜️" },
+  // 🔥 Exclusifs
+  { id: "vipbadge",   name: "VIP Badge",    lotus: 25000,  animated: true,  emoji: "💫" },
+  { id: "goldcar",    name: "Gold Car",     lotus: 50000,  animated: true,  emoji: "🚘" },
+  { id: "castle",     name: "Castle",       lotus: 100000, animated: true,  emoji: "🏰" },
+  { id: "island",     name: "Private Island", lotus: 500000, animated: true, emoji: "🏝️" },
+  { id: "godpack",    name: "GOD Pack",     lotus: 1000000, animated: true, emoji: "⚜️" },
+
+  // ➕ Complets pour arriver à 50
+  { id: "rainbow",    name: "Rainbow",      lotus: 1600,   animated: true,  emoji: "🌈" },
+  { id: "snowflake",  name: "Snowflake",    lotus: 1400,   animated: true,  emoji: "❄️" },
+  { id: "rocket",     name: "Rocket",       lotus: 9000,   animated: true,  emoji: "🚀" },
+  { id: "treasure",   name: "Treasure Chest", lotus: 30000, animated: true, emoji: "🗝️" },
+  { id: "phoenix",    name: "Phoenix",      lotus: 120000, animated: true,  emoji: "🐦‍🔥" },
 ];
 
 function isVideo(path?: string) {
@@ -80,14 +95,7 @@ function isVideo(path?: string) {
 function isImage(path?: string) {
   if (!path) return false;
   const p = path.toLowerCase();
-  return (
-    p.endsWith(".gif") ||
-    p.endsWith(".webp") ||
-    p.endsWith(".png") ||
-    p.endsWith(".jpg") ||
-    p.endsWith(".jpeg") ||
-    p.endsWith(".svg")
-  );
+  return p.endsWith(".gif") || p.endsWith(".webp") || p.endsWith(".png") || p.endsWith(".jpg") || p.endsWith(".jpeg") || p.endsWith(".svg");
 }
 
 export default function GiftsPage() {
@@ -95,9 +103,7 @@ export default function GiftsPage() {
   const [sort, setSort] = useState<"asc" | "desc">("asc");
 
   const list = useMemo(() => {
-    const filtered = GIFTS.filter((g) =>
-      (g.name + " " + g.id).toLowerCase().includes(q.toLowerCase())
-    );
+    const filtered = GIFTS.filter(g => (g.name + " " + g.id).toLowerCase().includes(q.toLowerCase()));
     return filtered.sort((a, b) => (sort === "asc" ? a.lotus - b.lotus : b.lotus - a.lotus));
   }, [q, sort]);
 
@@ -138,30 +144,21 @@ export default function GiftsPage() {
           Gifts — Internal Catalog
         </h1>
         <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
-          Drop animated files in <b>/public/gifts/</b> (e.g. <i>lotus.mp4</i> / <i>butterfly.gif</i>).  
-          Video & images are auto-detected; others show a 🎁 fallback.
+          Drop animated files in <b>/public/gifts/</b> (e.g. <i>lotus.mp4</i> or <i>butterfly.gif</i>).  
+          Videos & images are auto-detected; others show a 🎁 fallback.
         </p>
       </section>
 
       {/* Filters */}
       <section style={{ maxWidth: 1100, margin: "10px auto 6px", padding: "0 16px" }}>
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
-          <input
-            className="input-velvet"
-            placeholder="Search gifts…"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-          />
-          <select
-            className="select-velvet"
-            value={sort}
-            onChange={(e) => setSort(e.target.value as "asc" | "desc")}
-          >
+          <input className="input-velvet" placeholder="Search gifts…" value={q} onChange={(e)=>setQ(e.target.value)} />
+          <select className="select-velvet" value={sort} onChange={(e)=>setSort(e.target.value as "asc"|"desc")}>
             <option value="asc">Price ↑ (Lotus)</option>
             <option value="desc">Price ↓ (Lotus)</option>
           </select>
           <div className="card" style={{ padding: 12, fontSize: 13, color: "#d7c9b3" }}>
-            <b>Tip:</b> Prefer short loop videos (mp4/webm), muted, ≤ 1 MB.  
+            <b>Tip :</b> prefer short loop videos (mp4/webm), muted, ≤ 1 MB.  
             Images (gif/webp/png/svg) also work.
           </div>
         </div>
@@ -233,9 +230,4 @@ export default function GiftsPage() {
       </section>
     </main>
   );
-    }
-{ id: "rainbow",   name: "Rainbow",        lotus: 1600,  animated: true,  emoji: "🌈" },
-  { id: "snowflake", name: "Snowflake",      lotus: 1400,  animated: true,  emoji: "❄️" },
-  { id: "rocket",    name: "Rocket",         lotus: 9000,  animated: true,  emoji: "🚀" },
-  { id: "treasure",  name: "Treasure Chest", lotus: 30000, animated: true,  emoji: "🗝️" },
-  { id: "phoenix",   name: "Phoenix",        lotus: 120000,animated: true,  emoji: "🐦‍🔥" },
+  }
