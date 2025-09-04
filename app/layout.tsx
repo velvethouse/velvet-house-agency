@@ -1,7 +1,34 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-import AnnouncementBar from "../components/AnnouncementBar"; // components/ à la racine (chemin relatif depuis app/)
+
+type Announcement = {
+  id: string;
+  message: string;
+  level?: "info" | "warn" | "vip";
+  startAt: string;
+  endAt: string;
+};
+
+/** Détermine un baseURL utilisable côté serveur (Vercel/local) */
+function getBaseUrl() {
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
+  return "http://localhost:3000";
+}
+
+/** Récupère les annonces actives (petit message discret) */
+async function getAnnouncements(): Promise<Announcement[]> {
+  const base = getBaseUrl();
+  try {
+    const res = await fetch(`${base}/api/announcements`, { cache: "no-store" });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data.items) ? data.items : [];
+  } catch {
+    return [];
+  }
+}
 
 export const metadata: Metadata = {
   title: "Velvet House Agency",
@@ -10,7 +37,13 @@ export const metadata: Metadata = {
   icons: { icon: "/icon.svg" },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const announcements = await getAnnouncements();
+
   return (
     <html lang="en">
       <body
@@ -67,19 +100,55 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 fontWeight: 700,
               }}
             >
-              <a href="/live" style={{ textDecoration: "none", color: "#f5f5f5" }}>Live</a>
-              <a href="/vip" style={{ textDecoration: "none", color: "#f5f5f5" }}>VIP</a>
-              <a href="/gifts" style={{ textDecoration: "none", color: "#f5f5f5" }}>Gifts</a>
-              <a href="/lotus" style={{ textDecoration: "none", color: "#f5f5f5" }}>Lotus</a>
-              <a href="/dashboard" style={{ textDecoration: "none", color: "#f5f5f5" }}>Dashboard</a>
-              <a href="/contact" style={{ textDecoration: "none", color: "#f5f5f5" }}>Contact</a>
-              <a href="/cgu" style={{ textDecoration: "none", color: "#f5f5f5" }}>Terms</a>
+              <a href="/live" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+                Live
+              </a>
+              <a href="/vip" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+                VIP
+              </a>
+              <a href="/gifts" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+                Gifts
+              </a>
+              <a href="/lotus" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+                Lotus
+              </a>
+              <a href="/dashboard" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+                Dashboard
+              </a>
+              <a href="/contact" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+                Contact
+              </a>
+              <a href="/cgu" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+                Terms
+              </a>
             </div>
           </nav>
-        </header>
 
-        {/* ====== Announcements / GOD banner (persistant) ====== */}
-        <AnnouncementBar />
+          {/* ====== PETIT STRIP D’ANNONCE DISCRET ====== */}
+          {announcements.length > 0 && (
+            <div
+              style={{
+                background: "transparent",
+                padding: "2px 8px",
+              }}
+            >
+              {announcements.map((a) => (
+                <div
+                  key={a.id}
+                  style={{
+                    textAlign: "center",
+                    color: "#D4AF37",
+                    fontSize: 12,
+                    lineHeight: 1.6,
+                    opacity: 0.92,
+                  }}
+                >
+                  {a.message}
+                </div>
+              ))}
+            </div>
+          )}
+        </header>
 
         {/* ====== Page content ====== */}
         <main>{children}</main>
@@ -107,13 +176,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             <span>© {new Date().getFullYear()} Velvet House Agency</span>
             <span>
-              <a href="/legal" style={{ color: "#D4AF37", textDecoration: "none" }}>Legal</a>
-              {" · "}
-              <a href="/cgu" style={{ color: "#D4AF37", textDecoration: "none" }}>Terms</a>
+              <a href="/legal" style={{ color: "#D4AF37", textDecoration: "none" }}>
+                Legal
+              </a>{" "}
+              ·{" "}
+              <a href="/cgu" style={{ color: "#D4AF37", textDecoration: "none" }}>
+                Terms
+              </a>
             </span>
           </div>
         </footer>
       </body>
     </html>
   );
-}
+        }
