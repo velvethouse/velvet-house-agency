@@ -1,16 +1,23 @@
 // components/GiftButton.tsx  (REMPLACEMENT COMPLET)
+"use client";
 
 import Image from "next/image";
 
 type GiftButtonProps = {
-  id?: string;
-  name: string;           // ex: "Lotus"
-  lotus: number;          // prix en Lotus (affichage)
-  animated?: boolean;     // true si le gift est animé
-  file?: string;          // chemin vers un fichier animé (ex: "/gifts/lotus.gif" ou ".webp" / ".png")
-  emoji?: string;         // fallback si pas de fichier (ex: "🪷")
-  onPreview?: () => void; // action au clic sur Preview
-  onSend?: () => void;    // action au clic sur Send
+  // === Mode BOUTON (utilisé par MediaCard) ===
+  target?: string;         // ex: slug créatrice
+  className?: string;      // ex: "btn3d btn3d--gold"
+  label?: string;          // ex: "Unlock with Lotus ✨"
+  onClick?: () => void;    // action onClick (optionnel)
+
+  // === Mode CARTE (catalogue / page /gifts) ===
+  name?: string;           // ex: "Lotus"
+  lotus?: number;          // prix en Lotus
+  animated?: boolean;      // true si gift animé
+  file?: string;           // /gifts/xxx.mp4|.webm|.gif|.webp|.png|.svg
+  emoji?: string;          // fallback si pas de fichier
+  onPreview?: () => void;  // action prévisualiser (optionnel)
+  onSend?: () => void;     // action envoyer (optionnel)
 };
 
 function isVideo(path?: string) {
@@ -19,19 +26,48 @@ function isVideo(path?: string) {
   return e.endsWith(".mp4") || e.endsWith(".webm");
 }
 
-export default function GiftButton({
-  name,
-  lotus,
-  animated,
-  file,
-  emoji = "🎁",
-  onPreview,
-  onSend,
-}: GiftButtonProps) {
-  // Media à afficher (priorité: file > cas Lotus > emoji)
+/**
+ * Composant polyvalent :
+ * - si "label" est fourni (ou pas de name/lotus) -> rend un BOUTON (utilisé dans MediaCard).
+ * - sinon -> rend une CARTE cadeau (catalogue /gifts).
+ */
+export default function GiftButton(props: GiftButtonProps) {
+  const {
+    // bouton
+    target,
+    className,
+    label,
+    onClick,
+    // carte
+    name,
+    lotus,
+    animated,
+    file,
+    emoji = "🎁",
+    onPreview,
+    onSend,
+  } = props;
+
+  // ======= MODE BOUTON (utilisé dans MediaCard) =======
+  const isButtonMode = !!label || (!name && !lotus);
+
+  if (isButtonMode) {
+    return (
+      <button
+        type="button"
+        className={className ?? "btn3d btn3d--gold"}
+        onClick={onClick ?? onSend}
+        // on peut utiliser "target" si tu veux logger/envoyer le gift vers une créatrice
+        data-target={target ?? ""}
+      >
+        {label ?? "Send gift"}
+      </button>
+    );
+  }
+
+  // ======= MODE CARTE (catalogue) =======
   const Media = () => {
     if (file) {
-      // vidéo
       if (isVideo(file)) {
         return (
           <video
@@ -44,7 +80,6 @@ export default function GiftButton({
           />
         );
       }
-      // image (gif / webp / png / svg / jpg)
       return (
         <Image
           src={file}
@@ -52,13 +87,11 @@ export default function GiftButton({
           width={120}
           height={120}
           unoptimized
-          style={{ borderRadius: 8 }}
+          style={{ borderRadius: 8, objectFit: "contain" }}
         />
       );
     }
-
-    // Démo : si c'est Lotus et que "animated" est true, on affiche /gifts/lotus.gif
-    if (animated && name.toLowerCase() === "lotus") {
+    if (animated && (name || "").toLowerCase() === "lotus") {
       return (
         <Image
           src="/gifts/lotus.gif"
@@ -70,8 +103,6 @@ export default function GiftButton({
         />
       );
     }
-
-    // Fallback emoji
     return <span style={{ fontSize: 42, lineHeight: 1 }}>{emoji}</span>;
   };
 
@@ -108,7 +139,7 @@ export default function GiftButton({
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
         <div style={{ fontWeight: 800, color: "#D4AF37" }}>{name}</div>
         <div style={{ fontWeight: 700 }}>
-          {lotus.toLocaleString("en-US")}{" "}
+          {typeof lotus === "number" ? lotus.toLocaleString("en-US") : "--"}{" "}
           <span style={{ fontSize: 12, color: "#d7c9b3" }}>Lotus</span>
         </div>
       </div>
@@ -120,18 +151,10 @@ export default function GiftButton({
 
       {/* actions */}
       <div className="btn-row-2" style={{ marginTop: 4 }}>
-        <button
-          onClick={onPreview}
-          className="btn3d btn3d--velvet"
-          type="button"
-        >
+        <button onClick={onPreview} className="btn3d btn3d--velvet" type="button">
           Preview
         </button>
-        <button
-          onClick={onSend}
-          className="btn3d btn3d--gold"
-          type="button"
-        >
+        <button onClick={onSend} className="btn3d btn3d--gold" type="button">
           Send
         </button>
       </div>
