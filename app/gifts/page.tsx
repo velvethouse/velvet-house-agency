@@ -8,25 +8,36 @@ type Gift = {
   id: string;
   name: string;
   lotus: number;
-  emoji: string;
-  animated?: boolean;
+  // un des deux (ou les deux si tu veux un poster)
+  file?: string;   // /gifts/xxx.mp4 | .webm | .gif | .svg | .png
+  poster?: string; // /gifts/xxx.jpg (image de couverture facultative)
+  emoji?: string;  // fallback si le fichier n'existe pas encore
   note?: string;
 };
 
+// 🔸 DEMO : 12 items prêts à être remplacés par tes vrais fichiers.
+// Ajoute/édite librement jusqu’à tes 50 gifts.
 const GIFTS: Gift[] = [
-  { id: "lotus",      name: "Lotus",        lotus: 1000,  emoji: "🪷", animated: true,  note: "Signature Velvet House" },
-  { id: "butterfly",  name: "Butterfly",    lotus: 2000,  emoji: "🦋", animated: true  },
-  { id: "star",       name: "Star",         lotus: 500,   emoji: "⭐",  animated: true  },
-  { id: "rose",       name: "Rose",         lotus: 1500,  emoji: "🌹",  animated: true  },
-  { id: "diamond",    name: "Diamond",      lotus: 10000, emoji: "💎",  animated: true  },
-  { id: "fireworks",  name: "Fireworks",    lotus: 8000,  emoji: "🎆",  animated: true  },
-  { id: "champagne",  name: "Champagne",    lotus: 3000,  emoji: "🥂" },
-  { id: "heart",      name: "Heart",        lotus: 800,   emoji: "❤️",  animated: true  },
-  { id: "crown",      name: "Crown",        lotus: 7000,  emoji: "👑" },
-  { id: "music",      name: "Music Notes",  lotus: 1200,  emoji: "🎶",  animated: true  },
-  { id: "lightning",  name: "Lightning",    lotus: 2500,  emoji: "⚡",  animated: true  },
-  { id: "velvetbox",  name: "Velvet Box",   lotus: 5000,  emoji: "🎁",  animated: true  },
+  { id: "lotus",      name: "Lotus",       lotus: 1000,  file: "/gifts/lotus.mp4",      poster: "/gifts/lotus.jpg",      emoji: "🪷", note: "Signature Velvet House" },
+  { id: "butterfly",  name: "Butterfly",   lotus: 2000,  file: "/gifts/butterfly.mp4",  poster: "/gifts/butterfly.jpg",  emoji: "🦋" },
+  { id: "star",       name: "Star",        lotus: 500,   file: "/gifts/star.mp4",       poster: "/gifts/star.jpg",       emoji: "⭐"  },
+  { id: "rose",       name: "Rose",        lotus: 1500,  file: "/gifts/rose.mp4",       poster: "/gifts/rose.jpg",       emoji: "🌹"  },
+  { id: "diamond",    name: "Diamond",     lotus: 10000, file: "/gifts/diamond.mp4",    poster: "/gifts/diamond.jpg",    emoji: "💎"  },
+  { id: "fireworks",  name: "Fireworks",   lotus: 8000,  file: "/gifts/fireworks.mp4",  poster: "/gifts/fireworks.jpg",  emoji: "🎆"  },
+  { id: "champagne",  name: "Champagne",   lotus: 3000,  file: "/gifts/champagne.mp4",  poster: "/gifts/champagne.jpg",  emoji: "🥂"  },
+  { id: "heart",      name: "Heart",       lotus: 800,   file: "/gifts/heart.mp4",      poster: "/gifts/heart.jpg",      emoji: "❤️"  },
+  { id: "crown",      name: "Crown",       lotus: 7000,  file: "/gifts/crown.mp4",      poster: "/gifts/crown.jpg",      emoji: "👑"  },
+  { id: "music",      name: "Music Notes", lotus: 1200,  file: "/gifts/music.mp4",      poster: "/gifts/music.jpg",      emoji: "🎶"  },
+  { id: "lightning",  name: "Lightning",   lotus: 2500,  file: "/gifts/lightning.mp4",  poster: "/gifts/lightning.jpg",  emoji: "⚡"  },
+  { id: "velvetbox",  name: "Velvet Box",  lotus: 5000,  file: "/gifts/velvetbox.mp4",  poster: "/gifts/velvetbox.jpg",  emoji: "🎁"  },
 ];
+
+// util : détecter l’extension pour choisir le rendu
+function ext(path?: string) {
+  if (!path) return "";
+  const i = path.lastIndexOf(".");
+  return i >= 0 ? path.slice(i + 1).toLowerCase() : "";
+}
 
 export default function GiftsCatalogPage() {
   const [q, setQ] = useState("");
@@ -60,32 +71,25 @@ export default function GiftsCatalogPage() {
     color: "#f5f5f5",
   };
 
-  const emojiWrap: React.CSSProperties = {
-    height: 90,
+  const mediaWrap: React.CSSProperties = {
+    height: 110,
     display: "grid",
     placeItems: "center",
     borderRadius: 12,
     background: "rgba(0,0,0,.25)",
     border: "1px solid rgba(212,175,55,.22)",
+    overflow: "hidden",
   };
 
   return (
     <main style={wrapStyle}>
-      {/* Styles d’animation locaux */}
-      <style>{`
-        @keyframes floatY { 0%{ transform: translateY(0) } 50%{ transform: translateY(-6px) } 100%{ transform: translateY(0) } }
-        @keyframes pulse { 0%{ transform: scale(1) } 50%{ transform: scale(1.08) } 100%{ transform: scale(1) } }
-        .anim-float { animation: floatY 2s ease-in-out infinite; }
-        .anim-pulse { animation: pulse 1.8s ease-in-out infinite; }
-      `}</style>
-
       {/* Titre */}
       <section style={{ maxWidth: 1100, margin: "24px auto 12px", padding: "0 16px" }}>
         <h1 className="gold-gradient-text" style={{ fontSize: "clamp(24px,6vw,36px)", margin: 0 }}>
-          Gifts — Internal Catalog (Phase 1)
+          Gifts — Internal Catalog (Animated)
         </h1>
         <p style={{ margin: "6px 0 0", color: "#e9dfcf" }}>
-          This page is for internal review (not in the public menu). Gifts are used in Live, Chat & Profiles.
+          Drop your real animated files in <b>/public/gifts/</b> — this page renders videos/images directly.
         </p>
       </section>
 
@@ -110,8 +114,8 @@ export default function GiftsCatalogPage() {
             className="card"
             style={{ padding: 12, fontSize: 13, color: "#d7c9b3", display: "grid", gap: 6 }}
           >
-            <div><b>Note:</b> prices are in <b>Lotus</b>. Sending is wired in-context (Live/Chat/Profile).</div>
-            <div>Use <b>Send test</b> to simulate the button wiring (no payment here).</div>
+            <div><b>Note:</b> This is an internal preview. Video files should be short & loopable (mp4/webm), muted, and optimized.</div>
+            <div>Fallback to emoji is automatic if file is missing.</div>
           </div>
         </div>
       </section>
@@ -120,19 +124,48 @@ export default function GiftsCatalogPage() {
       <section style={{ maxWidth: 1100, margin: "12px auto 30px", padding: "0 16px" }}>
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
           {results.map((g) => {
-            const animClass =
-              g.animated && (g.id === "star" || g.id === "heart" || g.id === "music")
-                ? "anim-pulse"
-                : g.animated
-                ? "anim-float"
-                : "";
+            const e = ext(g.file);
+            const isVideo = e === "mp4" || e === "webm";
+            const isImage = e === "gif" || e === "svg" || e === "png" || e === "jpg" || e === "jpeg" || e === "webp";
+
             return (
               <article key={g.id} className="card" style={cardStyle}>
-                <div style={emojiWrap}>
-                  <div style={{ fontSize: 42, lineHeight: 1 }} className={animClass}>
-                    {g.emoji}
-                  </div>
+                <div style={mediaWrap}>
+                  {/* Rend l'animation si le fichier est là, sinon emoji */}
+                  {g.file ? (
+                    isVideo ? (
+                      <video
+                        src={g.file}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        poster={g.poster}
+                        style={{ maxWidth: 120, maxHeight: 110, display: "block" }}
+                        onError={(ev) => {
+                          // si la vidéo ne se charge pas -> fallback emoji
+                          const el = ev.currentTarget as HTMLVideoElement;
+                          el.outerHTML = `<div style="font-size:42px;line-height:1">${g.emoji || "🎁"}</div>`;
+                        }}
+                      />
+                    ) : isImage ? (
+                      <img
+                        src={g.file}
+                        alt={g.name}
+                        style={{ maxWidth: 120, maxHeight: 110, display: "block" }}
+                        onError={(ev) => {
+                          const el = ev.currentTarget as HTMLImageElement;
+                          el.outerHTML = `<div style="font-size:42px;line-height:1">${g.emoji || "🎁"}</div>`;
+                        }}
+                      />
+                    ) : (
+                      <div style={{ fontSize: 42 }}>{g.emoji || "🎁"}</div>
+                    )
+                  ) : (
+                    <div style={{ fontSize: 42 }}>{g.emoji || "🎁"}</div>
+                  )}
                 </div>
+
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
                   <div style={{ fontWeight: 800, color: "#D4AF37" }}>{g.name}</div>
                   <div style={{ fontWeight: 700 }}>
@@ -152,4 +185,4 @@ export default function GiftsCatalogPage() {
       </section>
     </main>
   );
-        }
+            }
