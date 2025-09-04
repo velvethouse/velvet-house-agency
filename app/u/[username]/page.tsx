@@ -232,3 +232,4 @@ export default function CreatorPage({ params }: { params: { username: string } }
     </main>
   );
                        }
+import ScheduleGrid from "../../../components/ScheduleGrid";
