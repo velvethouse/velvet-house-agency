@@ -234,3 +234,8 @@ export default function GiftsPage() {
     </main>
   );
     }
+{ id: "rainbow",   name: "Rainbow",        lotus: 1600,  animated: true,  emoji: "🌈" },
+  { id: "snowflake", name: "Snowflake",      lotus: 1400,  animated: true,  emoji: "❄️" },
+  { id: "rocket",    name: "Rocket",         lotus: 9000,  animated: true,  emoji: "🚀" },
+  { id: "treasure",  name: "Treasure Chest", lotus: 30000, animated: true,  emoji: "🗝️" },
+  { id: "phoenix",   name: "Phoenix",        lotus: 120000,animated: true,  emoji: "🐦‍🔥" },
