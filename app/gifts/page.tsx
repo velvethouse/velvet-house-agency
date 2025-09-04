@@ -1,102 +1,155 @@
-function Nav() {
-  return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        backdropFilter: "blur(10px)",
-        background: "rgba(11,11,15,0.8)",
-        borderBottom: "1px solid #1f1f25",
-        zIndex: 50
-      }}
-    >
-      <nav
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          padding: "14px 20px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between"
-        }}
-      >
-        <div style={{ fontWeight: 700, letterSpacing: 0.5, fontSize: 18 }}>
-          <span style={{ opacity: 0.8, marginRight: 8 }}>🌸</span>
-          Velvet House Agency
-          <span style={{ opacity: 0.8, marginLeft: 8 }}>🦋</span>
-        </div>
-        <div style={{ display: "flex", gap: 18, fontSize: 15, flexWrap: "wrap" }}>
-          <a href="/live" style={{ color: "#cfcfd6", textDecoration: "none" }}>Live</a>
-          <a href="/vip" style={{ color: "#cfcfd6", textDecoration: "none" }}>VIP</a>
-          <a href="/gifts" style={{ color: "#cfcfd6", textDecoration: "none" }}>Gifts</a>
-          <a href="/dashboard" style={{ color: "#cfcfd6", textDecoration: "none" }}>Dashboard</a>
-          <a href="/#about" style={{ color: "#cfcfd6", textDecoration: "none" }}>About</a>
-          <a href="/contact" style={{ color: "#cfcfd6", textDecoration: "none" }}>Contact</a>
-        </div>
-      </nav>
-    </header>
-  );
-}
+// app/gifts/page.tsx
+"use client";
 
-export const metadata = { title: "Gifts | Velvet House Agency" };
+import { useMemo, useState } from "react";
+import GiftButton from "../../components/GiftButton";
 
-const gifts = [
-  { id: 1, name: "Lotus", price: "1€", animated: true,  desc: "Petit soutien élégant" },
-  { id: 2, name: "Papillon", price: "2€", animated: true,  desc: "Animation papillon 🦋" },
-  { id: 3, name: "Étoile", price: "0,5€", animated: false, desc: "Un clin d’œil ⭐" },
-  { id: 4, name: "Velvet Box", price: "5€", animated: true, desc: "Cadeau premium" }
+type Gift = {
+  id: string;
+  name: string;
+  lotus: number;
+  emoji: string;
+  animated?: boolean;
+  note?: string;
+};
+
+const GIFTS: Gift[] = [
+  { id: "lotus",      name: "Lotus",        lotus: 1000,  emoji: "🪷", animated: true,  note: "Signature Velvet House" },
+  { id: "butterfly",  name: "Butterfly",    lotus: 2000,  emoji: "🦋", animated: true  },
+  { id: "star",       name: "Star",         lotus: 500,   emoji: "⭐",  animated: true  },
+  { id: "rose",       name: "Rose",         lotus: 1500,  emoji: "🌹",  animated: true  },
+  { id: "diamond",    name: "Diamond",      lotus: 10000, emoji: "💎",  animated: true  },
+  { id: "fireworks",  name: "Fireworks",    lotus: 8000,  emoji: "🎆",  animated: true  },
+  { id: "champagne",  name: "Champagne",    lotus: 3000,  emoji: "🥂" },
+  { id: "heart",      name: "Heart",        lotus: 800,   emoji: "❤️",  animated: true  },
+  { id: "crown",      name: "Crown",        lotus: 7000,  emoji: "👑" },
+  { id: "music",      name: "Music Notes",  lotus: 1200,  emoji: "🎶",  animated: true  },
+  { id: "lightning",  name: "Lightning",    lotus: 2500,  emoji: "⚡",  animated: true  },
+  { id: "velvetbox",  name: "Velvet Box",   lotus: 5000,  emoji: "🎁",  animated: true  },
 ];
 
-export default function GiftsPage() {
+export default function GiftsCatalogPage() {
+  const [q, setQ] = useState("");
+  const [sort, setSort] = useState<"asc" | "desc">("asc");
+
+  const results = useMemo(() => {
+    const filtered = GIFTS.filter(g =>
+      (g.name + " " + g.id).toLowerCase().includes(q.toLowerCase())
+    );
+    return filtered.sort((a, b) =>
+      sort === "asc" ? a.lotus - b.lotus : b.lotus - a.lotus
+    );
+  }, [q, sort]);
+
+  const wrapStyle: React.CSSProperties = {
+    minHeight: "100vh",
+    background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
+    color: "#f5f5f5",
+    fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
+  };
+
+  const cardStyle: React.CSSProperties = {
+    display: "grid",
+    gap: 10,
+    padding: 16,
+    borderRadius: 14,
+    background: "linear-gradient(180deg, rgba(15,15,15,.45), rgba(15,15,15,.30))",
+    border: "1px solid rgba(212,175,55,0.22)",
+    boxShadow: "0 10px 26px rgba(0,0,0,.30)",
+    textDecoration: "none",
+    color: "#f5f5f5",
+  };
+
+  const emojiWrap: React.CSSProperties = {
+    height: 90,
+    display: "grid",
+    placeItems: "center",
+    borderRadius: 12,
+    background: "rgba(0,0,0,.25)",
+    border: "1px solid rgba(212,175,55,.22)",
+  };
+
   return (
-    <main>
-      <Nav />
+    <main style={wrapStyle}>
+      {/* Styles d’animation locaux */}
+      <style>{`
+        @keyframes floatY { 0%{ transform: translateY(0) } 50%{ transform: translateY(-6px) } 100%{ transform: translateY(0) } }
+        @keyframes pulse { 0%{ transform: scale(1) } 50%{ transform: scale(1.08) } 100%{ transform: scale(1) } }
+        .anim-float { animation: floatY 2s ease-in-out infinite; }
+        .anim-pulse { animation: pulse 1.8s ease-in-out infinite; }
+      `}</style>
 
-      <section style={{maxWidth:1100, margin:"0 auto", padding:"32px 20px", color:"#f5f5f7"}}>
-        <header style={{display:"grid", gap:6, marginBottom:16}}>
-          <h1 style={{margin:0}}>Cadeaux</h1>
-          <p style={{color:"#cfcfd6", margin:0}}>
-            Choisis un cadeau à offrir pendant un live (animations à venir).
-          </p>
-        </header>
+      {/* Titre */}
+      <section style={{ maxWidth: 1100, margin: "24px auto 12px", padding: "0 16px" }}>
+        <h1 className="gold-gradient-text" style={{ fontSize: "clamp(24px,6vw,36px)", margin: 0 }}>
+          Gifts — Internal Catalog (Phase 1)
+        </h1>
+        <p style={{ margin: "6px 0 0", color: "#e9dfcf" }}>
+          This page is for internal review (not in the public menu). Gifts are used in Live, Chat & Profiles.
+        </p>
+      </section>
 
-        <div style={{
-          display:"grid",
-          gap:14,
-          gridTemplateColumns:"repeat(auto-fit, minmax(220px, 1fr))"
-        }}>
-          {gifts.map(g => (
-            <div key={g.id} style={{
-              border:"1px solid #1f1f25",
-              borderRadius:14,
-              padding:16,
-              background:"rgba(15,15,21,0.6)",
-              display:"grid",
-              gap:8
-            }}>
-              <div style={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
-                <div style={{fontWeight:700}}>{g.name} {g.animated ? "✨" : ""}</div>
-                <div style={{color:"#cfcfd6"}}>{g.price}</div>
-              </div>
-              <div style={{color:"#a9a9b8", fontSize:14}}>{g.desc}</div>
-              <button
-                style={{
-                  marginTop:6,
-                  padding:"10px 14px",
-                  borderRadius:12,
-                  border:"1px solid #2a2a33",
-                  background:"#8257e6",
-                  color:"#fff",
-                  fontWeight:500,
-                  cursor:"pointer"
-                }}
-              >
-                Offrir
-              </button>
-            </div>
-          ))}
+      {/* Filtres */}
+      <section style={{ maxWidth: 1100, margin: "10px auto 6px", padding: "0 16px" }}>
+        <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+          <input
+            className="input-velvet"
+            placeholder="Search gifts…"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          />
+          <select
+            className="select-velvet"
+            value={sort}
+            onChange={(e) => setSort(e.target.value as any)}
+          >
+            <option value="asc">Price ↑ (Lotus)</option>
+            <option value="desc">Price ↓ (Lotus)</option>
+          </select>
+          <div
+            className="card"
+            style={{ padding: 12, fontSize: 13, color: "#d7c9b3", display: "grid", gap: 6 }}
+          >
+            <div><b>Note:</b> prices are in <b>Lotus</b>. Sending is wired in-context (Live/Chat/Profile).</div>
+            <div>Use <b>Send test</b> to simulate the button wiring (no payment here).</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Grille des gifts */}
+      <section style={{ maxWidth: 1100, margin: "12px auto 30px", padding: "0 16px" }}>
+        <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+          {results.map((g) => {
+            const animClass =
+              g.animated && (g.id === "star" || g.id === "heart" || g.id === "music")
+                ? "anim-pulse"
+                : g.animated
+                ? "anim-float"
+                : "";
+            return (
+              <article key={g.id} className="card" style={cardStyle}>
+                <div style={emojiWrap}>
+                  <div style={{ fontSize: 42, lineHeight: 1 }} className={animClass}>
+                    {g.emoji}
+                  </div>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+                  <div style={{ fontWeight: 800, color: "#D4AF37" }}>{g.name}</div>
+                  <div style={{ fontWeight: 700 }}>
+                    {g.lotus.toLocaleString("en-US")} <span style={{ fontSize: 12, color: "#d7c9b3" }}>Lotus</span>
+                  </div>
+                </div>
+                {g.note && <div style={{ color: "#d7c9b3", fontSize: 13 }}>{g.note}</div>}
+
+                <div className="btn-row-2" style={{ marginTop: 4 }}>
+                  <a className="btn3d btn3d--velvet" href={`/u/alice?gift=${g.id}`}>Preview</a>
+                  <GiftButton target="demo" className="btn3d btn3d--gold" label="Send test" />
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
     </main>
   );
-}
+        }
