@@ -2,14 +2,11 @@
 // @ts-nocheck
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import GiftButton from "../../components/GiftButton";
 
-/* Helpers pays/drapeau */
-const countryName = (code: string) =>
-  new Intl.DisplayNames(["en"], { type: "region" }).of(code) ?? code;
-const countryFlag = (code: string) =>
-  code.toUpperCase().replace(/./g, c => String.fromCodePoint(127397 + c.charCodeAt(0)));
+const countryName = (c: string) => new Intl.DisplayNames(["en"], { type: "region" }).of(c) ?? c;
+const countryFlag = (code: string) => code.toUpperCase().replace(/./g, (ch) => String.fromCodePoint(127397 + ch.charCodeAt(0)));
 
 const LIVES = [
   { slug:"alice", title:"Showcase — Alice",  cover:"/avatars/alice.jpg",  liveNow:true,  time:"Tonight 9:00 PM",  country:"US", languages:["English","French"] },
@@ -20,6 +17,18 @@ const LIVES = [
 ];
 
 export default function LivePage() {
+  const [hasGod, setHasGod] = useState(false);
+
+  useEffect(() => {
+    try {
+      const url = new URL(window.location.href);
+      if (url.searchParams.get("god") === "1") {
+        localStorage.setItem("vh_hasGod", "1");
+      }
+      setHasGod(localStorage.getItem("vh_hasGod") === "1");
+    } catch {}
+  }, []);
+
   const [country, setCountry]   = useState("");
   const [language, setLanguage] = useState("");
   const [query, setQuery]       = useState("");
@@ -29,33 +38,31 @@ export default function LivePage() {
 
   const results = useMemo(() => {
     return LIVES.filter(l => {
-      const okCountry = country ? l.country === country : true;
-      const okLang    = language ? l.languages.includes(language) : true;
-      const okQuery   = query ? l.title.toLowerCase().includes(query.toLowerCase()) : true;
-      return okCountry && okLang && okQuery;
+      const okC = country ? l.country === country : true;
+      const okL = language ? l.languages.includes(language) : true;
+      const okQ = query ? l.title.toLowerCase().includes(query.toLowerCase()) : true;
+      return okC && okL && okQ;
     });
   }, [country, language, query]);
 
   return (
     <main style={{ minHeight:"100vh", background:"linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)", color:"#f5f5f5", fontFamily:'system-ui,"Segoe UI",Roboto,Arial,sans-serif' }}>
-      {/* Header simple */}
-      <header style={{ position:"sticky", top:0, zIndex:40, backdropFilter:"blur(8px)", background:"rgba(43,13,13,0.88)", borderBottom:"1px solid rgba(212,175,55,0.18)" }}>
-        <nav style={{ maxWidth:1100, margin:"0 auto", padding:"12px 16px", display:"flex", justifyContent:"space-between", alignItems:"center", gap:12 }}>
-          <a href="/" style={{ color:"#D4AF37", fontWeight:800 }}>Velvet House</a>
-          <div style={{ display:"flex", gap:16, flexWrap:"wrap", fontWeight:700 }}>
-            <a href="/vip">VIP</a><a href="/gifts">Gifts</a><a href="/dashboard">Dashboard</a><a href="/contact">Contact</a><a href="/cgu">Terms</a>
-          </div>
-        </nav>
-      </header>
+      {/* Bannière GOD (si activée) */}
+      {hasGod && (
+        <div className="god-banner">
+          GOD AWAKENING — Exclusive effects enabled
+          <span className="small">Your 100,000 Lotus pack unlocked the GOD game</span>
+        </div>
+      )}
 
-      {/* Title */}
+      {/* Titre */}
       <section style={{ maxWidth:1100, margin:"20px auto 12px", padding:"0 16px" }}>
         <h1 className="gold-gradient-text" style={{ fontSize:"clamp(22px,5.8vw,34px)", margin:0, textAlign:"center" }}>
           Upcoming & current live sessions from our creators.
         </h1>
       </section>
 
-      {/* Filters compact */}
+      {/* Filtres */}
       <section style={{ maxWidth:1100, margin:"10px auto", padding:"0 16px" }}>
         <div className="cards-grid" style={{ gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))" }}>
           <select className="select-velvet" value={country} onChange={e=>setCountry(e.target.value)}>
@@ -66,44 +73,28 @@ export default function LivePage() {
             <option value="">All languages</option>
             {allLanguages.map(l => <option key={l} value={l}>{l}</option>)}
           </select>
-          <input className="input-velvet" placeholder="Search title or description..." value={query} onChange={e=>setQuery(e.target.value)} />
-        </div>
-        <div style={{ marginTop:10 }}>
-          <button className="btn3d btn3d--outline-gold" onClick={()=>{ setCountry(""); setLanguage(""); setQuery(""); }} style={{ width:"100%" }}>
-            Reset filters
-          </button>
+          <input className="input-velvet" placeholder="Search title or description…" value={query} onChange={e=>setQuery(e.target.value)} />
         </div>
       </section>
 
-      {/* Grid compact */}
+      {/* Cartes */}
       <section style={{ maxWidth:1100, margin:"14px auto 30px", padding:"0 16px" }}>
         <div className="cards-grid">
           {results.map(live => (
             <article key={live.slug} className="card">
-              {/* Cover + overlays */}
               <a href={`/u/${live.slug}`} className="card-cover" aria-label={`Open ${live.slug} profile`}>
-                <img
-                  src={live.cover || "/avatars/default.jpg"}
-                  alt={live.slug}
-                  onError={(e)=>{ e.currentTarget.src="/avatars/default.jpg"; e.currentTarget.onerror=null; }}
-                />
+                <img src={live.cover || "/avatars/default.jpg"} alt={live.slug} onError={(e)=>{ e.currentTarget.src="/avatars/default.jpg"; e.currentTarget.onerror=null; }} />
                 <div className="card-gradient" />
                 {live.liveNow && <span className="badge-live">LIVE</span>}
                 <span className="badge-flag">{countryFlag(live.country)}</span>
               </a>
-
-              {/* Body */}
               <div className="card-body">
-                <a href={`/u/${live.slug}`} style={{ textDecoration:"none", color:"#D4AF37", fontWeight:800 }}>
-                  {live.title}
-                </a>
+                <a href={`/u/${live.slug}`} style={{ textDecoration:"none", color:"#D4AF37", fontWeight:800 }}>{live.title}</a>
                 <div style={{ color:"#e9dfcf" }}>{live.time}</div>
-
                 <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
                   {live.languages.slice(0,2).map(l => <span key={l} className="pill">{l}</span>)}
-                  {live.languages.length > 2 && <span className="pill">+{live.languages.length-2}</span>}
+                  {live.languages.length>2 && <span className="pill">+{live.languages.length-2}</span>}
                 </div>
-
                 <div className="actions-3col">
                   <a href={`/u/${live.slug}`}      className="btn3d btn3d--velvet btn3d--sm">Profile</a>
                   <a href={`/u/${live.slug}/live`} className="btn3d btn3d--gold   btn3d--sm">Join</a>
@@ -113,13 +104,7 @@ export default function LivePage() {
             </article>
           ))}
         </div>
-
-        {results.length === 0 && (
-          <div style={{ marginTop:16, padding:14, borderRadius:12, border:"1px solid rgba(212,175,55,0.22)", background:"rgba(0,0,0,0.25)", color:"#d7c9b3", textAlign:"center" }}>
-            No live found with these filters.
-          </div>
-        )}
       </section>
     </main>
   );
-              }
+      }
