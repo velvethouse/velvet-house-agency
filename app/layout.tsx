@@ -1,19 +1,16 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
+import AnnouncementBar from "../components/AnnouncementBar"; // components/ à la racine (chemin relatif depuis app/)
 
 export const metadata: Metadata = {
   title: "Velvet House Agency",
   description:
-    "Velvet House — live platform & premium experiences. VIP access, animated gifts, unlockable content and creator support. NSFW media unlock via gifts.",
+    "Velvet House — premium live platform with VIP, gifts, unlockable content and the GOD game. NSFW unlock via gifts only.",
   icons: { icon: "/icon.svg" },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body
@@ -47,7 +44,7 @@ export default function RootLayout({
               gap: 12,
             }}
           >
-            {/* Marque / lien home */}
+            {/* Logo / Home */}
             <a
               href="/"
               style={{
@@ -70,35 +67,24 @@ export default function RootLayout({
                 fontWeight: 700,
               }}
             >
-              <a href="/live" style={{ textDecoration: "none", color: "#f5f5f5" }}>
-                Live
-              </a>
-              <a href="/vip" style={{ textDecoration: "none", color: "#f5f5f5" }}>
-                VIP
-              </a>
-              <a href="/gifts" style={{ textDecoration: "none", color: "#f5f5f5" }}>
-                Gifts
-              </a>
-              <a href="/lotus" style={{ textDecoration: "none", color: "#f5f5f5" }}>
-                Lotus
-              </a>
-              <a href="/dashboard" style={{ textDecoration: "none", color: "#f5f5f5" }}>
-                Dashboard
-              </a>
-              <a href="/contact" style={{ textDecoration: "none", color: "#f5f5f5" }}>
-                Contact
-              </a>
-              <a href="/cgu" style={{ textDecoration: "none", color: "#f5f5f5" }}>
-                Terms
-              </a>
+              <a href="/live" style={{ textDecoration: "none", color: "#f5f5f5" }}>Live</a>
+              <a href="/vip" style={{ textDecoration: "none", color: "#f5f5f5" }}>VIP</a>
+              <a href="/gifts" style={{ textDecoration: "none", color: "#f5f5f5" }}>Gifts</a>
+              <a href="/lotus" style={{ textDecoration: "none", color: "#f5f5f5" }}>Lotus</a>
+              <a href="/dashboard" style={{ textDecoration: "none", color: "#f5f5f5" }}>Dashboard</a>
+              <a href="/contact" style={{ textDecoration: "none", color: "#f5f5f5" }}>Contact</a>
+              <a href="/cgu" style={{ textDecoration: "none", color: "#f5f5f5" }}>Terms</a>
             </div>
           </nav>
         </header>
 
+        {/* ====== Announcements / GOD banner (persistant) ====== */}
+        <AnnouncementBar />
+
         {/* ====== Page content ====== */}
         <main>{children}</main>
 
-        {/* ====== Global footer (léger) ====== */}
+        {/* ====== Global footer ====== */}
         <footer
           style={{
             maxWidth: 1100,
@@ -121,13 +107,9 @@ export default function RootLayout({
           >
             <span>© {new Date().getFullYear()} Velvet House Agency</span>
             <span>
-              <a href="/legal" style={{ color: "#D4AF37", textDecoration: "none" }}>
-                Legal
-              </a>{" "}
-              ·{" "}
-              <a href="/cgu" style={{ color: "#D4AF37", textDecoration: "none" }}>
-                Terms
-              </a>
+              <a href="/legal" style={{ color: "#D4AF37", textDecoration: "none" }}>Legal</a>
+              {" · "}
+              <a href="/cgu" style={{ color: "#D4AF37", textDecoration: "none" }}>Terms</a>
             </span>
           </div>
         </footer>
