@@ -1,3 +1,4 @@
+// components/GiftStage.tsx
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useGiftStore, type Gift } from "@/stores/giftStore";
@@ -32,7 +33,7 @@ export default function GiftStage() {
         pointerEvents: "none",
         position: "fixed",
         inset: 0,
-        zIndex: 60, // au-dessus du header (zIndex 50)
+        zIndex: 60,
         display: "grid",
         placeItems: "center",
       }}
