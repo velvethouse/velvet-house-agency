@@ -1,3 +1,4 @@
+// stores/giftStore.ts
 "use client";
 import { create } from "zustand";
 
@@ -5,7 +6,7 @@ export type Gift = {
   id: string;
   name: string;
   kind: "lottie" | "static";
-  src: string;          // /gifts/xxx.json ou .png
+  src: string;          // /gifts/xxx.json | .webm | .mp4 | .png...
   durationMs?: number;  // ex: 2000
 };
 
