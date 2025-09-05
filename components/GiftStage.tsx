@@ -33,9 +33,9 @@ export default function GiftStage() {
         pointerEvents: "none",
         position: "fixed",
         inset: 0,
-        zIndex: 60,
+        zIndex: 60, // au-dessus du header (zIndex 50)
         display: "grid",
-        placeItems: "center",
+        placeItems: "center"
       }}
     >
       <div
@@ -44,7 +44,7 @@ export default function GiftStage() {
           aspectRatio: "16/9",
           background: "rgba(0,0,0,.35)",
           borderRadius: 16,
-          overflow: "hidden",
+          overflow: "hidden"
         }}
       >
         {isVideo(current.src) ? (
