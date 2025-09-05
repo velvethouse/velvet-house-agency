@@ -1,6 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
+import GiftStage from "@/components/GiftStage"; // ⬅️ overlay global pour afficher les gifts
 
 type Announcement = {
   id: string;
@@ -152,6 +153,9 @@ export default async function RootLayout({
             </div>
           )}
         </header>
+
+        {/* ====== Overlay global des gifts (au-dessus des pages) ====== */}
+        <GiftStage />
 
         {/* ====== Page content ====== */}
         <main>{children}</main>
