@@ -10,10 +10,10 @@ type Announcement = {
   endAt: string;
 };
 
-/** Détermine un baseURL utilisable côté serveur (Vercel/local) */
+/** Détermine une baseURL utilisable côté serveur (Vercel/local) */
 function getBaseUrl() {
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL!;
+  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
   return "http://localhost:3000";
 }
 
@@ -135,20 +135,20 @@ export default async function RootLayout({
                 Terms
               </a>
 
-              {/* Nouveaux accès */}
+              {/* Nouveaux accès (coming soon) */}
               <a href="/gaming" style={linkStyle}>
                 Gaming <span style={soonStyle}>(soon)</span>
               </a>
               <a href="/casino" style={linkStyle}>
                 Casino <span style={soonStyle}>(soon)</span>
               </a>
-              <a href="/network" style={linkStyle}>
-                Network <span style={soonStyle}>(soon)</span>
+              <a href="/ads" style={linkStyle}>
+                Ads <span style={soonStyle}>(soon)</span>
               </a>
             </div>
           </nav>
 
-          {/* ====== PETIT STRIP D’ANNONCE DISCRET ====== */}
+          {/* ====== Petit strip d’annonce discret ====== */}
           {announcements.length > 0 && (
             <div style={{ background: "transparent", padding: "2px 8px" }}>
               {announcements.map((a) => (
@@ -209,3 +209,4 @@ export default async function RootLayout({
     </html>
   );
 }
+```0
