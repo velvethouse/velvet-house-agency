@@ -9,14 +9,59 @@ type Gift = {
   id: string;
   name: string;
   lotus: number;
-  file?: string;  // URL d’un média dans /public (image/vidéo)
-  emoji?: string; // fallback si pas de fichier
+  file?: string;   // URL d’un média dans /public (image/vidéo)
+  emoji?: string;  // fallback si pas de fichier
 };
 
 const GIFTS: Gift[] = [
-  { id: "lotus", name: "Lotus", lotus: 1000, file: "/hero.png", emoji: "🌸" },
-  { id: "rose",  name: "Rose",  lotus: 1500, emoji: "🌹" },
-  { id: "heart", name: "Heart", lotus: 2000, emoji: "❤️" }
+  { id: "lotus",       name: "Lotus",        lotus: 1000,   file: "/gifts/lotus.webm",       emoji: "🌸" },
+  { id: "rose",        name: "Rose",         lotus: 1500,   file: "/gifts/rose.webm",        emoji: "🌹" },
+  { id: "heart",       name: "Heart",        lotus: 2000,   file: "/gifts/heart.webm",       emoji: "❤️" },
+  { id: "butterfly",   name: "Butterfly",    lotus: 2500,   file: "/gifts/butterfly.webm",   emoji: "🦋" },
+  { id: "star",        name: "Star",         lotus: 3000,   file: "/gifts/star.webm",        emoji: "⭐" },
+  { id: "diamond",     name: "Diamond",      lotus: 4000,   file: "/gifts/diamond.webm",     emoji: "💎" },
+  { id: "crown",       name: "Crown",        lotus: 5000,   file: "/gifts/crown.webm",       emoji: "👑" },
+  { id: "champagne",   name: "Champagne",    lotus: 6000,   file: "/gifts/champagne.webm",   emoji: "🥂" },
+  { id: "velvetbox",   name: "Velvet Box",   lotus: 7000,   file: "/gifts/velvetbox.webm",   emoji: "🎁" },
+  { id: "fireworks",   name: "Fireworks",    lotus: 8000,   file: "/gifts/fireworks.webm",   emoji: "🎆" },
+  { id: "lightning",   name: "Lightning",    lotus: 9000,   file: "/gifts/lightning.webm",   emoji: "⚡" },
+  { id: "musicnotes",  name: "Music Notes",  lotus: 10000,  file: "/gifts/musicnotes.webm",  emoji: "🎶" },
+  { id: "ring",        name: "Ring",         lotus: 12000,  file: "/gifts/ring.webm",        emoji: "💍" },
+  { id: "car",         name: "Luxury Car",   lotus: 15000,  file: "/gifts/car.webm",         emoji: "🏎️" },
+  { id: "yacht",       name: "Yacht",        lotus: 20000,  file: "/gifts/yacht.webm",       emoji: "🛥️" },
+  { id: "castle",      name: "Castle",       lotus: 25000,  file: "/gifts/castle.webm",      emoji: "🏰" },
+  { id: "jet",         name: "Private Jet",  lotus: 30000,  file: "/gifts/jet.webm",         emoji: "✈️" },
+  { id: "candle",      name: "Candlelight",  lotus: 1200,   file: "/gifts/candle.webm",      emoji: "🕯️" },
+  { id: "kiss",        name: "Kiss",         lotus: 1800,   file: "/gifts/kiss.webm",        emoji: "💋" },
+  { id: "bear",        name: "Teddy Bear",   lotus: 2200,   file: "/gifts/bear.webm",        emoji: "🧸" },
+  { id: "pearl",       name: "Pearl",        lotus: 2600,   file: "/gifts/pearl.webm",       emoji: "🦪" },
+  { id: "lipstick",    name: "Lipstick",     lotus: 2800,   file: "/gifts/lipstick.webm",    emoji: "💄" },
+  { id: "mirror",      name: "Mirror",       lotus: 3200,   file: "/gifts/mirror.webm",      emoji: "🪞" },
+  { id: "piano",       name: "Piano",        lotus: 3500,   file: "/gifts/piano.webm",       emoji: "🎹" },
+  { id: "violin",      name: "Violin",       lotus: 3600,   file: "/gifts/violin.webm",      emoji: "🎻" },
+  { id: "guitar",      name: "Guitar",       lotus: 3700,   file: "/gifts/guitar.webm",      emoji: "🎸" },
+  { id: "dragon",      name: "Dragon",       lotus: 40000,  file: "/gifts/dragon.webm",      emoji: "🐉" },
+  { id: "phoenix",     name: "Phoenix",      lotus: 45000,  file: "/gifts/phoenix.webm",     emoji: "🔥" },
+  { id: "lion",        name: "Lion",         lotus: 48000,  file: "/gifts/lion.webm",        emoji: "🦁" },
+  { id: "tiger",       name: "Tiger",        lotus: 49000,  file: "/gifts/tiger.webm",       emoji: "🐅" },
+  { id: "money",       name: "Money Rain",   lotus: 1500,   file: "/gifts/money.webm",       emoji: "💵" },
+  { id: "rosebouquet", name: "Bouquet",      lotus: 1700,   file: "/gifts/rosebouquet.webm", emoji: "💐" },
+  { id: "perfume",     name: "Perfume",      lotus: 2000,   file: "/gifts/perfume.webm",     emoji: "🌸" },
+  { id: "heels",       name: "High Heels",   lotus: 2200,   file: "/gifts/heels.webm",       emoji: "👠" },
+  { id: "bag",         name: "Luxury Bag",   lotus: 3000,   file: "/gifts/bag.webm",         emoji: "👜" },
+  { id: "watch",       name: "Watch",        lotus: 3500,   file: "/gifts/watch.webm",       emoji: "⌚" },
+  { id: "necklace",    name: "Necklace",     lotus: 5000,   file: "/gifts/necklace.webm",    emoji: "📿" },
+  { id: "champion",    name: "Champion Cup", lotus: 5500,   file: "/gifts/champion.webm",    emoji: "🏆" },
+  { id: "dance",       name: "Dance",        lotus: 6000,   file: "/gifts/dance.webm",       emoji: "💃" },
+  { id: "wine",        name: "Wine",         lotus: 7000,   file: "/gifts/wine.webm",        emoji: "🍷" },
+  { id: "cigar",       name: "Cigar",        lotus: 7500,   file: "/gifts/cigar.webm",       emoji: "🚬" },
+  { id: "goldbar",     name: "Gold Bar",     lotus: 9000,   file: "/gifts/goldbar.webm",     emoji: "🏅" },
+  { id: "crownjewel",  name: "Crown Jewel",  lotus: 12000,  file: "/gifts/crownjewel.webm",  emoji: "👑" },
+  { id: "unicorn",     name: "Unicorn",      lotus: 13000,  file: "/gifts/unicorn.webm",     emoji: "🦄" },
+  { id: "galaxy",      name: "Galaxy",       lotus: 15000,  file: "/gifts/galaxy.webm",      emoji: "🌌" },
+  { id: "volcano",     name: "Volcano",      lotus: 18000,  file: "/gifts/volcano.webm",     emoji: "🌋" },
+  { id: "island",      name: "Island",       lotus: 20000,  file: "/gifts/island.webm",      emoji: "🏝️" },
+  { id: "worldtour",   name: "World Tour",   lotus: 500000, file: "/gifts/worldtour.webm",   emoji: "🌍" }
 ];
 
 function isVideo(path?: string) {
@@ -24,7 +69,6 @@ function isVideo(path?: string) {
   const p = path.toLowerCase();
   return p.endsWith(".mp4") || p.endsWith(".webm");
 }
-
 function isImage(path?: string) {
   if (!path) return false;
   const p = path.toLowerCase();
@@ -58,7 +102,7 @@ export default function GiftsPage() {
         minHeight: "100vh",
         background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
         color: "#f5f5f5",
-        fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif'
+        fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
       }}
     >
       <section style={{ maxWidth: 1100, margin: "24px auto 12px", padding: "0 16px" }}>
@@ -66,8 +110,7 @@ export default function GiftsPage() {
           Gifts — Internal Catalog
         </h1>
         <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
-          Pour tester maintenant, <b>Lotus</b> utilise <code>/hero.png</code>.
-          Quand tes médias seront prêts, place-les dans <code>/public/gifts/</code>.
+          Place tes médias dans <code>/public/gifts/</code>. Les cartes utilisent l’emoji si le fichier manque.
         </p>
       </section>
 
@@ -87,9 +130,6 @@ export default function GiftsPage() {
             <option value="asc">Price ↑ (Lotus)</option>
             <option value="desc">Price ↓ (Lotus)</option>
           </select>
-          <div className="card" style={{ padding: 12, fontSize: 13, color: "#d7c9b3" }}>
-            Uploads : <code>/public/gifts/</code> (vidéos .webm/.mp4 ou images .gif/.png/.svg).
-          </div>
         </div>
       </section>
 
@@ -106,7 +146,7 @@ export default function GiftsPage() {
                 borderRadius: 14,
                 background: "linear-gradient(180deg, rgba(15,15,15,.45), rgba(15,15,15,.30))",
                 border: "1px solid rgba(212,175,55,0.22)",
-                boxShadow: "0 10px 26px rgba(0,0,0,.30)"
+                boxShadow: "0 10px 26px rgba(0,0,0,.30)",
               }}
             >
               <div
@@ -117,7 +157,7 @@ export default function GiftsPage() {
                   borderRadius: 12,
                   background: "rgba(0,0,0,.25)",
                   border: "1px solid rgba(212,175,55,.22)",
-                  overflow: "hidden"
+                  overflow: "hidden",
                 }}
               >
                 {g.file ? (
@@ -166,7 +206,7 @@ export default function GiftsPage() {
                       name: g.name,
                       kind: "static",
                       src: g.file ?? "/hero.png",
-                      durationMs: 2000
+                      durationMs: 2000,
                     })
                   }
                 >
@@ -179,4 +219,4 @@ export default function GiftsPage() {
       </section>
     </main>
   );
-                    }
+}
