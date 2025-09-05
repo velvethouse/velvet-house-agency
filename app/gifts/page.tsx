@@ -3,26 +3,23 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import GiftButton from "../../components/GiftButton";
 import { useGiftStore } from "@/stores/giftStore";
 
 type Gift = {
   id: string;
   name: string;
   lotus: number;
-  animated?: boolean;
-  file?: string;   // /gifts/xxx.webm|.mp4|.gif|.webp|.png|.jpg|.jpeg|.svg
-  emoji?: string;
+  file?: string;          // URL d’un média dans /public (image/vidéo)
+  emoji?: string;         // fallback si pas de fichier
 };
 
-// Catalogue (extrait) — Lotus utilise un fichier qui existe déjà en /public/gifts/
 const GIFTS: Gift[] = [
-  { id: "lotus", name: "Lotus", lotus: 1000, animated: true, file: "/gifts/lotus.gif", emoji: "🌸" }, // ✅ existe
-  { id: "rose",  name: "Rose",  lotus: 1500, animated: true, file: "/gifts/rose.webm",  emoji: "🌹" },
-  { id: "heart", name: "Heart", lotus: 2000, animated: true, file: "/gifts/heart.webm", emoji: "❤️" },
-  { id: "butterfly", name: "Butterfly", lotus: 2500, animated: true, file: "/gifts/butterfly.webm", emoji: "🦋" },
-  { id: "star",  name: "Star",  lotus: 3000, animated: true, file: "/gifts/star.webm",  emoji: "⭐" },
-  // …tu peux garder les autres entrées comme avant, on les déplacera ensuite dans /public/gifts/
+  // ✅ Lotus pointe vers un fichier qui existe déjà dans /public
+  { id: "lotus", name: "Lotus", lotus: 1000, file: "/hero.png", emoji: "🌸" },
+
+  // Exemples supplémentaires (utilisent l’emoji par défaut tant que les fichiers ne sont pas uploadés dans /public/gifts/)
+  { id: "rose",  name: "Rose",  lotus: 1500, /* file: "/gifts/rose.webm" */,  emoji: "🌹" },
+  { id: "heart", name: "Heart", lotus: 2000, /* file: "/gifts/heart.webm" */, emoji: "❤️" },
 ];
 
 function isVideo(path?: string) {
@@ -30,6 +27,7 @@ function isVideo(path?: string) {
   const p = path.toLowerCase();
   return p.endsWith(".mp4") || p.endsWith(".webm");
 }
+
 function isImage(path?: string) {
   if (!path) return false;
   const p = path.toLowerCase();
@@ -66,13 +64,14 @@ export default function GiftsPage() {
         fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
       }}
     >
-      {/* Header */}
+      {/* En-tête */}
       <section style={{ maxWidth: 1100, margin: "24px auto 12px", padding: "0 16px" }}>
         <h1 className="gold-gradient-text" style={{ fontSize: "clamp(24px,6vw,36px)", margin: 0 }}>
           Gifts — Internal Catalog
         </h1>
         <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
-          Place tes fichiers dans <b>/public/gifts/</b>. Les vidéos (.webm/.mp4) ou images (.gif/.png/.svg) sont supportées.
+          Pour tester maintenant, <b>Lotus</b> utilise <code>/hero.png</code>.
+          Quand tu auras uploadé tes médias, mets-les dans <code>/public/gifts/</code> (ex. <i>/gifts/rose.webm</i>).
         </p>
       </section>
 
@@ -94,7 +93,7 @@ export default function GiftsPage() {
             <option value="desc">Price ↓ (Lotus)</option>
           </select>
           <div className="card" style={{ padding: 12, fontSize: 13, color: "#d7c9b3" }}>
-            <b>Tip :</b> utilise des boucles courtes (≤ 1&nbsp;Mo). Mets-les dans <code>/public/gifts/</code>.
+            Uploads : <code>/public/gifts/</code> (vidéos .webm/.mp4 ou images .gif/.png/.svg).
           </div>
         </div>
       </section>
@@ -163,26 +162,25 @@ export default function GiftsPage() {
                   <span style={{ fontSize: 12, color: "#d7c9b3" }}>Lotus</span>
                 </div>
               </div>
-              <div style={{ fontSize: 13, color: "#d7c9b3" }}>
-                {g.animated ? "Animated ✨" : "Static"}
-              </div>
 
               {/* Actions */}
               <div className="btn-row-2" style={{ marginTop: 4 }}>
                 <a className="btn3d btn3d--velvet" href={`/u/alice?gift=${g.id}`}>Preview</a>
-                <GiftButton
+                <button
                   className="btn3d btn3d--gold"
-                  label="Send test"
-                  onSend={() =>
+                  type="button"
+                  onClick={() =>
                     push({
                       id: g.id,
                       name: g.name,
-                      kind: "static",                 // overlay unifié
-                      src: g.file ?? "/icon.svg",     // fallback sûr si le fichier n'existe pas
+                      kind: "static",
+                      src: g.file ?? "/hero.png", // fallback sûr
                       durationMs: 2000,
                     })
                   }
-                />
+                >
+                  Send test
+                </button>
               </div>
             </article>
           ))}
@@ -190,4 +188,4 @@ export default function GiftsPage() {
       </section>
     </main>
   );
-                      }
+                  }
