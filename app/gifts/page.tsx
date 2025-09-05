@@ -9,17 +9,14 @@ type Gift = {
   id: string;
   name: string;
   lotus: number;
-  file?: string;          // URL d’un média dans /public (image/vidéo)
-  emoji?: string;         // fallback si pas de fichier
+  file?: string;   // URL d’un média dans /public (image/vidéo)
+  emoji?: string;  // fallback si pas de fichier
 };
 
 const GIFTS: Gift[] = [
-  // ✅ Lotus pointe vers un fichier qui existe déjà dans /public
   { id: "lotus", name: "Lotus", lotus: 1000, file: "/hero.png", emoji: "🌸" },
-
-  // Exemples supplémentaires (utilisent l’emoji par défaut tant que les fichiers ne sont pas uploadés dans /public/gifts/)
-  { id: "rose",  name: "Rose",  lotus: 1500, /* file: "/gifts/rose.webm" */,  emoji: "🌹" },
-  { id: "heart", name: "Heart", lotus: 2000, /* file: "/gifts/heart.webm" */, emoji: "❤️" },
+  { id: "rose",  name: "Rose",  lotus: 1500, emoji: "🌹" },
+  { id: "heart", name: "Heart", lotus: 2000, emoji: "❤️" }
 ];
 
 function isVideo(path?: string) {
@@ -27,7 +24,6 @@ function isVideo(path?: string) {
   const p = path.toLowerCase();
   return p.endsWith(".mp4") || p.endsWith(".webm");
 }
-
 function isImage(path?: string) {
   if (!path) return false;
   const p = path.toLowerCase();
@@ -174,7 +170,7 @@ export default function GiftsPage() {
                       id: g.id,
                       name: g.name,
                       kind: "static",
-                      src: g.file ?? "/hero.png", // fallback sûr
+                      src: g.file ?? "/hero.png",
                       durationMs: 2000,
                     })
                   }
@@ -188,4 +184,4 @@ export default function GiftsPage() {
       </section>
     </main>
   );
-                  }
+                }
