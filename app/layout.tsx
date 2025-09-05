@@ -10,10 +10,10 @@ type Announcement = {
   endAt: string;
 };
 
-/** Détermine une baseURL utilisable côté serveur (Vercel/local) */
+/** Détermine un baseURL utilisable côté serveur (Vercel/local) */
 function getBaseUrl() {
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
+  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL!;
   return "http://localhost:3000";
 }
 
@@ -103,7 +103,7 @@ export default async function RootLayout({
               Velvet House
             </a>
 
-            {/* Liens principaux */}
+            {/* Liens principaux dans l’ordre demandé */}
             <div
               style={{
                 display: "flex",
@@ -113,42 +113,26 @@ export default async function RootLayout({
                 fontWeight: 700,
               }}
             >
-              <a href="/live" style={linkStyle}>
-                Live
-              </a>
-              <a href="/vip" style={linkStyle}>
-                VIP
-              </a>
-              <a href="/gifts" style={linkStyle}>
-                Gifts
-              </a>
-              <a href="/lotus" style={linkStyle}>
-                Lotus
-              </a>
-              <a href="/dashboard" style={linkStyle}>
-                Dashboard
-              </a>
-              <a href="/contact" style={linkStyle}>
-                Contact
-              </a>
-              <a href="/cgu" style={linkStyle}>
-                Terms
-              </a>
-
-              {/* Nouveaux accès (coming soon) */}
+              <a href="/live" style={linkStyle}>Live</a>
               <a href="/gaming" style={linkStyle}>
-                Gaming <span style={soonStyle}>(soon)</span>
+                Gamer <span style={soonStyle}>(soon)</span>
               </a>
+              <a href="/vip" style={linkStyle}>VIP</a>
+              <a href="/gifts" style={linkStyle}>Gifts</a>
               <a href="/casino" style={linkStyle}>
                 Casino <span style={soonStyle}>(soon)</span>
               </a>
+              <a href="/lotus" style={linkStyle}>Lotus</a>
+              <a href="/dashboard" style={linkStyle}>Dashboard</a>
+              <a href="/contact" style={linkStyle}>Contact</a>
               <a href="/ads" style={linkStyle}>
                 Ads <span style={soonStyle}>(soon)</span>
               </a>
+              <a href="/cgu" style={linkStyle}>Terms</a>
             </div>
           </nav>
 
-          {/* ====== Petit strip d’annonce discret ====== */}
+          {/* ====== PETIT STRIP D’ANNONCE DISCRET ====== */}
           {announcements.length > 0 && (
             <div style={{ background: "transparent", padding: "2px 8px" }}>
               {announcements.map((a) => (
@@ -209,4 +193,3 @@ export default async function RootLayout({
     </html>
   );
 }
-```0
