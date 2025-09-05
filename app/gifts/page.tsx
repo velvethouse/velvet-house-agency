@@ -9,8 +9,8 @@ type Gift = {
   id: string;
   name: string;
   lotus: number;
-  file?: string;   // URL d’un média dans /public (image/vidéo)
-  emoji?: string;  // fallback si pas de fichier
+  file?: string;  // URL d’un média dans /public (image/vidéo)
+  emoji?: string; // fallback si pas de fichier
 };
 
 const GIFTS: Gift[] = [
@@ -24,6 +24,7 @@ function isVideo(path?: string) {
   const p = path.toLowerCase();
   return p.endsWith(".mp4") || p.endsWith(".webm");
 }
+
 function isImage(path?: string) {
   if (!path) return false;
   const p = path.toLowerCase();
@@ -57,21 +58,19 @@ export default function GiftsPage() {
         minHeight: "100vh",
         background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
         color: "#f5f5f5",
-        fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
+        fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif'
       }}
     >
-      {/* En-tête */}
       <section style={{ maxWidth: 1100, margin: "24px auto 12px", padding: "0 16px" }}>
         <h1 className="gold-gradient-text" style={{ fontSize: "clamp(24px,6vw,36px)", margin: 0 }}>
           Gifts — Internal Catalog
         </h1>
         <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
           Pour tester maintenant, <b>Lotus</b> utilise <code>/hero.png</code>.
-          Quand tu auras uploadé tes médias, mets-les dans <code>/public/gifts/</code> (ex. <i>/gifts/rose.webm</i>).
+          Quand tes médias seront prêts, place-les dans <code>/public/gifts/</code>.
         </p>
       </section>
 
-      {/* Filtres */}
       <section style={{ maxWidth: 1100, margin: "10px auto 6px", padding: "0 16px" }}>
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
           <input
@@ -94,7 +93,6 @@ export default function GiftsPage() {
         </div>
       </section>
 
-      {/* Grille */}
       <section style={{ maxWidth: 1100, margin: "12px auto 30px", padding: "0 16px" }}>
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
           {list.map((g) => (
@@ -108,10 +106,9 @@ export default function GiftsPage() {
                 borderRadius: 14,
                 background: "linear-gradient(180deg, rgba(15,15,15,.45), rgba(15,15,15,.30))",
                 border: "1px solid rgba(212,175,55,0.22)",
-                boxShadow: "0 10px 26px rgba(0,0,0,.30)",
+                boxShadow: "0 10px 26px rgba(0,0,0,.30)"
               }}
             >
-              {/* Media */}
               <div
                 style={{
                   height: 120,
@@ -120,7 +117,7 @@ export default function GiftsPage() {
                   borderRadius: 12,
                   background: "rgba(0,0,0,.25)",
                   border: "1px solid rgba(212,175,55,.22)",
-                  overflow: "hidden",
+                  overflow: "hidden"
                 }}
               >
                 {g.file ? (
@@ -150,7 +147,6 @@ export default function GiftsPage() {
                 )}
               </div>
 
-              {/* Infos */}
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <div style={{ fontWeight: 800, color: "#D4AF37" }}>{g.name}</div>
                 <div style={{ fontWeight: 700 }}>
@@ -159,7 +155,6 @@ export default function GiftsPage() {
                 </div>
               </div>
 
-              {/* Actions */}
               <div className="btn-row-2" style={{ marginTop: 4 }}>
                 <a className="btn3d btn3d--velvet" href={`/u/alice?gift=${g.id}`}>Preview</a>
                 <button
@@ -171,7 +166,7 @@ export default function GiftsPage() {
                       name: g.name,
                       kind: "static",
                       src: g.file ?? "/hero.png",
-                      durationMs: 2000,
+                      durationMs: 2000
                     })
                   }
                 >
@@ -184,4 +179,4 @@ export default function GiftsPage() {
       </section>
     </main>
   );
-                }
+                    }
