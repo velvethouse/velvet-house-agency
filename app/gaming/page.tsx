@@ -1,3 +1,6 @@
+export const runtime = "nodejs";
+export const dynamic = "force-static";
+
 export default function GamingComingSoon() {
   return (
     <main style={{maxWidth: 1100, margin: "24px auto", padding: "0 16px"}}>
