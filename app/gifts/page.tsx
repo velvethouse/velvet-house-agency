@@ -4,13 +4,14 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import GiftButton from "../../components/GiftButton";
+import { useGiftStore } from "@/stores/giftStore";
 
 type Gift = {
   id: string;
   name: string;
   lotus: number;
   animated?: boolean;
-  file?: string;
+  file?: string;   // /gifts/xxx.webm|.mp4|.gif|.webp|.png|.jpg|.jpeg|.svg
   emoji?: string;
 };
 
@@ -63,7 +64,7 @@ const GIFTS: Gift[] = [
   { id: "galaxy",      name: "Galaxy",       lotus: 15000,  animated: true,  file: "/gifts/galaxy.webm", emoji: "🌌" },
   { id: "volcano",     name: "Volcano",      lotus: 18000,  animated: true,  file: "/gifts/volcano.webm", emoji: "🌋" },
   { id: "island",      name: "Island",       lotus: 20000,  animated: true,  file: "/gifts/island.webm", emoji: "🏝️" },
-  { id: "worldtour",   name: "World Tour",   lotus: 500000, animated: true, file: "/gifts/worldtour.webm", emoji: "🌍" },
+  { id: "worldtour",   name: "World Tour",   lotus: 500000, animated: true,  file: "/gifts/worldtour.webm", emoji: "🌍" },
 ];
 
 function isVideo(path?: string) {
@@ -87,6 +88,7 @@ function isImage(path?: string) {
 export default function GiftsPage() {
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<"asc" | "desc">("asc");
+  const push = useGiftStore(s => s.push); // ⬅️ branchage overlay
 
   const list = useMemo(() => {
     const filtered = GIFTS.filter(g =>
@@ -212,7 +214,20 @@ export default function GiftsPage() {
               {/* Actions */}
               <div className="btn-row-2" style={{ marginTop: 4 }}>
                 <a className="btn3d btn3d--velvet" href={`/u/alice?gift=${g.id}`}>Preview</a>
-                <GiftButton className="btn3d btn3d--gold" label="Send test" />
+
+                <GiftButton
+                  className="btn3d btn3d--gold"
+                  label="Send test"
+                  onSend={() =>
+                    push({
+                      id: g.id,
+                      name: g.name,
+                      kind: "static",                 // on unifie pour l’overlay
+                      src: g.file ?? "/icon.svg",     // ⚠️ assure-toi que le fichier existe
+                      durationMs: 2000,
+                    })
+                  }
+                />
               </div>
             </article>
           ))}
@@ -220,4 +235,4 @@ export default function GiftsPage() {
       </section>
     </main>
   );
-  }
+   }
