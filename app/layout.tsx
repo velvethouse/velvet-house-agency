@@ -13,7 +13,7 @@ type Announcement = {
 /** Détermine un baseURL utilisable côté serveur (Vercel/local) */
 function getBaseUrl() {
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
+  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL!;
   return "http://localhost:3000";
 }
 
@@ -43,6 +43,18 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const announcements = await getAnnouncements();
+
+  const linkStyle: React.CSSProperties = {
+    textDecoration: "none",
+    color: "#f5f5f5",
+    whiteSpace: "nowrap",
+  };
+  const soonStyle: React.CSSProperties = {
+    fontSize: 11,
+    color: "#d7c9b3",
+    marginLeft: 4,
+    opacity: 0.9,
+  };
 
   return (
     <html lang="en">
@@ -75,6 +87,7 @@ export default async function RootLayout({
               justifyContent: "space-between",
               alignItems: "center",
               gap: 12,
+              flexWrap: "wrap",
             }}
           >
             {/* Logo / Home */}
@@ -100,38 +113,44 @@ export default async function RootLayout({
                 fontWeight: 700,
               }}
             >
-              <a href="/live" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+              <a href="/live" style={linkStyle}>
                 Live
               </a>
-              <a href="/vip" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+              <a href="/vip" style={linkStyle}>
                 VIP
               </a>
-              <a href="/gifts" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+              <a href="/gifts" style={linkStyle}>
                 Gifts
               </a>
-              <a href="/lotus" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+              <a href="/lotus" style={linkStyle}>
                 Lotus
               </a>
-              <a href="/dashboard" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+              <a href="/dashboard" style={linkStyle}>
                 Dashboard
               </a>
-              <a href="/contact" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+              <a href="/contact" style={linkStyle}>
                 Contact
               </a>
-              <a href="/cgu" style={{ textDecoration: "none", color: "#f5f5f5" }}>
+              <a href="/cgu" style={linkStyle}>
                 Terms
+              </a>
+
+              {/* Nouveaux accès */}
+              <a href="/gaming" style={linkStyle}>
+                Gaming <span style={soonStyle}>(soon)</span>
+              </a>
+              <a href="/casino" style={linkStyle}>
+                Casino <span style={soonStyle}>(soon)</span>
+              </a>
+              <a href="/network" style={linkStyle}>
+                Network <span style={soonStyle}>(soon)</span>
               </a>
             </div>
           </nav>
 
           {/* ====== PETIT STRIP D’ANNONCE DISCRET ====== */}
           {announcements.length > 0 && (
-            <div
-              style={{
-                background: "transparent",
-                padding: "2px 8px",
-              }}
-            >
+            <div style={{ background: "transparent", padding: "2px 8px" }}>
               {announcements.map((a) => (
                 <div
                   key={a.id}
@@ -189,4 +208,4 @@ export default async function RootLayout({
       </body>
     </html>
   );
-        }
+}
