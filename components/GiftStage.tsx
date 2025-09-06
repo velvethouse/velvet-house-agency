@@ -3,8 +3,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useGiftStore, type Gift } from "@/stores/giftStore";
-import Player from "react-lottie-player";
+import dynamic from "next/dynamic";
 
+// ⚡ Import dynamique + typage any => pas d'erreur de props TS
+const LottieAny: any = dynamic(
+  () => import("react-lottie-player").then((m) => m.default as any),
+  { ssr: false }
+);
+
+// Détecteurs simples
 const isVideo = (p?: string) => !!p && (p.endsWith(".webm") || p.endsWith(".mp4"));
 const isLottie = (p?: string) => !!p && (p.endsWith(".json") || p.endsWith(".lottie"));
 const isImage = (p?: string) =>
@@ -21,6 +28,7 @@ export default function GiftStage() {
   const [current, setCurrent] = useState<Gift | null>(null);
   const playing = useRef(false);
 
+  // Prend le prochain gift de la file et le joue pendant durationMs
   useEffect(() => {
     if (playing.current) return;
     if (queue.length === 0) return;
@@ -62,8 +70,9 @@ export default function GiftStage() {
         }}
       >
         {isLottie(current.src) ? (
-          <Player
-            src={current.src}   // URL du .json Lottie (pas besoin de fetch à la main)
+          // ✅ react-lottie-player accepte `path` (ou animationData). On passe `path`.
+          <LottieAny
+            path={current.src}
             play
             loop={false}
             style={{ width: "100%", height: "100%" }}
