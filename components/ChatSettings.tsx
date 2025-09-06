@@ -3,22 +3,17 @@
 
 import { useEffect, useState } from "react";
 
-const KEY_INCOG = "vh_incognito"; // partagé avec le profil & le chat
+const KEY_INCOG = "vh_incognito"; // partagé profil + chat
 
 export default function ChatSettings({ isGold }: { isGold: boolean }) {
   const [incognito, setIncognito] = useState(false);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(KEY_INCOG);
-      setIncognito(saved === "1");
-    } catch {}
+    try { setIncognito(localStorage.getItem(KEY_INCOG) === "1"); } catch {}
   }, []);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(KEY_INCOG, incognito ? "1" : "0");
-    } catch {}
+    try { localStorage.setItem(KEY_INCOG, incognito ? "1" : "0"); } catch {}
   }, [incognito]);
 
   return (
