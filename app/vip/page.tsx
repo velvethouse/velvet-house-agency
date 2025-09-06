@@ -27,7 +27,7 @@ export default function VipPage() {
 
   const searchParams = useSearchParams();
   const reason = searchParams.get("reason") || "";
-  const from = searchParams.get("from") || "";
+  the const from = searchParams.get("from") || "";
 
   const [state, setState] = useState<LoadState>({ status: "loading" });
 
@@ -178,7 +178,7 @@ export default function VipPage() {
       <section style={{ maxWidth: 1100, margin: "18px auto 10px", padding: "0 16px" }}>
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
           <Card
-            title={`${vip.title} Monthly`}
+            title={vip.title + " Monthly"}
             price={fmtPrice(vip.monthly)}
             period="month"
             lotus={vip.lotusMonthlyIncluded}
@@ -187,7 +187,7 @@ export default function VipPage() {
             ctaHref="/signup"
           />
           <Card
-            title={`${vip.title} Annual`}
+            title={vip.title + " Annual"}
             price={fmtPrice(vip.annual)}
             period="year"
             lotus={vip.lotusMonthlyIncluded}
@@ -197,7 +197,7 @@ export default function VipPage() {
             highlight
           />
           <Card
-            title={`${gold.title} Monthly`}
+            title={gold.title + " Monthly"}
             price={fmtPrice(gold.monthly)}
             period="month"
             lotus={gold.lotusMonthlyIncluded}
@@ -206,7 +206,7 @@ export default function VipPage() {
             ctaHref="/signup"
           />
           <Card
-            title={`${gold.title} Annual`}
+            title={gold.title + " Annual"}
             price={fmtPrice(gold.annual)}
             period="year"
             lotus={gold.lotusMonthlyIncluded}
@@ -218,7 +218,7 @@ export default function VipPage() {
         </div>
       </section>
 
-      {/* Compare VIP vs VIP Gold (includes Incognito & Silent purchases) */}
+      {/* Compare VIP vs VIP Gold */}
       <section style={{ maxWidth: 1100, margin: "16px auto 18px", padding: "0 16px" }}>
         <h2 style={{ margin: "0 0 10px 0", color: "#D4AF37", textAlign: "center", fontSize: "clamp(20px,4.5vw,28px)" }}>
           Compare VIP vs VIP Gold
@@ -302,5 +302,4 @@ export default function VipPage() {
       </section>
     </main>
   );
-}
-```0
+      }
