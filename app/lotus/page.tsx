@@ -3,22 +3,24 @@
 
 import { useEffect, useState } from "react";
 
-type Pack = {
+type PackApi = {
+  id: string;
   name: string;
   lotus: number;
   price: number;   // € TTC
   badge?: string;
   note?: string;
+  bonusPercentGold?: number;
+  lotusWithGoldBonus?: number; // présent si /api/packs?gold=1
 };
 
 type FetchState =
-  | { status: "idle" | "loading" }
+  | { status: "loading" | "idle" }
   | { status: "error"; message: string }
-  | { status: "ready"; packs: Pack[] };
+  | { status: "ready"; packs: PackApi[] };
 
-// TODO: brancher au vrai rôle de session plus tard
-const IS_VIP_GOLD = true;            // démo : VIP Gold = +5% bonus
-const GOLD_BONUS_RATE = 0.05;        // +5%
+// TODO: brancher au rôle réel (session)
+const IS_VIP_GOLD = true; // démo : considérer l’utilisateur comme Gold
 
 export default function LotusPage() {
   const [state, setState] = useState<FetchState>({ status: "loading" });
@@ -27,9 +29,10 @@ export default function LotusPage() {
     let canceled = false;
     async function load() {
       try {
-        const res = await fetch("/api/packs", { cache: "no-store" });
+        const url = IS_VIP_GOLD ? "/api/packs?gold=1" : "/api/packs";
+        const res = await fetch(url, { cache: "no-store" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const packs = (await res.json()) as Pack[];
+        const packs = (await res.json()) as PackApi[];
         if (!canceled) setState({ status: "ready", packs });
       } catch (e: any) {
         if (!canceled) setState({ status: "error", message: e?.message || "Failed to load packs" });
@@ -65,22 +68,16 @@ export default function LotusPage() {
         <p style={{ margin: "8px auto 0", maxWidth: 820, color: "#e9dfcf", lineHeight: 1.7 }}>
           Lotus is the currency used across Velvet House — to send gifts, unlock NSFW media, and support creators.
           {IS_VIP_GOLD && (
-            <>
-              {" "}
-              <b style={{ color: "#D4AF37" }}>VIP Gold members receive an extra +5% Lotus on every pack.</b>
-            </>
+            <> <b style={{ color: "#D4AF37" }}> VIP Gold members receive an extra +5% Lotus on every pack.</b></>
           )}
         </p>
       </section>
 
-      {/* Contenu */}
+      {/* Grid */}
       <section style={{ maxWidth: 1100, margin: "18px auto 30px", padding: "0 16px" }}>
-        {/* Loading / Error */}
         {state.status !== "ready" ? (
           <div className="card" style={{ padding: 16, textAlign: "center" }}>
-            {state.status === "loading" ? (
-              <div>Loading packs…</div>
-            ) : (
+            {state.status === "loading" ? "Loading packs…" : (
               <div style={{ color: "#e67e22" }}>
                 Failed to load packs. {state.status === "error" ? state.message : null}
               </div>
@@ -89,12 +86,12 @@ export default function LotusPage() {
         ) : (
           <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
             {state.packs.map((p) => {
-              const bonus = IS_VIP_GOLD ? Math.floor(p.lotus * GOLD_BONUS_RATE) : 0;
-              const totalLotus = p.lotus + bonus;
+              const showGold = IS_VIP_GOLD && typeof p.lotusWithGoldBonus === "number";
+              const totalLotus = showGold ? p.lotusWithGoldBonus! : p.lotus;
 
               return (
                 <article
-                  key={`${p.name}-${p.lotus}`}
+                  key={p.id}
                   className="card"
                   style={{
                     display: "grid",
@@ -106,7 +103,7 @@ export default function LotusPage() {
                     boxShadow: p.badge ? "0 10px 34px rgba(0,0,0,.36)" : undefined,
                   }}
                 >
-                  {/* Header row (name + optional badge) */}
+                  {/* Header */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                     <h2 style={{ margin: 0, color: "#D4AF37" }}>{p.name}</h2>
                     {p.badge && (
@@ -126,15 +123,14 @@ export default function LotusPage() {
                     )}
                   </div>
 
-                  {/* Base Lotus */}
+                  {/* Base lotus + (Gold bonus) */}
                   <div style={{ fontSize: 26, fontWeight: 800 }}>
-                    {p.lotus.toLocaleString("en-US")}{" "}
+                    {totalLotus.toLocaleString("en-US")}{" "}
                     <span style={{ fontSize: 14, color: "#d7c9b3" }}>Lotus</span>
                   </div>
 
-                  {/* VIP Gold bonus line */}
-                  {IS_VIP_GOLD ? (
-                    <div style={{ fontSize: 14, color: "#d7c9b3" }}>
+                  {showGold && (
+                    <div style={{ fontSize: 13, color: "#d7c9b3" }}>
                       <span
                         style={{
                           display: "inline-block",
@@ -146,19 +142,20 @@ export default function LotusPage() {
                           marginRight: 8,
                         }}
                       >
-                        VIP Gold: +5% bonus
+                        VIP Gold: +{p.bonusPercentGold ?? 5}% bonus
                       </span>
-                      +{bonus.toLocaleString("en-US")} Lotus →{" "}
-                      <b style={{ color: "#D4AF37" }}>{totalLotus.toLocaleString("en-US")} Lotus</b>
+                      Base {p.lotus.toLocaleString("en-US")} → <b style={{ color: "#D4AF37" }}>
+                        {totalLotus.toLocaleString("en-US")} Lotus
+                      </b>
                     </div>
-                  ) : null}
+                  )}
 
                   {/* Price */}
                   <div style={{ fontSize: 18, fontWeight: 700 }}>
                     {p.price.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
                   </div>
 
-                  {/* Optional note */}
+                  {/* Note éventuelle */}
                   {p.note && <div style={{ color: "#d7c9b3", fontSize: 13 }}>{p.note}</div>}
 
                   {/* CTA */}
@@ -166,11 +163,8 @@ export default function LotusPage() {
                     className="btn3d btn3d--gold"
                     href={`/checkout/lotus?pack=${p.lotus}`}
                     onClick={(e) => {
-                      // Demo: “GOD” flag when buying 100k (à remplacer par backend)
                       if (p.lotus === 100_000) {
-                        try {
-                          localStorage.setItem("vh_hasGod", "1");
-                        } catch {}
+                        try { localStorage.setItem("vh_hasGod", "1"); } catch {}
                       }
                     }}
                   >
@@ -194,4 +188,4 @@ export default function LotusPage() {
       </section>
     </main>
   );
-                            }
+}
