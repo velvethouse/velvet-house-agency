@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 
-const KEY_INCOG = "vh_incognito"; // même clé que dans le profil
+const KEY_INCOG = "vh_incognito"; // partagé avec le profil & le chat
 
 export default function ChatSettings({ isGold }: { isGold: boolean }) {
   const [incognito, setIncognito] = useState(false);
