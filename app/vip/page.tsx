@@ -15,9 +15,14 @@ type Tier = {
 type TiersResponse = { vip: Tier; "vip-gold": Tier };
 
 type LoadState =
-  | { status: "loading" | "idle" }
+  | { status: "idle" | "loading" }
   | { status: "error"; message: string }
   | { status: "ready"; tiers: TiersResponse };
+
+/* ---------- Type Guard ---------- */
+function isReady(s: LoadState): s is { status: "ready"; tiers: TiersResponse } {
+  return s.status === "ready";
+}
 
 /* ---------- Page ---------- */
 export default function VipPage() {
@@ -55,8 +60,8 @@ export default function VipPage() {
     return "";
   }, [reason]);
 
-  /* ---------- Loading / Error ---------- */
-  if (state.status === "loading" || state.status === "idle") {
+  /* ---------- Loading ---------- */
+  if (state.status === "idle" || state.status === "loading") {
     return (
       <main
         style={{
@@ -78,6 +83,7 @@ export default function VipPage() {
     );
   }
 
+  /* ---------- Error ---------- */
   if (state.status === "error") {
     return (
       <main
@@ -100,9 +106,9 @@ export default function VipPage() {
     );
   }
 
-  // Ici, TypeScript sait que state.status === "ready"
-  const vip = state.tiers.vip;
-  const gold = state.tiers["vip-gold"];
+  /* ---------- Ready (narrowed) ---------- */
+  const vip   = state.tiers.vip;
+  const gold  = state.tiers["vip-gold"];
 
   /* ---------- UI helpers ---------- */
   const ProgressBar = ({ value = 100 }: { value?: number }) => (
@@ -189,7 +195,7 @@ export default function VipPage() {
       {/* Hero */}
       <section style={{ maxWidth: 1100, margin: "24px auto 12px", padding: "0 16px", textAlign: "center" }}>
         <h1 className="gold-gradient-text" style={{ fontSize: "clamp(28px,6.5vw,44px)", margin: 0 }}>
-          Become VIP
+            Become VIP
         </h1>
         <p style={{ margin: "10px auto 0", maxWidth: 820, color: "#e9dfcf", lineHeight: 1.7 }}>
           Unlock full galleries (non-NSFW), priority in lives & chats, exclusive rewards, and premium access across
@@ -325,4 +331,4 @@ export default function VipPage() {
       </section>
     </main>
   );
-            }
+        }
