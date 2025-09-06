@@ -4,7 +4,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-/* ---------------- Types ---------------- */
+/* ---------- Types ---------- */
 type Tier = {
   title: string;
   monthly: number;              // €/month
@@ -19,9 +19,10 @@ type LoadState =
   | { status: "error"; message: string }
   | { status: "ready"; tiers: TiersResponse };
 
-/* ---------------- Page ---------------- */
+/* ---------- Page ---------- */
 export default function VipPage() {
-  const fmtNum = (n: number) => new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 }).format(n);
+  const fmtNum = (n: number) =>
+    new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 }).format(n);
   const fmtPrice = (n: number) => `${fmtNum(n)}€`;
 
   const searchParams = useSearchParams();
@@ -54,7 +55,7 @@ export default function VipPage() {
     return "";
   }, [reason]);
 
-  /* --------- Loading / Error --------- */
+  /* ---------- Loading / Error ---------- */
   if (state.status !== "ready") {
     return (
       <main
@@ -77,10 +78,10 @@ export default function VipPage() {
     );
   }
 
-  const vip   = state.tiers.vip;
-  const gold  = state.tiers["vip-gold"];
+  const vip = state.tiers.vip;
+  const gold = state.tiers["vip-gold"];
 
-  /* --------- Small UI helpers --------- */
+  /* ---------- UI helpers ---------- */
   const ProgressBar = ({ value = 100 }: { value?: number }) => (
     <div style={{ width: "100%", height: 8, background: "rgba(255,255,255,.15)", borderRadius: 999 }}>
       <div
@@ -133,7 +134,7 @@ export default function VipPage() {
     </article>
   );
 
-  /* ---------------- Render ---------------- */
+  /* ---------- Render ---------- */
   return (
     <main
       style={{
@@ -301,4 +302,5 @@ export default function VipPage() {
       </section>
     </main>
   );
-          }
+}
+```0
