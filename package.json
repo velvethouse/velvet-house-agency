@@ -23,5 +23,10 @@
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.5",
     "typescript": "5.4.5"
+  },
+  "overrides": {
+    "@lottiefiles/react-lottie-player": {
+      "react": "18.2.0"
+    }
   }
 }
