@@ -1,4 +1,3 @@
-// app/vip/VipContent.tsx
 "use client";
 
 import { useSearchParams } from "next/navigation";
@@ -38,8 +37,12 @@ export default function VipContent() {
         const json = (await res.json()) as TiersResponse;
         if (!cancelled) setState({ status: "ready", tiers: json });
       } catch (e: any) {
-        if (!cancelled)
-          setState({ status: "error", message: e?.message || "Failed to load tiers" });
+        if (!cancelled) {
+          setState({
+            status: "error",
+            message: e?.message || "Failed to load tiers",
+          });
+        }
       }
     }
     load();
@@ -71,7 +74,11 @@ export default function VipContent() {
             Become VIP
           </h1>
           <div className="card" style={{ padding: 16, marginTop: 16 }}>
-            {state.status === "loading" ? "Loading VIP tiers…" : `Error: ${state.message}`}
+            {state.status === "loading"
+              ? "Loading VIP tiers…"
+              : state.status === "error"
+              ? `Error: ${state.message}`
+              : null}
           </div>
         </section>
       </main>
@@ -81,7 +88,6 @@ export default function VipContent() {
   const vip = state.tiers.vip;
   const gold = state.tiers["vip-gold"];
 
-  // 💳 Carte tarif
   const Card = ({
     title,
     price,
@@ -138,7 +144,6 @@ export default function VipContent() {
         fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
       }}
     >
-      {/* Banner */}
       {banner && (
         <section style={{ maxWidth: 1100, margin: "14px auto", padding: "0 16px" }}>
           <div
@@ -155,7 +160,6 @@ export default function VipContent() {
         </section>
       )}
 
-      {/* Hero */}
       <section style={{ maxWidth: 1100, margin: "24px auto 12px", padding: "0 16px", textAlign: "center" }}>
         <h1 className="gold-gradient-text" style={{ fontSize: "clamp(28px,6.5vw,44px)", margin: 0 }}>
           Become VIP
@@ -166,7 +170,6 @@ export default function VipContent() {
         </p>
       </section>
 
-      {/* Tiers */}
       <section style={{ maxWidth: 1100, margin: "18px auto 10px", padding: "0 16px" }}>
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
           <Card
@@ -211,4 +214,4 @@ export default function VipContent() {
       </section>
     </main>
   );
-                       }
+    }
