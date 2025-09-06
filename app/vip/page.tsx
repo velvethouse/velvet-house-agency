@@ -54,13 +54,10 @@ export default function VipPage() {
       <div style={{ fontSize: 32, fontWeight: 800 }}>
         {price} <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ {period}</span>
       </div>
-
-      {/* Monthly Lotus */}
       <div style={{ color: "#d7c9b3" }}>
         Includes <b>{fmt(lotus)} Lotus</b> per month
       </div>
       <ProgressBar value={100} />
-
       <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.8, color: "#d7c9b3" }}>
         {benefits.map((b, i) => (
           <li key={i}>{b}</li>
@@ -136,7 +133,7 @@ export default function VipPage() {
         </div>
       </section>
 
-      {/* Compare VIP vs VIP Gold */}
+      {/* Compare VIP vs VIP Gold (UPDATED with Incognito) */}
       <section style={{ maxWidth: 1100, margin: "16px auto 18px", padding: "0 16px" }}>
         <h2 style={{ margin: "0 0 10px 0", color: "#D4AF37", textAlign: "center", fontSize: "clamp(20px,4.5vw,28px)" }}>
           Compare VIP vs VIP Gold
@@ -154,6 +151,8 @@ export default function VipPage() {
               <li>VIP badge & highlights</li>
               <li>Exclusive VIP drops & events</li>
               <li>Better rates on selected VIP-only items</li>
+              <li><b>NSFW pay-per-item</b> (chat, DM, profile) — <b>3-day access</b></li>
+              <li><b>Purchases visible</b> in VIP chat</li>
             </ul>
           </article>
 
@@ -168,6 +167,10 @@ export default function VipPage() {
               <li><b>+5% Lotus bonus</b> on every pack</li>
               <li>Gold Lounge (private events & early access)</li>
               <li>Cosmetic gold skins in Casino (no odds boost)</li>
+              <li><b>NSFW pay-per-item</b> (chat, DM, profile)</li>
+              <li><b>Lifetime storage</b> for <b>VIP chat & DM photos</b> (Library+)</li>
+              <li><b>Silent purchases</b> (no chat broadcast)</li>
+              <li><b>Incognito mode</b> (Live & Chat — appear as “Gold Member”)</li>
             </ul>
           </article>
         </div>
@@ -180,26 +183,11 @@ export default function VipPage() {
         </h2>
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
           {[
-            {
-              q: "How are the included Lotus credited?",
-              a: "They are credited monthly upon subscription renewal (included Lotus per month).",
-            },
-            {
-              q: "Can I cancel anytime?",
-              a: "Yes. You keep access until the end of your current period.",
-            },
-            {
-              q: "Is NSFW content included?",
-              a: "No. NSFW remains gift-unlock only, even for VIP / VIP Gold.",
-            },
-            {
-              q: "What is the difference between VIP and VIP Gold?",
-              a: "Gold includes everything in VIP plus extended galleries, top priority, +5% Lotus bonus, private lounge, and cosmetic casino skins.",
-            },
-            {
-              q: "Are Lotus refundable or monetary?",
-              a: "No. Lotus have no monetary value and are non-refundable.",
-            },
+            { q: "How are the included Lotus credited?", a: "Monthly upon renewal (included Lotus per month)." },
+            { q: "Can I cancel anytime?", a: "Yes. You keep access until the end of your current period." },
+            { q: "Is NSFW content included?", a: "No. NSFW remains gift-unlock only, even for VIP / VIP Gold." },
+            { q: "VIP vs VIP Gold?", a: "Gold adds extended galleries, top priority, +5% Lotus bonus, private lounge, cosmetic skins, lifetime storage (VIP chat & DM photos), and Incognito mode." },
+            { q: "Are Lotus refundable?", a: "No. Lotus have no monetary value and are non-refundable." },
           ].map((x, i) => (
             <article key={i} className="card" style={{ padding: 14, display: "grid", gap: 6 }}>
               <div style={{ fontWeight: 800, color: "#D4AF37" }}>{x.q}</div>
@@ -229,4 +217,4 @@ export default function VipPage() {
       </section>
     </main>
   );
-}
+                }
