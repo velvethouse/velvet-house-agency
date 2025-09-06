@@ -1,3 +1,4 @@
+// app/vip/VipContent.tsx
 "use client";
 
 import { useSearchParams } from "next/navigation";
@@ -37,12 +38,8 @@ export default function VipContent() {
         const json = (await res.json()) as TiersResponse;
         if (!cancelled) setState({ status: "ready", tiers: json });
       } catch (e: any) {
-        if (!cancelled) {
-          setState({
-            status: "error",
-            message: e?.message || "Failed to load tiers",
-          });
-        }
+        if (!cancelled)
+          setState({ status: "error", message: e?.message || "Failed to load tiers" });
       }
     }
     load();
