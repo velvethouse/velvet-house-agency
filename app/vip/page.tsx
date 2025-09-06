@@ -6,7 +6,7 @@ export default function VipPage() {
   const gold = TIERS["vip-gold"];
 
   const fmt = (n: number) =>
-    new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n);
+    new Intl.NumberFormat("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n);
 
   const ProgressBar = ({ value = 100 }: { value?: number }) => (
     <div style={{ width: "100%", height: 8, background: "rgba(255,255,255,.15)", borderRadius: 999 }}>
@@ -55,9 +55,9 @@ export default function VipPage() {
         {price} <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ {period}</span>
       </div>
 
-      {/* Lotus inclus / mois */}
+      {/* Monthly Lotus */}
       <div style={{ color: "#d7c9b3" }}>
-        Includes <b>{fmt(lotus)} Lotus</b> / month
+        Includes <b>{fmt(lotus)} Lotus</b> per month
       </div>
       <ProgressBar value={100} />
 
@@ -87,8 +87,8 @@ export default function VipPage() {
           Become VIP
         </h1>
         <p style={{ margin: "10px auto 0", maxWidth: 820, color: "#e9dfcf", lineHeight: 1.7 }}>
-          Unlock full galleries (non-NSFW), priority in lives & chats, exclusive rewards and premium access across Velvet
-          House. NSFW media stay <b>gift-unlock only</b> — even for VIP &amp; VIP Gold.
+          Unlock full galleries (non-NSFW), priority in lives & chats, exclusive rewards, and premium access across
+          Velvet House. NSFW media remain <b>gift-unlock only</b> — even for VIP & VIP Gold.
         </p>
       </section>
 
@@ -136,7 +136,7 @@ export default function VipPage() {
         </div>
       </section>
 
-      {/* Comparatif VIP vs VIP Gold */}
+      {/* Compare VIP vs VIP Gold */}
       <section style={{ maxWidth: 1100, margin: "16px auto 18px", padding: "0 16px" }}>
         <h2 style={{ margin: "0 0 10px 0", color: "#D4AF37", textAlign: "center", fontSize: "clamp(20px,4.5vw,28px)" }}>
           Compare VIP vs VIP Gold
@@ -167,7 +167,7 @@ export default function VipPage() {
               <li>Gold badge & golden highlight</li>
               <li><b>+5% Lotus bonus</b> on every pack</li>
               <li>Gold Lounge (private events & early access)</li>
-              <li>Cosmetic gold skins in Casino (non-boost)</li>
+              <li>Cosmetic gold skins in Casino (no odds boost)</li>
             </ul>
           </article>
         </div>
@@ -181,24 +181,24 @@ export default function VipPage() {
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
           {[
             {
-              q: "Comment sont crédités les Lotus inclus ?",
-              a: "Chaque mois au renouvellement de l’abonnement (lotus inclus / mois).",
+              q: "How are the included Lotus credited?",
+              a: "They are credited monthly upon subscription renewal (included Lotus per month).",
             },
             {
-              q: "Puis-je annuler à tout moment ?",
-              a: "Oui, vous gardez l’accès jusqu’à la fin de la période en cours.",
+              q: "Can I cancel anytime?",
+              a: "Yes. You keep access until the end of your current period.",
             },
             {
-              q: "Le contenu NSFW est-il inclus ?",
-              a: "Non. NSFW reste gift-unlock only, même pour VIP / Gold.",
+              q: "Is NSFW content included?",
+              a: "No. NSFW remains gift-unlock only, even for VIP / VIP Gold.",
             },
             {
-              q: "Quelle est la différence VIP vs VIP Gold ?",
-              a: "Gold inclut tout VIP + galleries étendues, top priorité, +5% bonus Lotus, lounge privé, skins casino (cosmétique).",
+              q: "What is the difference between VIP and VIP Gold?",
+              a: "Gold includes everything in VIP plus extended galleries, top priority, +5% Lotus bonus, private lounge, and cosmetic casino skins.",
             },
             {
-              q: "Les Lotus sont-ils remboursables ?",
-              a: "Non, les Lotus n’ont pas de valeur monétaire et ne sont pas remboursables.",
+              q: "Are Lotus refundable or monetary?",
+              a: "No. Lotus have no monetary value and are non-refundable.",
             },
           ].map((x, i) => (
             <article key={i} className="card" style={{ padding: 14, display: "grid", gap: 6 }}>
@@ -209,7 +209,7 @@ export default function VipPage() {
         </div>
       </section>
 
-      {/* CTA secondaires */}
+      {/* Secondary CTAs */}
       <section style={{ maxWidth: 900, margin: "0 auto 18px", padding: "0 16px", textAlign: "center" }}>
         <div className="btn-row-2" style={{ maxWidth: 560, margin: "0 auto" }}>
           <a href="/lotus" className="btn3d btn3d--gold">Buy Lotus</a>
@@ -217,12 +217,12 @@ export default function VipPage() {
         </div>
       </section>
 
-      {/* Mentions */}
+      {/* Legal / Notes */}
       <section style={{ maxWidth: 1100, margin: "0 auto 30px", padding: "0 16px" }}>
         <div className="card" style={{ padding: 14 }}>
           <p style={{ margin: 0, color: "#d7c9b3", fontSize: 13, lineHeight: 1.7 }}>
-            <b>Legal / Notes:</b> Lotus inclus crédités mensuellement au renouvellement. Les Lotus n’ont pas de valeur
-            monétaire et ne sont pas remboursables. NSFW media restent gift-unlock only. By subscribing you accept our{" "}
+            <b>Legal / Notes:</b> Included Lotus are credited monthly upon renewal. Lotus have no monetary value and are
+            non-refundable. NSFW media remain gift-unlock only. By subscribing you accept our{" "}
             <a href="/cgu" style={{ color: "#D4AF37", textDecoration: "none" }}>Terms</a>.
           </p>
         </div>
