@@ -1,6 +1,13 @@
 // app/vip/page.tsx
+import { TIERS } from "@/data/tiers";
 
 export default function VipPage() {
+  const vip = TIERS["vip"];
+  const gold = TIERS["vip-gold"];
+
+  const fmt = (n: number) =>
+    new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n);
+
   return (
     <main
       style={{
@@ -15,31 +22,33 @@ export default function VipPage() {
         <h1 className="gold-gradient-text" style={{ fontSize: "clamp(28px,6.5vw,44px)", margin: 0 }}>
           Become VIP
         </h1>
-        <p style={{ margin: "10px auto 0", maxWidth: 800, color: "#e9dfcf", lineHeight: 1.7 }}>
-          Unlock full galleries (non-NSFW), priority in lives & chats, exclusive rewards and premium
-          access across Velvet House. NSFW media stay gift-unlock only — even for VIP.
+        <p style={{ margin: "10px auto 0", maxWidth: 820, color: "#e9dfcf", lineHeight: 1.7 }}>
+          Unlock full galleries (non-NSFW), priority in lives & chats, exclusive rewards and premium access across
+          Velvet House. NSFW media stay <b>gift-unlock only</b> — even for VIP &amp; VIP Gold.
         </p>
       </section>
 
-      {/* Tiers */}
+      {/* Tiers – 4 cartes : VIP / VIP annual / GOLD / GOLD annual */}
       <section style={{ maxWidth: 1100, margin: "18px auto 10px", padding: "0 16px" }}>
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
-          {/* Monthly */}
+          {/* VIP Monthly */}
           <article className="card" style={{ display: "grid", gap: 12, padding: 18 }}>
-            <h2 style={{ margin: 0, color: "#D4AF37" }}>VIP Monthly</h2>
+            <h2 style={{ margin: 0, color: "#D4AF37" }}>{vip.title} Monthly</h2>
             <div style={{ fontSize: 32, fontWeight: 800 }}>
-              9,90€ <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ month</span>
+              15€ <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ month</span>
+            </div>
+            <div style={{ color: "#d7c9b3" }}>
+              Includes <b>{fmt(vip.lotusMonthlyIncluded)} Lotus</b> / month
             </div>
             <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.8, color: "#d7c9b3" }}>
-              <li>Access up to <b>100 photos</b> & <b>20 videos</b> (non-NSFW)</li>
-              <li>Priority in live rooms & chat</li>
-              <li>VIP badge & highlights</li>
-              <li>Exclusive VIP drops & events</li>
+              {vip.benefits.map((b, i) => (
+                <li key={i} dangerouslySetInnerHTML={{ __html: b.replaceAll("&", "&amp;") }} />
+              ))}
             </ul>
             <a href="/signup" className="btn3d btn3d--gold">Subscribe monthly</a>
           </article>
 
-          {/* Annual */}
+          {/* VIP Annual */}
           <article
             className="card"
             style={{
@@ -50,48 +59,99 @@ export default function VipPage() {
               boxShadow: "0 10px 34px rgba(0,0,0,.36)",
             }}
           >
-            <h2 style={{ margin: 0, color: "#D4AF37" }}>VIP Annual</h2>
+            <h2 style={{ margin: 0, color: "#D4AF37" }}>{vip.title} Annual</h2>
             <div style={{ fontSize: 32, fontWeight: 800 }}>
-              99€ <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ year</span>
+              150€ <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ year</span>
+            </div>
+            <div style={{ color: "#d7c9b3" }}>
+              Includes <b>{fmt(vip.lotusMonthlyIncluded)} Lotus</b> / month (credited monthly)
             </div>
             <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.8, color: "#d7c9b3" }}>
               <li><b>2 months free</b> vs monthly</li>
-              <li>Access up to <b>100 photos</b> & <b>20 videos</b> (non-NSFW)</li>
-              <li>Top priority & early access</li>
-              <li>Annual VIP exclusive rewards</li>
+              {vip.benefits.map((b, i) => (
+                <li key={i} dangerouslySetInnerHTML={{ __html: b.replaceAll("&", "&amp;") }} />
+              ))}
             </ul>
             <a href="/signup" className="btn3d btn3d--velvet">Subscribe annual</a>
+          </article>
+
+          {/* VIP GOLD Monthly */}
+          <article className="card" style={{ display: "grid", gap: 12, padding: 18 }}>
+            <h2 style={{ margin: 0, color: "#D4AF37" }}>{gold.title} Monthly</h2>
+            <div style={{ fontSize: 32, fontWeight: 800 }}>
+              464€ <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ month</span>
+            </div>
+            <div style={{ color: "#d7c9b3" }}>
+              Includes <b>{fmt(gold.lotusMonthlyIncluded)} Lotus</b> / month
+            </div>
+            <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.8, color: "#d7c9b3" }}>
+              {gold.benefits.map((b, i) => (
+                <li key={i} dangerouslySetInnerHTML={{ __html: b.replaceAll("&", "&amp;") }} />
+              ))}
+            </ul>
+            <a href="/signup" className="btn3d btn3d--gold">Subscribe Gold monthly</a>
+          </article>
+
+          {/* VIP GOLD Annual */}
+          <article
+            className="card"
+            style={{
+              display: "grid",
+              gap: 12,
+              padding: 18,
+              borderColor: "rgba(212,175,55,0.35)",
+              boxShadow: "0 10px 34px rgba(0,0,0,.36)",
+            }}
+          >
+            <h2 style={{ margin: 0, color: "#D4AF37" }}>{gold.title} Annual</h2>
+            <div style={{ fontSize: 32, fontWeight: 800 }}>
+              4 640€ <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ year</span>
+            </div>
+            <div style={{ color: "#d7c9b3" }}>
+              Includes <b>{fmt(gold.lotusMonthlyIncluded)} Lotus</b> / month (credited monthly)
+            </div>
+            <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.8, color: "#d7c9b3" }}>
+              <li><b>2 months free</b> vs monthly</li>
+              {gold.benefits.map((b, i) => (
+                <li key={i} dangerouslySetInnerHTML={{ __html: b.replaceAll("&", "&amp;") }} />
+              ))}
+            </ul>
+            <a href="/signup" className="btn3d btn3d--velvet">Subscribe Gold annual</a>
           </article>
         </div>
       </section>
 
-      {/* Condition Lotus */}
+      {/* Notes */}
       <section style={{ maxWidth: 1100, margin: "8px auto 18px", padding: "0 16px" }}>
         <div className="card" style={{ padding: 14 }}>
-          <p style={{ margin: 0, color: "#d7c9b3" }}>
-            <b>Note:</b> Becoming VIP requires an <b>active subscription</b> (monthly or annual)
-            <br />and a <b>minimum purchase of 100,000 Lotus</b>.
+          <p style={{ margin: 0, color: "#d7c9b3", lineHeight: 1.7 }}>
+            <b>Lotus inclus :</b> crédités chaque mois au renouvellement de l’abonnement. Lotus without monetary value and non-refundable.
+            <br />
+            <b>NSFW :</b> remains <b>gift-unlock only</b> for all tiers.
           </p>
         </div>
       </section>
 
-      {/* Benefits */}
-      <section style={{ maxWidth: 1100, margin: "8px auto 22px", padding: "0 16px" }}>
+      {/* Benefits recap (facultatif, tu peux garder ou enlever) */}
+      <section style={{ maxWidth: 1100, margin: "8px auto 30px", padding: "0 16px" }}>
         <h2 style={{ margin: "0 0 10px 0", color: "#D4AF37", textAlign: "center", fontSize: "clamp(20px,4.5vw,28px)" }}>
           VIP benefits
         </h2>
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
-          {[
-            { t: "Full galleries (non-NSFW)", d: "Up to 100 photos & 20 videos unlocked for every creator." },
-            { t: "Priority access", d: "Top queue in lives & faster replies in chats." },
-            { t: "Premium badge", d: "Stand out with the VIP mark across the platform." },
-            { t: "Exclusive drops", d: "Early access to events, gifts & limited offers." },
-            { t: "Better rates", d: "Special pricing on selected VIP-only items." },
-            { t: "Support creators", d: "Directly support your favorite creators with more visibility." },
-          ].map((x, i) => (
+          {vip.benefits.map((b, i) => (
             <article key={i} className="card" style={{ padding: 14, display: "grid", gap: 6 }}>
-              <div style={{ fontWeight: 800, color: "#D4AF37" }}>{x.t}</div>
-              <div style={{ color: "#d7c9b3" }}>{x.d}</div>
+              <div style={{ fontWeight: 800, color: "#D4AF37" }} dangerouslySetInnerHTML={{ __html: b.replaceAll("&", "&amp;") }} />
+            </article>
+          ))}
+        </div>
+
+        <h2 style={{ margin: "24px 0 10px 0", color: "#D4AF37", textAlign: "center", fontSize: "clamp(20px,4.5vw,28px)" }}>
+          VIP Gold benefits
+        </h2>
+        <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+          {gold.benefits.map((b, i) => (
+            <article key={i} className="card" style={{ padding: 14, display: "grid", gap: 6 }}>
+              <div style={{ fontWeight: 800, color: "#D4AF37" }} dangerouslySetInnerHTML={{ __html: b.replaceAll("&", "&amp;") }} />
             </article>
           ))}
         </div>
@@ -109,4 +169,4 @@ export default function VipPage() {
       </section>
     </main>
   );
-      }
+}
