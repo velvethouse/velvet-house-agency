@@ -4,6 +4,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
+/* ---------------- Types ---------------- */
 type Tier = {
   title: string;
   monthly: number;              // €/month
@@ -18,9 +19,11 @@ type LoadState =
   | { status: "error"; message: string }
   | { status: "ready"; tiers: TiersResponse };
 
+/* ---------------- Page ---------------- */
 export default function VipPage() {
   const fmtNum = (n: number) => new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 }).format(n);
   const fmtPrice = (n: number) => `${fmtNum(n)}€`;
+
   const searchParams = useSearchParams();
   const reason = searchParams.get("reason") || "";
   const from = searchParams.get("from") || "";
@@ -40,19 +43,18 @@ export default function VipPage() {
       }
     }
     load();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, []);
 
   const banner = useMemo(() => {
     if (reason === "gold-required")
       return "VIP Gold required: unlock lifetime storage for VIP chat & DM media (+5% Lotus bonus on every pack).";
-    if (reason === "vip-required") return "VIP required to access this feature.";
-    if (reason === "vip-or-gold") return "VIP or VIP Gold required to access this feature.";
+    if (reason === "vip-required")   return "VIP required to access this feature.";
+    if (reason === "vip-or-gold")    return "VIP or VIP Gold required to access this feature.";
     return "";
   }, [reason]);
 
+  /* --------- Loading / Error --------- */
   if (state.status !== "ready") {
     return (
       <main
@@ -75,9 +77,10 @@ export default function VipPage() {
     );
   }
 
-  const vip = state.tiers.vip;
-  const gold = state.tiers["vip-gold"];
+  const vip   = state.tiers.vip;
+  const gold  = state.tiers["vip-gold"];
 
+  /* --------- Small UI helpers --------- */
   const ProgressBar = ({ value = 100 }: { value?: number }) => (
     <div style={{ width: "100%", height: 8, background: "rgba(255,255,255,.15)", borderRadius: 999 }}>
       <div
@@ -92,14 +95,7 @@ export default function VipPage() {
   );
 
   const Card = ({
-    title,
-    price,
-    period,
-    lotus,
-    benefits,
-    ctaText,
-    ctaHref,
-    highlight = false,
+    title, price, period, lotus, benefits, ctaText, ctaHref, highlight = false,
   }: {
     title: string;
     price: string;
@@ -129,9 +125,7 @@ export default function VipPage() {
       </div>
       <ProgressBar value={100} />
       <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.8, color: "#d7c9b3" }}>
-        {benefits.map((b, i) => (
-          <li key={i}>{b}</li>
-        ))}
+        {benefits.map((b, i) => <li key={i}>{b}</li>)}
       </ul>
       <a href={ctaHref} className={`btn3d ${highlight ? "btn3d--velvet" : "btn3d--gold"}`}>
         {ctaText}
@@ -139,6 +133,7 @@ export default function VipPage() {
     </article>
   );
 
+  /* ---------------- Render ---------------- */
   return (
     <main
       style={{
@@ -222,7 +217,7 @@ export default function VipPage() {
         </div>
       </section>
 
-      {/* Compare VIP vs VIP Gold (includes Incognito) */}
+      {/* Compare VIP vs VIP Gold (includes Incognito & Silent purchases) */}
       <section style={{ maxWidth: 1100, margin: "16px auto 18px", padding: "0 16px" }}>
         <h2 style={{ margin: "0 0 10px 0", color: "#D4AF37", textAlign: "center", fontSize: "clamp(20px,4.5vw,28px)" }}>
           Compare VIP vs VIP Gold
