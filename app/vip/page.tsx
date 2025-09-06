@@ -1,12 +1,82 @@
 // app/vip/page.tsx
-import { TIERS } from "@/data/tiers";
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+
+type Tier = {
+  title: string;
+  monthly: number;              // €/month
+  annual: number;               // €/year
+  lotusMonthlyIncluded: number; // Lotus credited per month
+  benefits: string[];
+};
+type TiersResponse = { vip: Tier; "vip-gold": Tier };
+
+type LoadState =
+  | { status: "loading" | "idle" }
+  | { status: "error"; message: string }
+  | { status: "ready"; tiers: TiersResponse };
 
 export default function VipPage() {
-  const vip = TIERS["vip"];
-  const gold = TIERS["vip-gold"];
+  const fmtNum = (n: number) => new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 }).format(n);
+  const fmtPrice = (n: number) => `${fmtNum(n)}€`;
+  const searchParams = useSearchParams();
+  const reason = searchParams.get("reason") || "";
+  const from = searchParams.get("from") || "";
 
-  const fmt = (n: number) =>
-    new Intl.NumberFormat("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n);
+  const [state, setState] = useState<LoadState>({ status: "loading" });
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      try {
+        const res = await fetch("/api/tiers", { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = (await res.json()) as TiersResponse;
+        if (!cancelled) setState({ status: "ready", tiers: json });
+      } catch (e: any) {
+        if (!cancelled) setState({ status: "error", message: e?.message || "Failed to load tiers" });
+      }
+    }
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const banner = useMemo(() => {
+    if (reason === "gold-required")
+      return "VIP Gold required: unlock lifetime storage for VIP chat & DM media (+5% Lotus bonus on every pack).";
+    if (reason === "vip-required") return "VIP required to access this feature.";
+    if (reason === "vip-or-gold") return "VIP or VIP Gold required to access this feature.";
+    return "";
+  }, [reason]);
+
+  if (state.status !== "ready") {
+    return (
+      <main
+        style={{
+          minHeight: "100vh",
+          background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
+          color: "#f5f5f5",
+          fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
+        }}
+      >
+        <section style={{ maxWidth: 1100, margin: "24px auto", padding: "0 16px", textAlign: "center" }}>
+          <h1 className="gold-gradient-text" style={{ fontSize: "clamp(28px,6.5vw,44px)", margin: 0 }}>
+            Become VIP
+          </h1>
+          <div className="card" style={{ padding: 16, marginTop: 16 }}>
+            {state.status === "loading" ? "Loading VIP tiers…" : `Error: ${state.message}`}
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  const vip = state.tiers.vip;
+  const gold = state.tiers["vip-gold"];
 
   const ProgressBar = ({ value = 100 }: { value?: number }) => (
     <div style={{ width: "100%", height: 8, background: "rgba(255,255,255,.15)", borderRadius: 999 }}>
@@ -33,7 +103,7 @@ export default function VipPage() {
   }: {
     title: string;
     price: string;
-    period: string;
+    period: "month" | "year";
     lotus: number;
     benefits: string[];
     ctaText: string;
@@ -55,7 +125,7 @@ export default function VipPage() {
         {price} <span style={{ fontSize: 14, color: "#d7c9b3", fontWeight: 600 }}>/ {period}</span>
       </div>
       <div style={{ color: "#d7c9b3" }}>
-        Includes <b>{fmt(lotus)} Lotus</b> per month
+        Includes <b>{fmtNum(lotus)} Lotus</b> per month
       </div>
       <ProgressBar value={100} />
       <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.8, color: "#d7c9b3" }}>
@@ -78,6 +148,25 @@ export default function VipPage() {
         fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
       }}
     >
+      {/* Banner if redirected from a gated feature */}
+      {banner && (
+        <div style={{ maxWidth: 1100, margin: "14px auto 0", padding: "0 16px" }}>
+          <div
+            className="card"
+            style={{
+              padding: 12,
+              borderColor: "rgba(212,175,55,.5)",
+              background: "linear-gradient(180deg, rgba(212,175,55,.12), rgba(212,175,55,.06))",
+            }}
+          >
+            <div style={{ color: "#D4AF37", fontWeight: 800 }}>Upgrade required</div>
+            <div style={{ color: "#e9dfcf" }}>
+              {banner} {from ? <span style={{ opacity: 0.8 }}> (from: {from})</span> : null}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero */}
       <section style={{ maxWidth: 1100, margin: "24px auto 12px", padding: "0 16px", textAlign: "center" }}>
         <h1 className="gold-gradient-text" style={{ fontSize: "clamp(28px,6.5vw,44px)", margin: 0 }}>
@@ -94,7 +183,7 @@ export default function VipPage() {
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
           <Card
             title={`${vip.title} Monthly`}
-            price={`${vip.monthly}€`}
+            price={fmtPrice(vip.monthly)}
             period="month"
             lotus={vip.lotusMonthlyIncluded}
             benefits={vip.benefits}
@@ -103,7 +192,7 @@ export default function VipPage() {
           />
           <Card
             title={`${vip.title} Annual`}
-            price={`${vip.annual}€`}
+            price={fmtPrice(vip.annual)}
             period="year"
             lotus={vip.lotusMonthlyIncluded}
             benefits={[`2 months free vs monthly`, ...vip.benefits]}
@@ -113,7 +202,7 @@ export default function VipPage() {
           />
           <Card
             title={`${gold.title} Monthly`}
-            price={`${gold.monthly}€`}
+            price={fmtPrice(gold.monthly)}
             period="month"
             lotus={gold.lotusMonthlyIncluded}
             benefits={gold.benefits}
@@ -122,7 +211,7 @@ export default function VipPage() {
           />
           <Card
             title={`${gold.title} Annual`}
-            price={`${fmt(gold.annual)}€`}
+            price={fmtPrice(gold.annual)}
             period="year"
             lotus={gold.lotusMonthlyIncluded}
             benefits={[`2 months free vs monthly`, ...gold.benefits]}
@@ -133,7 +222,7 @@ export default function VipPage() {
         </div>
       </section>
 
-      {/* Compare VIP vs VIP Gold (UPDATED with Incognito) */}
+      {/* Compare VIP vs VIP Gold (includes Incognito) */}
       <section style={{ maxWidth: 1100, margin: "16px auto 18px", padding: "0 16px" }}>
         <h2 style={{ margin: "0 0 10px 0", color: "#D4AF37", textAlign: "center", fontSize: "clamp(20px,4.5vw,28px)" }}>
           Compare VIP vs VIP Gold
@@ -217,4 +306,4 @@ export default function VipPage() {
       </section>
     </main>
   );
-                }
+          }
