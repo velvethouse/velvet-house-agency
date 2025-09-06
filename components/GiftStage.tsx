@@ -2,6 +2,16 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useGiftStore, type Gift } from "@/stores/giftStore";
+import dynamic from "next/dynamic";
+
+// react-lottie-player supporte <Player src="...json" />
+const Player = dynamic(() => import("react-lottie-player").then(m => m.default), {
+  ssr: false,
+});
+
+function isLottie(path?: string) {
+  return !!path && (path.endsWith(".json") || path.endsWith(".lottie"));
+}
 
 export default function GiftStage() {
   const { queue, shift } = useGiftStore();
@@ -25,17 +35,15 @@ export default function GiftStage() {
 
   if (!current) return null;
 
-  const isVideo = (p?: string) => !!p && (p.endsWith(".webm") || p.endsWith(".mp4"));
-
   return (
     <div
       style={{
         pointerEvents: "none",
         position: "fixed",
         inset: 0,
-        zIndex: 60, // au-dessus du header (zIndex 50)
+        zIndex: 60,
         display: "grid",
-        placeItems: "center"
+        placeItems: "center",
       }}
     >
       <div
@@ -44,19 +52,18 @@ export default function GiftStage() {
           aspectRatio: "16/9",
           background: "rgba(0,0,0,.35)",
           borderRadius: 16,
-          overflow: "hidden"
+          overflow: "hidden",
         }}
       >
-        {isVideo(current.src) ? (
-          <video
+        {isLottie(current.src) ? (
+          <Player
             src={current.src}
-            autoPlay
-            loop
-            muted
-            playsInline
-            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+            play
+            loop={false}
+            style={{ width: "100%", height: "100%" }}
           />
         ) : (
+          // Fallback image (si jamais on pousse une image au lieu d'un json)
           <img
             src={current.src}
             alt={current.name}
