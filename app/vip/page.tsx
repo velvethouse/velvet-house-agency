@@ -56,7 +56,7 @@ export default function VipPage() {
   }, [reason]);
 
   /* ---------- Loading / Error ---------- */
-  if (state.status !== "ready") {
+  if (state.status === "loading" || state.status === "idle") {
     return (
       <main
         style={{
@@ -71,13 +71,36 @@ export default function VipPage() {
             Become VIP
           </h1>
           <div className="card" style={{ padding: 16, marginTop: 16 }}>
-            {state.status === "loading" ? "Loading VIP tiers…" : `Error: ${state.message}`}
+            Loading VIP tiers…
           </div>
         </section>
       </main>
     );
   }
 
+  if (state.status === "error") {
+    return (
+      <main
+        style={{
+          minHeight: "100vh",
+          background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
+          color: "#f5f5f5",
+          fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
+        }}
+      >
+        <section style={{ maxWidth: 1100, margin: "24px auto", padding: "0 16px", textAlign: "center" }}>
+          <h1 className="gold-gradient-text" style={{ fontSize: "clamp(28px,6.5vw,44px)", margin: 0 }}>
+            Become VIP
+          </h1>
+          <div className="card" style={{ padding: 16, marginTop: 16, color: "#e67e22" }}>
+            Error: {state.message}
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  // Ici, TypeScript sait que state.status === "ready"
   const vip = state.tiers.vip;
   const gold = state.tiers["vip-gold"];
 
@@ -186,9 +209,6 @@ export default function VipPage() {
             ctaText="Subscribe monthly"
             ctaHref="/signup"
           />
-        </div>
-
-        <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 12 }}>
           <Card
             title={vip.title + " Annual"}
             price={fmtPrice(vip.annual)}
@@ -199,9 +219,6 @@ export default function VipPage() {
             ctaHref="/signup"
             highlight
           />
-        </div>
-
-        <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 12 }}>
           <Card
             title={gold.title + " Monthly"}
             price={fmtPrice(gold.monthly)}
@@ -211,9 +228,6 @@ export default function VipPage() {
             ctaText="Subscribe Gold monthly"
             ctaHref="/signup"
           />
-        </div>
-
-        <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 12 }}>
           <Card
             title={gold.title + " Annual"}
             price={fmtPrice(gold.annual)}
@@ -311,4 +325,4 @@ export default function VipPage() {
       </section>
     </main>
   );
-          }
+            }
