@@ -27,7 +27,7 @@ export default function VipPage() {
 
   const searchParams = useSearchParams();
   const reason = searchParams.get("reason") || "";
-  the const from = searchParams.get("from") || "";
+  const from = searchParams.get("from") || "";
 
   const [state, setState] = useState<LoadState>({ status: "loading" });
 
@@ -186,6 +186,9 @@ export default function VipPage() {
             ctaText="Subscribe monthly"
             ctaHref="/signup"
           />
+        </div>
+
+        <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 12 }}>
           <Card
             title={vip.title + " Annual"}
             price={fmtPrice(vip.annual)}
@@ -196,6 +199,9 @@ export default function VipPage() {
             ctaHref="/signup"
             highlight
           />
+        </div>
+
+        <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 12 }}>
           <Card
             title={gold.title + " Monthly"}
             price={fmtPrice(gold.monthly)}
@@ -205,6 +211,9 @@ export default function VipPage() {
             ctaText="Subscribe Gold monthly"
             ctaHref="/signup"
           />
+        </div>
+
+        <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", marginTop: 12 }}>
           <Card
             title={gold.title + " Annual"}
             price={fmtPrice(gold.annual)}
@@ -302,4 +311,4 @@ export default function VipPage() {
       </section>
     </main>
   );
-      }
+          }
