@@ -3,18 +3,23 @@
 
 import { useEffect, useState } from "react";
 
+/** Demo: replace with real session role later */
+const IS_GOLD = true;
+
 /** Local storage keys (demo only) */
-const KEY_AVATAR = "vh_profile_avatar";
-const KEY_MEDIA  = "vh_profile_media";   // up to 5
-const KEY_SUB    = "vh_sub_active";      // subscription status (demo)
+const KEY_AVATAR   = "vh_profile_avatar";
+const KEY_MEDIA    = "vh_profile_media";   // up to 5
+const KEY_SUB      = "vh_sub_active";      // subscription status (demo)
+const KEY_INCOG    = "vh_incognito";       // Gold-only incognito toggle
 
 /** Types */
 type MediaItem = { id: string; url: string; kind: "image" | "video" };
 
 export default function ProfilePage() {
   const [avatar, setAvatar] = useState<string>("");
-  const [media, setMedia]   = useState<MediaItem[]>([]);
-  const [subActive, setSubActive] = useState<boolean>(true);
+  const [media,  setMedia]  = useState<MediaItem[]>([]);
+  const [subActive, setSubActive]   = useState<boolean>(true);
+  const [incognito, setIncognito]   = useState<boolean>(false); // Gold only
 
   /** Load persisted demo data */
   useEffect(() => {
@@ -22,6 +27,7 @@ export default function ProfilePage() {
       setAvatar(localStorage.getItem(KEY_AVATAR) || "");
       setMedia(JSON.parse(localStorage.getItem(KEY_MEDIA) || "[]"));
       setSubActive((localStorage.getItem(KEY_SUB) ?? "1") === "1");
+      setIncognito((localStorage.getItem(KEY_INCOG) ?? "0") === "1");
     } catch {}
   }, []);
 
@@ -29,6 +35,7 @@ export default function ProfilePage() {
   useEffect(() => { try { localStorage.setItem(KEY_AVATAR, avatar); } catch {} }, [avatar]);
   useEffect(() => { try { localStorage.setItem(KEY_MEDIA, JSON.stringify(media)); } catch {} }, [media]);
   useEffect(() => { try { localStorage.setItem(KEY_SUB, subActive ? "1" : "0"); } catch {} }, [subActive]);
+  useEffect(() => { try { localStorage.setItem(KEY_INCOG, incognito ? "1" : "0"); } catch {} }, [incognito]);
 
   /** Handlers */
   function onAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -55,7 +62,7 @@ export default function ProfilePage() {
   }
 
   function stopSubscription() {
-    // TODO: call your billing backend (Stripe/StoreKit/Google Play) here.
+    // TODO: call billing backend (Stripe/StoreKit/Play) in production.
     setSubActive(false);
     alert("Your subscription has been marked for cancellation (demo).");
   }
@@ -75,11 +82,11 @@ export default function ProfilePage() {
           My Profile
         </h1>
         <p style={{ margin: "8px 0 0", color: "#e9dfcf" }}>
-          Manage your avatar, personal media (up to 5), and subscription.
+          Manage your avatar, personal media (up to 5), subscription, and privacy.
         </p>
       </section>
 
-      {/* Avatar + Subscription */}
+      {/* Avatar + Subscription + Incognito */}
       <section style={{ maxWidth: 1100, margin: "16px auto 22px", padding: "0 16px" }}>
         <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
           {/* Avatar */}
@@ -154,6 +161,34 @@ export default function ProfilePage() {
             <p style={{ margin: 0, color: "#d7c9b3", fontSize: 12 }}>
               This is a demo action. In production, cancellations are handled by the billing provider.
             </p>
+          </article>
+
+          {/* Incognito (Gold only) */}
+          <article className="card" style={{ display: "grid", gap: 12, padding: 16 }}>
+            <div style={{ fontWeight: 800, color: "#D4AF37" }}>Privacy — Incognito (VIP Gold)</div>
+            <p style={{ margin: 0, color: "#d7c9b3" }}>
+              When enabled, your identity is hidden in <b>Live & Chat</b>. Others see <i>“Gold Member”</i> with a generic avatar.
+              Purchases remain silent in chat.
+            </p>
+
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <input
+                id="incognito"
+                type="checkbox"
+                checked={IS_GOLD && incognito}
+                onChange={(e) => IS_GOLD ? setIncognito(e.target.checked) : alert("Incognito is a VIP Gold feature.")}
+                style={{ width: 18, height: 18, accentColor: "#D4AF37" }}
+              />
+              <label htmlFor="incognito" style={{ cursor: "pointer" }}>
+                Enable Incognito mode (Gold only)
+              </label>
+            </div>
+
+            {!IS_GOLD && (
+              <div style={{ color: "#d7c9b3", fontSize: 12 }}>
+                Incognito mode is available with <a href="/vip" style={{ color: "#D4AF37", textDecoration: "none" }}>VIP Gold</a>.
+              </div>
+            )}
           </article>
         </div>
       </section>
