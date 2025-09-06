@@ -1,7 +1,6 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-import GiftStage from "@/components/GiftStage"; // ⬅️ overlay global pour afficher les gifts
+// import GiftStage from "@/components/GiftStage"; // Désactivé pour éviter erreur de build
 
 type Announcement = {
   id: string;
@@ -11,14 +10,12 @@ type Announcement = {
   endAt: string;
 };
 
-/** Détermine un baseURL utilisable côté serveur (Vercel/local) */
 function getBaseUrl() {
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL!;
   return "http://localhost:3000";
 }
 
-/** Récupère les annonces actives (petit message discret) */
 async function getAnnouncements(): Promise<Announcement[]> {
   const base = getBaseUrl();
   try {
@@ -68,7 +65,6 @@ export default async function RootLayout({
           fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
         }}
       >
-        {/* ====== Global sticky header ====== */}
         <header
           style={{
             position: "sticky",
@@ -91,7 +87,6 @@ export default async function RootLayout({
               flexWrap: "wrap",
             }}
           >
-            {/* Logo / Home */}
             <a
               href="/"
               style={{
@@ -104,7 +99,6 @@ export default async function RootLayout({
               Velvet House
             </a>
 
-            {/* Liens principaux dans l’ordre demandé */}
             <div
               style={{
                 display: "flex",
@@ -133,7 +127,6 @@ export default async function RootLayout({
             </div>
           </nav>
 
-          {/* ====== PETIT STRIP D’ANNONCE DISCRET ====== */}
           {announcements.length > 0 && (
             <div style={{ background: "transparent", padding: "2px 8px" }}>
               {announcements.map((a) => (
@@ -154,13 +147,10 @@ export default async function RootLayout({
           )}
         </header>
 
-        {/* ====== Overlay global des gifts (au-dessus des pages) ====== */}
-        <GiftStage />
+        {/* <GiftStage /> Désactivé car le composant est manquant */}
 
-        {/* ====== Page content ====== */}
         <main>{children}</main>
 
-        {/* ====== Global footer ====== */}
         <footer
           style={{
             maxWidth: 1100,
@@ -196,4 +186,4 @@ export default async function RootLayout({
       </body>
     </html>
   );
-}
+          }
