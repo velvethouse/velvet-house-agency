@@ -1,6 +1,7 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-// import GiftStage from "@/components/GiftStage"; // Désactivé pour éviter erreur de build
+import GiftStage from "@/components/GiftStage"; // ✅ Réactivé ici
 
 type Announcement = {
   id: string;
@@ -147,7 +148,8 @@ export default async function RootLayout({
           )}
         </header>
 
-        {/* <GiftStage /> Désactivé car le composant est manquant */}
+        {/* ✅ Bloc global d’animation cadeaux */}
+        <GiftStage />
 
         <main>{children}</main>
 
@@ -186,4 +188,4 @@ export default async function RootLayout({
       </body>
     </html>
   );
-          }
+}
