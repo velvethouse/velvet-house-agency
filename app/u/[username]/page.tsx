@@ -4,9 +4,9 @@ import ButterflyRank from "./components/ButterflyRank";
 import StreamAccessNotice from "./components/StreamAccessNotice";
 
 export default function CreatorProfile() {
-  const lotusEarned = 216000; // 💰 test: à remplacer par valeur réelle
-  const isVip = false;        // 🔓 profil ouvert par défaut (non-VIP)
-  const isLocked = false;     // 🔓 stream déverrouillé par défaut
+  const lotusEarned = 216000; // valeur mock pour test
+  const isVip = false;        // true si le profil est VIP/VIP Gold
+  const isLocked = false;     // 🔓 profil ouvert par défaut
 
   return (
     <main style={{ padding: "20px", maxWidth: 720, margin: "0 auto" }}>
@@ -30,30 +30,32 @@ export default function CreatorProfile() {
 
       <section style={{ marginTop: 40 }}>
         <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>Weekly Schedule</h2>
-        <div className="schedule-table">
-          <div className="row header">
-            <div>Time</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-            <div>Sun</div>
-          </div>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(8, 1fr)",
+          gap: "1px",
+          background: "#D4AF37",
+          fontSize: 14,
+          textAlign: "center",
+        }}>
+          <div style={{ background: "#2e0d0d", padding: "6px" }}>Time</div>
+          <div style={{ background: "#2e0d0d", padding: "6px" }}>Mon</div>
+          <div style={{ background: "#2e0d0d", padding: "6px" }}>Tue</div>
+          <div style={{ background: "#2e0d0d", padding: "6px" }}>Wed</div>
+          <div style={{ background: "#2e0d0d", padding: "6px" }}>Thu</div>
+          <div style={{ background: "#2e0d0d", padding: "6px" }}>Fri</div>
+          <div style={{ background: "#2e0d0d", padding: "6px" }}>Sat</div>
+          <div style={{ background: "#2e0d0d", padding: "6px" }}>Sun</div>
+
           {Array.from({ length: 16 }, (_, i) => {
             const hour = `${8 + i}:00`;
             return (
-              <div className="row" key={hour}>
-                <div>{hour}</div>
-                <div />
-                <div />
-                <div />
-                <div />
-                <div />
-                <div />
-                <div />
-              </div>
+              <>
+                <div style={{ background: "#3d0e0e", padding: "6px" }}>{hour}</div>
+                {Array.from({ length: 7 }).map((_, j) => (
+                  <div key={`${hour}-${j}`} style={{ background: "#3d0e0e", padding: "6px" }} />
+                ))}
+              </>
             );
           })}
         </div>
