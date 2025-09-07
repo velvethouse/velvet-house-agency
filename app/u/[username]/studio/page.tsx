@@ -1,76 +1,109 @@
-"use client";
+// app/u/[username]/page.tsx
+import { notFound } from "next/navigation";
 
-import { useEffect, useState } from "react";
+export default async function PublicProfile({
+  params,
+}: {
+  params: { username: string };
+}) {
+  const { username } = params;
 
-export default function StudioPage() {
-  const [accepted, setAccepted] = useState(false);
-
-  useEffect(() => {
-    const hasAccepted = localStorage.getItem("studio_rules_accepted");
-    if (hasAccepted === "true") {
-      setAccepted(true);
-    }
-  }, []);
-
-  const handleAccept = () => {
-    localStorage.setItem("studio_rules_accepted", "true");
-    setAccepted(true);
+  // Simulated data (to replace later with real fetch from DB)
+  const profile = {
+    username,
+    displayName: "QueenLuna",
+    avatarUrl: "/avatar-default.jpg", // fallback avatar
+    bio: "Welcome to my universe ✨ Let's vibe, chat and enjoy the moment together.",
+    level: "🔥 Fire Butterfly", // or 💛 Golden / 🦋 Butterfly / 🐛 Cristalline
+    lotusEarned: 1260000,
+    isLive: true,
   };
 
-  if (!accepted) {
-    return (
-      <div style={{ maxWidth: 600, margin: "32px auto", padding: 16 }}>
-        <h1 style={{ fontSize: 20, marginBottom: 12 }}>
-          Welcome to your Studio
-        </h1>
-        <p style={{ marginBottom: 8 }}>
-          This space is reserved for streamers and content creators. Before accessing your studio, please agree with the following rules:
-        </p>
-        <ul style={{ paddingLeft: 20, marginBottom: 16 }}>
-          <li>No explicit nudity or illegal content</li>
-          <li>Respect others and yourself</li>
-          <li>Gifts are your only unlock trigger</li>
-          <li>VIP and VIP Gold are managed by admins only</li>
-          <li>You are free to create and earn at your rhythm</li>
-        </ul>
-        <p style={{ fontWeight: 600, marginBottom: 16, color: "#f5c542" }}>
-          Any violation may result in a ban or removal from the platform.
-        </p>
-        <button
-          onClick={handleAccept}
+  if (!profile) return notFound();
+
+  return (
+    <main
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
+        color: "#f5f5f5",
+        fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
+      }}
+    >
+      <section
+        style={{
+          maxWidth: 1100,
+          margin: "32px auto",
+          padding: "0 16px",
+          display: "grid",
+          gap: 24,
+        }}
+      >
+        {/* AVATAR + INFO */}
+        <div
           style={{
-            background: "#D4AF37",
-            border: "none",
-            padding: "12px 24px",
-            fontWeight: 700,
-            borderRadius: 8,
-            cursor: "pointer",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 16,
+            textAlign: "center",
           }}
         >
-          I understand and want to enter my studio
-        </button>
-      </div>
-    );
-  }
+          <img
+            src={profile.avatarUrl}
+            alt={profile.username}
+            style={{
+              width: 128,
+              height: 128,
+              objectFit: "cover",
+              borderRadius: "50%",
+              border: "3px solid #D4AF37",
+            }}
+          />
+          <h1 style={{ margin: 0, fontSize: "clamp(24px,6vw,36px)" }}>
+            {profile.displayName}
+          </h1>
+          <div style={{ fontSize: 14, color: "#d7c9b3" }}>
+            {profile.level} • {profile.lotusEarned.toLocaleString()} Lotus earned
+          </div>
+          <p
+            style={{
+              fontSize: 15,
+              color: "#e9dfcf",
+              maxWidth: 600,
+              marginTop: 8,
+              lineHeight: 1.7,
+            }}
+          >
+            {profile.bio}
+          </p>
+        </div>
 
-  // 🎯 Contenu visible après acceptation
-  return (
-    <div style={{ maxWidth: 800, margin: "32px auto", padding: 16 }}>
-      <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 16 }}>
-        🎥 Your Studio Dashboard
-      </h1>
-      <p style={{ fontSize: 16, marginBottom: 24 }}>
-        Welcome back! You can manage your schedule, go live, and track your earnings here.
-      </p>
+        {/* CTA BUTTONS */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            gap: 16,
+            marginTop: 12,
+          }}
+        >
+          <a href={`/u/${username}/chat`} className="btn3d btn3d--gold">
+            💬 Chat with me
+          </a>
+          {profile.isLive && (
+            <a href={`/u/${username}/live`} className="btn3d btn3d--velvet">
+              🔴 Watch Live
+            </a>
+          )}
+          <a href={`/u/${username}/studio`} className="btn3d btn3d--dark">
+            🎁 Send Gift
+          </a>
+        </div>
 
-      <div style={{ background: "#3c1a1a", padding: 24, borderRadius: 12 }}>
-        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-          <li style={{ marginBottom: 12 }}>📅 Schedule your live sessions</li>
-          <li style={{ marginBottom: 12 }}>🎁 View your received gifts</li>
-          <li style={{ marginBottom: 12 }}>💰 Track your Lotus balance</li>
-          <li style={{ marginBottom: 12 }}>🔐 Apply for VIP or Gold status</li>
-        </ul>
-      </div>
-    </div>
+        {/* (Optionnel) Planning ou Media ici plus tard */}
+      </section>
+    </main>
   );
 }
