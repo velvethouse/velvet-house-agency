@@ -1,109 +1,44 @@
-// app/u/[username]/page.tsx
-import { notFound } from "next/navigation";
+// ✅ Fichier : /app/u/[username]/studio/page.tsx
 
-export default async function PublicProfile({
-  params,
-}: {
-  params: { username: string };
-}) {
-  const { username } = params;
+"use client";
 
-  // Simulated data (to replace later with real fetch from DB)
-  const profile = {
-    username,
-    displayName: "QueenLuna",
-    avatarUrl: "/avatar-default.jpg", // fallback avatar
-    bio: "Welcome to my universe ✨ Let's vibe, chat and enjoy the moment together.",
-    level: "🔥 Fire Butterfly", // or 💛 Golden / 🦋 Butterfly / 🐛 Cristalline
-    lotusEarned: 1260000,
-    isLive: true,
-  };
+import { useState } from "react";
 
-  if (!profile) return notFound();
+export default function StreamerStudioPage() { const [agreed, setAgreed] = useState(false);
 
-  return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
-        color: "#f5f5f5",
-        fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
-      }}
+if (!agreed) { return ( <main style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}> <h1 style={{ color: "#D4AF37" }}>📋 Studio Rules & Conditions</h1> <p>Welcome to your professional page. Velvet House is a premium platform for streamers and content creators. Before accessing your studio, please make sure you agree with the following rules:</p> <ul style={{ paddingLeft: 20, lineHeight: 1.7 }}> <li>No explicit nudity or illegal content</li> <li>Respect others and yourself</li> <li>Gifts are your only unlock trigger</li> <li>VIP and VIP Gold are managed by admins only</li> <li>You are free to create and earn at your rhythm</li> </ul> <p style={{ marginTop: 16, fontWeight: 600, color: "#f8d7a0" }}> Any violation may result in a ban or removal from the platform. </p>
+
+<button
+      className="btn3d btn3d--gold"
+      style={{ marginTop: 28 }}
+      onClick={() => setAgreed(true)}
     >
-      <section
-        style={{
-          maxWidth: 1100,
-          margin: "32px auto",
-          padding: "0 16px",
-          display: "grid",
-          gap: 24,
-        }}
-      >
-        {/* AVATAR + INFO */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 16,
-            textAlign: "center",
-          }}
-        >
-          <img
-            src={profile.avatarUrl}
-            alt={profile.username}
-            style={{
-              width: 128,
-              height: 128,
-              objectFit: "cover",
-              borderRadius: "50%",
-              border: "3px solid #D4AF37",
-            }}
-          />
-          <h1 style={{ margin: 0, fontSize: "clamp(24px,6vw,36px)" }}>
-            {profile.displayName}
-          </h1>
-          <div style={{ fontSize: 14, color: "#d7c9b3" }}>
-            {profile.level} • {profile.lotusEarned.toLocaleString()} Lotus earned
-          </div>
-          <p
-            style={{
-              fontSize: 15,
-              color: "#e9dfcf",
-              maxWidth: 600,
-              marginTop: 8,
-              lineHeight: 1.7,
-            }}
-          >
-            {profile.bio}
-          </p>
-        </div>
+      I understand and want to enter my studio
+    </button>
+  </main>
+);
 
-        {/* CTA BUTTONS */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            flexWrap: "wrap",
-            gap: 16,
-            marginTop: 12,
-          }}
-        >
-          <a href={`/u/${username}/chat`} className="btn3d btn3d--gold">
-            💬 Chat with me
-          </a>
-          {profile.isLive && (
-            <a href={`/u/${username}/live`} className="btn3d btn3d--velvet">
-              🔴 Watch Live
-            </a>
-          )}
-          <a href={`/u/${username}/studio`} className="btn3d btn3d--dark">
-            🎁 Send Gift
-          </a>
-        </div>
-
-        {/* (Optionnel) Planning ou Media ici plus tard */}
-      </section>
-    </main>
-  );
 }
+
+return ( <main style={{ padding: 24, maxWidth: 960, margin: "0 auto" }}> <h1 style={{ color: "#D4AF37" }}>🎥 Your Studio Dashboard</h1> <p>Welcome back! You can manage your schedule, go live, and track your earnings here.</p>
+
+<div
+    style={{
+      background: "rgba(0,0,0,0.25)",
+      padding: 16,
+      borderRadius: 12,
+      marginTop: 20,
+      border: "1px solid rgba(212,175,55,0.35)",
+    }}
+  >
+    <ul style={{ lineHeight: 2 }}>
+      <li>📅 Schedule your live sessions</li>
+      <li>🎁 View your received gifts</li>
+      <li>💰 Track your Lotus balance</li>
+      <li>🔐 Apply for VIP or Gold status</li>
+    </ul>
+  </div>
+</main>
+
+); }
+
