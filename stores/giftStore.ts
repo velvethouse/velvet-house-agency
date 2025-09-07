@@ -2,12 +2,14 @@
 import { create } from "zustand";
 
 export type Gift = {
+  id: string;
   name: string;
-  duration?: number;
+  animation: string; // ex: "lotus.json"
+  amount: number;
 };
 
-type GiftState = {
-  current: Gift | null;
+export type GiftState = {
+  current: Gift | null; // ✅ c'était ça qui manquait !
   setGift: (gift: Gift) => void;
   clearGift: () => void;
 };
