@@ -4,9 +4,9 @@ import ButterflyRank from "./components/ButterflyRank";
 import StreamAccessNotice from "./components/StreamAccessNotice";
 
 export default function CreatorProfile() {
-  const lotusEarned = 216000; // valeur mock pour test
-  const isVip = false; // à true si le profil est VIP/VIP Gold
-  const isLocked = false; // 🔓 profil déverrouillé par défaut
+  const lotusEarned = 216000; // 💰 test: à remplacer par valeur réelle
+  const isVip = false;        // 🔓 profil ouvert par défaut (non-VIP)
+  const isLocked = false;     // 🔓 stream déverrouillé par défaut
 
   return (
     <main style={{ padding: "20px", maxWidth: 720, margin: "0 auto" }}>
