@@ -6,10 +6,11 @@ export type Gift = {
   name: string;
   animation: string; // ex: "lotus.json"
   amount: number;
+  duration: number; // ✅ <-- AJOUT ICI
 };
 
 export type GiftState = {
-  current: Gift | null; // ✅ c'était ça qui manquait !
+  current: Gift | null;
   setGift: (gift: Gift) => void;
   clearGift: () => void;
 };
