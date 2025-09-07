@@ -1,73 +1,63 @@
 // /app/u/[username]/page.tsx
+
 import ButterflyRank from "./components/ButterflyRank";
 import StreamAccessNotice from "./components/StreamAccessNotice";
 
-export default function CreatorProfilePage() {
-  const lotusEarned = 216000;
-  const isVip = false;
+export default function CreatorProfile() {
+  const lotusEarned = 216000; // valeur mock pour test
+  const isVip = false; // à true si le profil est VIP/VIP Gold
+  const isLocked = false; // 🔓 profil déverrouillé par défaut
 
   return (
-    <main style={{ padding: "20px", maxWidth: 800, margin: "0 auto" }}>
-      <h1 style={{ fontSize: "28px", marginBottom: "16px" }}>
+    <main style={{ padding: "20px", maxWidth: 720, margin: "0 auto" }}>
+      <h1 style={{ fontSize: "28px", marginBottom: 20 }}>
         🦋 Welcome to your <br />
         <span style={{ color: "#D4AF37" }}>Creator Studio</span>
       </h1>
 
       <ButterflyRank lotusEarned={lotusEarned} />
-      <StreamAccessNotice isVip={isVip} />
 
-      {/* Galerie visible ici */}
-      <h2 style={{ fontSize: "20px", marginTop: 40 }}>Gallery</h2>
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
-        gap: "12px",
-        marginTop: "10px"
-      }}>
-        <div style={{ background: "#2e0d0d", height: 100, borderRadius: 10 }} />
-        <div style={{ background: "#2e0d0d", height: 100, borderRadius: 10 }} />
-        <div style={{ background: "#2e0d0d", height: 100, borderRadius: 10 }} />
-      </div>
+      <StreamAccessNotice isLocked={isLocked} isVip={isVip} />
 
-      {/* Planning (planning.tsx) */}
-      <h2 style={{ fontSize: "20px", marginTop: 40 }}>Weekly Schedule</h2>
-      <div style={{
-        border: "1px solid rgba(212,175,55,0.2)",
-        borderRadius: 16,
-        padding: 10,
-        marginTop: 10,
-        overflowX: "auto"
-      }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", color: "#fff" }}>
-          <thead>
-            <tr>
-              <th style={{ padding: "8px", color: "#D4AF37" }}>Time</th>
-              <th style={{ padding: "8px", color: "#D4AF37" }}>Mon</th>
-              <th style={{ padding: "8px", color: "#D4AF37" }}>Tue</th>
-              <th style={{ padding: "8px", color: "#D4AF37" }}>Wed</th>
-              <th style={{ padding: "8px", color: "#D4AF37" }}>Thu</th>
-              <th style={{ padding: "8px", color: "#D4AF37" }}>Fri</th>
-              <th style={{ padding: "8px", color: "#D4AF37" }}>Sat</th>
-              <th style={{ padding: "8px", color: "#D4AF37" }}>Sun</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.from({ length: 16 }, (_, i) => {
-              const hour = 8 + i;
-              return (
-                <tr key={hour}>
-                  <td style={{ padding: "6px", fontWeight: 600 }}>
-                    {hour}:00
-                  </td>
-                  {Array.from({ length: 7 }, (_, j) => (
-                    <td key={j} style={{ padding: "6px", textAlign: "center" }}>—</td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <section style={{ marginTop: 40 }}>
+        <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>Gallery</h2>
+        <div className="media-grid">
+          <div className="media-card" />
+          <div className="media-card" />
+          <div className="media-card" />
+        </div>
+      </section>
+
+      <section style={{ marginTop: 40 }}>
+        <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>Weekly Schedule</h2>
+        <div className="schedule-table">
+          <div className="row header">
+            <div>Time</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+            <div>Sun</div>
+          </div>
+          {Array.from({ length: 16 }, (_, i) => {
+            const hour = `${8 + i}:00`;
+            return (
+              <div className="row" key={hour}>
+                <div>{hour}</div>
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            );
+          })}
+        </div>
+      </section>
     </main>
   );
 }
