@@ -1,94 +1,57 @@
-// app/u/[username]/page.tsx
-"use client";
+import ButterflyRank from "./components/ButterflyRank";
 
-import { useMemo } from "react";
-import Image from "next/image";
-import ScheduleGrid from "../../../components/ScheduleGrid";
-
-type Profile = {
-  displayName: string;
-  avatar: string;
-  country: string;
-  languages: string[];
-  bio?: string;
-  followers?: number;
-  likes?: number;
-  posts?: number;
-};
-
-const DEMO_PROFILES: Record<string, Profile> = {
-  alice: {
-    displayName: "Alice",
-    avatar: "/avatars/alice.jpg",
-    country: "US",
-    languages: ["English", "French"],
-    bio: "Showcase & Q&A lover.",
-    followers: 13300,
-    likes: 512000,
-    posts: 84,
-  },
-  bella: {
-    displayName: "Bella",
-    avatar: "/avatars/bella.jpg",
-    country: "FR",
-    languages: ["French"],
-    bio: "VIP talks & lifestyle.",
-    followers: 21400,
-    likes: 820000,
-    posts: 91,
-  },
-};
-
-export default function CreatorPage({ params }: { params: { username: string } }) {
-  const user = (params.username || "").toLowerCase();
-  const data: Profile = useMemo(
-    () =>
-      DEMO_PROFILES[user] || {
-        displayName: user || "Creator",
-        avatar: "/avatars/default.jpg",
-        country: "—",
-        languages: [],
-        bio: "Welcome to my world.",
-        followers: 0,
-        likes: 0,
-        posts: 0,
-      },
-    [user]
-  );
-
-  const isOwner =
-    typeof window !== "undefined" &&
-    new URLSearchParams(window.location.search).get("owner") === "1";
+export default function UserProfilePage() {
+  const lotusEarned = 216000; // à remplacer plus tard par une vraie valeur dynamique
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
-        color: "#f5f5f5",
-        fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
-      }}
-    >
-      {/* Profil */}
-      <section style={{ maxWidth: 1000, margin: "16px auto", padding: "0 16px" }}>
-        <h1 style={{ color: "#D4AF37" }}>{data.displayName}</h1>
-        <p style={{ color: "#d7c9b3" }}>{data.bio}</p>
-      </section>
+    <div style={{ maxWidth: 900, margin: "0 auto", padding: "24px 16px" }}>
+      <h1 className="gold-gradient-text">demo</h1>
+      <p>Welcome to my world.</p>
 
-      {/* Galerie (placeholder) */}
-      <section style={{ maxWidth: 1000, margin: "16px auto", padding: "0 16px" }}>
-        <h2 style={{ color: "#D4AF37" }}>Gallery</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
-          <div style={{ aspectRatio: "1/1", background: "#3d0e0e", borderRadius: 8 }} />
-          <div style={{ aspectRatio: "1/1", background: "#3d0e0e", borderRadius: 8 }} />
-          <div style={{ aspectRatio: "1/1", background: "#3d0e0e", borderRadius: 8 }} />
-        </div>
-      </section>
+      {/* 🦋 Affichage du rang Butterfly */}
+      <div style={{ margin: "24px 0" }}>
+        <ButterflyRank lotusEarned={lotusEarned} />
+      </div>
 
-      {/* 📅 Planning */}
-      <section style={{ maxWidth: 1000, margin: "16px auto 40px", padding: "0 16px" }}>
-        <ScheduleGrid username={user} isOwner={isOwner} />
-      </section>
-    </main>
+      <h2 className="gold-gradient-text">Gallery</h2>
+      <div className="media-grid">
+        <div className="media-card" />
+        <div className="media-card" />
+        <div className="media-card" />
+      </div>
+
+      <h2 className="gold-gradient-text" style={{ marginTop: 32 }}>
+        Weekly Schedule
+      </h2>
+      <div style={{ overflowX: "auto", marginTop: 12 }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 600 }}>
+          <thead>
+            <tr>
+              <th style={{ padding: 8, textAlign: "left", color: "#D4AF37" }}>Time</th>
+              <th style={{ padding: 8, textAlign: "left", color: "#D4AF37" }}>Mon</th>
+              <th style={{ padding: 8, textAlign: "left", color: "#D4AF37" }}>Tue</th>
+              <th style={{ padding: 8, textAlign: "left", color: "#D4AF37" }}>Wed</th>
+              <th style={{ padding: 8, textAlign: "left", color: "#D4AF37" }}>Thu</th>
+              <th style={{ padding: 8, textAlign: "left", color: "#D4AF37" }}>Fri</th>
+              <th style={{ padding: 8, textAlign: "left", color: "#D4AF37" }}>Sat</th>
+              <th style={{ padding: 8, textAlign: "left", color: "#D4AF37" }}>Sun</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.from({ length: 16 }).map((_, i) => {
+              const hour = 8 + i;
+              return (
+                <tr key={hour} style={{ borderTop: "1px solid rgba(212,175,55,0.1)" }}>
+                  <td style={{ padding: 8 }}>{`${hour}:00`}</td>
+                  {Array.from({ length: 7 }).map((_, j) => (
+                    <td key={j} style={{ padding: 8 }}></td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
