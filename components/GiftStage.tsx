@@ -7,6 +7,7 @@ import { useGiftStore } from "@/stores/giftStore";
 export default function GiftStage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const current = useGiftStore((state) => state.current);
+  const clearGift = useGiftStore((state) => state.clearGift);
 
   useEffect(() => {
     if (!current || !containerRef.current) return;
@@ -19,18 +20,19 @@ export default function GiftStage() {
     gift.style.transform = "translate(-50%, -50%)";
     gift.style.padding = "20px 40px";
     gift.style.background = "#D4AF37";
-    gift.style.color = "#2e0d0d";
-    gift.style.fontWeight = "bold";
-    gift.style.fontSize = "28px";
+    gift.style.color = "black";
     gift.style.borderRadius = "12px";
-    gift.style.boxShadow = "0 0 20px rgba(0,0,0,0.4)";
-    gift.style.zIndex = "999";
+    gift.style.fontSize = "20px";
+    gift.style.fontWeight = "bold";
+    gift.style.zIndex = "9999";
+    gift.style.opacity = "0.95";
 
     containerRef.current.appendChild(gift);
 
     const timeout = setTimeout(() => {
       containerRef.current?.removeChild(gift);
-    }, current.duration || 2000);
+      clearGift(); // Nettoyage du store
+    }, current.duration || 2000); // Par défaut 2 secondes
 
     return () => clearTimeout(timeout);
   }, [current]);
@@ -40,9 +42,12 @@ export default function GiftStage() {
       ref={containerRef}
       style={{
         position: "fixed",
-        inset: 0,
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
         pointerEvents: "none",
-        zIndex: 999,
+        zIndex: 9999,
       }}
     />
   );
