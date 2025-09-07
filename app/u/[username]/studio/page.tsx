@@ -1,104 +1,77 @@
 // app/u/[username]/studio/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function StudioPage() {
-  const [confirmed, setConfirmed] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+  const router = useRouter();
 
-  useEffect(() => {
-    const hasConfirmed = localStorage.getItem("studioConfirmed");
-    if (hasConfirmed === "true") {
-      setConfirmed(true);
-    }
-  }, []);
-
-  if (confirmed) {
-    redirect("/dashboard"); // 🔁 redirige vers le vrai dashboard une fois confirmé
-    return null;
-  }
+  const handleAgree = () => {
+    setAgreed(true);
+    // ✅ Redirection vers tableau de bord pro après validation
+    router.push("/dashboard");
+  };
 
   return (
     <main
       style={{
-        maxWidth: 880,
-        margin: "40px auto",
-        padding: "0 16px",
-        fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
+        minHeight: "100vh",
+        background: "linear-gradient(180deg, #4b1c1c 0%, #2e0d0d 100%)",
         color: "#f5f5f5",
-        lineHeight: 1.7,
+        padding: "32px 16px",
+        fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
       }}
     >
-      <h1 style={{ fontSize: "clamp(28px,5vw,42px)", marginBottom: 24 }}>
-        🎥 Bienvenue dans ton espace streameuse
-      </h1>
+      <div style={{ maxWidth: 800, margin: "0 auto" }}>
+        <h1 style={{ fontSize: "clamp(28px, 6vw, 42px)", color: "#D4AF37", marginBottom: 24 }}>
+          Welcome to Velvet House ✨
+        </h1>
 
-      <section
-        style={{
-          background: "rgba(255,255,255,0.05)",
-          padding: 24,
-          borderRadius: 12,
-          border: "1px solid rgba(255,255,255,0.1)",
-        }}
-      >
-        <p>
-          Avant de commencer tes lives, tu dois impérativement lire et comprendre le fonctionnement de Velvet House.
-        </p>
-        <ul style={{ paddingLeft: 24, marginTop: 16 }}>
-          <li>
-            🎁 <b>Les cadeaux</b> sont envoyés par les viewers. Chaque cadeau a une valeur en Lotus, et une animation unique.
-          </li>
-          <li>
-            🏆 Tu gagnes <b>65% des revenus</b> (ou plus si tu es en agence), automatiquement reversés chaque jour si ton solde dépasse 25€.
-          </li>
-          <li>
-            🚫 Les contenus strictement interdits : pornographie visible, violence, haine, drogue, mineurs. Nos modérateurs peuvent couper ton live sans préavis.
-          </li>
-          <li>
-            🔒 Tu dois respecter le <b>planning</b> fixé, et répondre aux messages privés dans les 24h. En cas de litige, tout est enregistré.
-          </li>
-          <li>
-            🧠 Tu es une ambassadrice de notre image : élégance, respect, mystère. Nous te formerons pour tirer le meilleur de toi-même.
-          </li>
-        </ul>
-
-        {/* ✅ Bloc NOVA assistant */}
         <div
           style={{
-            marginTop: 32,
-            padding: 16,
-            borderRadius: 10,
-            background: "rgba(212,175,55,0.05)",
-            border: "1px solid rgba(212,175,55,0.25)",
-            fontStyle: "italic",
+            background: "rgba(255, 255, 255, 0.05)",
+            border: "1px solid rgba(212,175,55,0.2)",
+            borderRadius: 12,
+            padding: 24,
+            lineHeight: 1.7,
+            fontSize: 16,
           }}
         >
-          👋 <b>Nova</b> : Je suis ton assistante. Je suis là pour t’aider à comprendre chaque règle, à améliorer tes performances, et à faire de toi une streameuse inoubliable.
+          <p>
+            As a Velvet House Creator, you're entering a professional and premium platform. All members here expect
+            quality, elegance, and respect.
+          </p>
+          <p>
+            Your personal studio is your command center: manage your lives, chat, unlockable content, VIP features,
+            and access gift animations.
+          </p>
+          <p>
+            <b>Key rules:</b> no nudity outside gift unlocks, no hate speech, no violence, and always maintain
+            self-respect and professionalism.
+          </p>
+          <p>
+            Before continuing, you must confirm that you've read and understood the platform’s principles.
+          </p>
         </div>
 
-        {/* ✅ Bouton de confirmation */}
         <button
-          onClick={() => {
-            localStorage.setItem("studioConfirmed", "true");
-            setConfirmed(true);
-          }}
+          onClick={handleAgree}
+          disabled={agreed}
           className="btn3d btn3d--velvet"
           style={{
-            marginTop: 32,
-            padding: "12px 20px",
-            fontWeight: 700,
+            marginTop: 28,
+            padding: "14px 28px",
             fontSize: 16,
-            borderRadius: 8,
+            fontWeight: 700,
             cursor: "pointer",
-            background: "#D4AF37",
-            color: "#1b0a0a",
-            border: "none",
+            opacity: agreed ? 0.5 : 1,
           }}
         >
-          ✅ J’ai bien lu, je peux accéder à mon espace
+          I understand and want to enter my studio
         </button>
-      </section>
+      </div>
     </main>
   );
 }
