@@ -1,75 +1,51 @@
 // /app/lotus/page.tsx
-
 "use client";
 
-const PACKS = [
-  { amount: 1000, price: "€10.99" },
-  { amount: 2000, price: "€21.99" },
-  { amount: 5000, price: "€43.99" },
-  { amount: 10000, price: "€79.99" },
-  { amount: 20000, price: "€105.99" },
-  { amount: 50000, price: "€264.99", vip: "VIP Gold" },
-  { amount: 100000, price: "€529.99", tag: "GOD" },
-  { amount: 200000, price: "€1059.99" },
-  { amount: 500000, price: "€2649.99" },
-  { amount: 1000000, price: "€5299.99" },
-];
-
 export default function LotusPage() {
+  const packs = [
+    { amount: 1000, price: 4.65 },
+    { amount: 2000, price: 9.30 },
+    { amount: 5000, price: 23.25 },
+    { amount: 10000, price: 46.50 },
+    { amount: 20000, price: 93.00 },
+    { amount: 50000, price: 232.50, vip: "VIP Gold" },
+    { amount: 100000, price: 465.00, vip: "GOD Game" },
+    { amount: 200000, price: 930.00 },
+    { amount: 500000, price: 2325.00 },
+    { amount: 1000000, price: 4650.00 },
+  ];
+
   return (
-    <main style={{ padding: "20px", maxWidth: 960, margin: "0 auto" }}>
-      <h1 style={{ fontSize: "28px", marginBottom: 16, color: "#D4AF37" }}>
-        💠 Buy Lotus Packs
+    <main style={{ padding: "20px", maxWidth: 1100, margin: "0 auto" }}>
+      <h1 className="gold-gradient-text" style={{ fontSize: "clamp(28px,6vw,42px)", marginBottom: 8 }}>
+        Buy Lotus Packs
       </h1>
-      <p style={{ marginBottom: 20, color: "#f5f5f5" }}>
-        Transparent pricing. No hidden fees. All prices are final.
+      <p style={{ color: "#e9dfcf", fontSize: 15, marginBottom: 18 }}>
+        Transparent pricing — no hidden fees or taxes. You pay what you see.{" "}
+        <br />
+        <b style={{ color: "#D4AF37" }}>+5% bonus Lotus</b> automatically gifted by VelvetHouse with every pack.
       </p>
 
-      <div
-        className="grid"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          gap: "16px",
-        }}
-      >
-        {PACKS.map((pack) => (
-          <div
+      <div className="cards-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
+        {packs.map((pack) => (
+          <article
             key={pack.amount}
             className="card"
-            style={{
-              padding: 16,
-              borderRadius: 12,
-              background: "#1c0e0e",
-              border: "1px solid rgba(212,175,55,0.2)",
-              textAlign: "center",
-              color: "#f5f5f5",
-            }}
+            style={{ padding: 18, display: "grid", gap: 10, placeItems: "center", textAlign: "center" }}
           >
-            <h3 style={{ fontSize: 20, marginBottom: 8 }}>
-              {pack.amount.toLocaleString()} Lotus{" "}
-              {pack.tag && <span style={{ color: "#e67e22" }}>({pack.tag})</span>}
-              {pack.vip && (
-                <span style={{ display: "block", fontSize: 14, color: "#D4AF37" }}>
-                  🌟 Includes {pack.vip}
-                </span>
-              )}
-            </h3>
-            <p style={{ fontSize: 16, marginBottom: 12 }}>{pack.price}</p>
-            <button
-              style={{
-                padding: "10px 16px",
-                background: "#D4AF37",
-                color: "#000",
-                fontWeight: "bold",
-                border: "none",
-                borderRadius: 8,
-                cursor: "pointer",
-              }}
-            >
+            <div style={{ fontSize: 28, fontWeight: 800, color: "#D4AF37" }}>
+              {pack.amount.toLocaleString()} Lotus
+            </div>
+            <div style={{ fontSize: 16, color: "#d7c9b3" }}>{pack.price.toFixed(2)} €</div>
+            {pack.vip && (
+              <div style={{ fontSize: 13, background: "rgba(212,175,55,.15)", padding: "4px 10px", borderRadius: 999 }}>
+                🎖️ {pack.vip}
+              </div>
+            )}
+            <button className="btn3d btn3d--gold" style={{ marginTop: 6 }}>
               Buy Now
             </button>
-          </div>
+          </article>
         ))}
       </div>
     </main>
