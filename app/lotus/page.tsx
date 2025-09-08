@@ -1,40 +1,51 @@
 // /app/lotus/page.tsx
 
-export default function LotusPacksPage() {
-  const packs = [
-    { amount: 1000, price: 5.29 },
-    { amount: 2000, price: 10.59 },
-    { amount: 5000, price: 26.49 },
-    { amount: 10000, price: 52.99 },
-    { amount: 20000, price: 105.99 },
-    { amount: 50000, price: 264.99 },
-    { amount: 100000, price: 529.99, label: "GOD" },
-    { amount: 200000, price: 1059.99 },
-    { amount: 500000, price: 2649.99 },
-    { amount: 1000000, price: 5299.99 },
-  ];
-
+export default function LotusPacks() {
   return (
-    <main style={{ padding: "32px 16px", maxWidth: 800, margin: "0 auto" }}>
-      <h1 style={{ fontSize: "28px", marginBottom: 24 }}>
-        🌸 Buy Lotus Packs
+    <main style={{ padding: "20px", maxWidth: 720, margin: "0 auto" }}>
+      <h1 style={{ fontSize: "28px", marginBottom: "12px", color: "#FFD700" }}>
+        💎 Buy Lotus Packs
       </h1>
+      <p style={{ color: "#f5f5f5", marginBottom: "32px" }}>
+        All prices are final — no hidden fees, no extra taxes. What you see is exactly what you pay.
+      </p>
 
-      <div className="cards-grid">
-        {packs.map((pack) => (
-          <div key={pack.amount} className="card" style={{ padding: 16 }}>
-            <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>
-              {pack.amount.toLocaleString()} Lotus
-              {pack.label && (
-                <span style={{ fontSize: 14, marginLeft: 6, color: "#FFD700" }}>
-                  ({pack.label})
-                </span>
-              )}
-            </div>
-            <div style={{ color: "#d7c9b3", marginBottom: 12 }}>
-              ≈ €{pack.price.toFixed(2)}
-            </div>
-            <button className="btn3d btn3d--gold">
+      <div className="grid grid-cols-2 gap-4">
+        {[
+          { amount: 1000, price: 5.49 },
+          { amount: 2000, price: 10.99 },
+          { amount: 5000, price: 21.99 },
+          { amount: 10000, price: 43.99 },
+          { amount: 20000, price: 87.99 },
+          { amount: 50000, price: 219.99 },
+          { amount: 100000, price: 439.99, god: true },
+          { amount: 200000, price: 879.99 },
+          { amount: 500000, price: 2199.99 },
+          { amount: 1000000, price: 4399.99 },
+        ].map((pack) => (
+          <div
+            key={pack.amount}
+            style={{
+              borderRadius: 12,
+              background: "#111",
+              padding: "20px",
+              textAlign: "center",
+              border: "1px solid #D4AF37",
+            }}
+          >
+            <h3 style={{ fontSize: "20px", color: "#FFD700", marginBottom: "6px" }}>
+              {pack.amount.toLocaleString()} Lotus {pack.god && <span style={{ color: "#f00" }}>(GOD)</span>}
+            </h3>
+            <p style={{ color: "#ccc", marginBottom: "12px" }}>≈ €{pack.price.toFixed(2)}</p>
+            <button
+              style={{
+                padding: "8px 16px",
+                background: "#FFD700",
+                color: "#000",
+                borderRadius: 8,
+                fontWeight: "bold",
+              }}
+            >
               Buy Now
             </button>
           </div>
