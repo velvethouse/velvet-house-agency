@@ -19,7 +19,7 @@ export default function VipPage() {
           <li>Access to public chat</li>
           <li>Private messaging with streamers (text, photo, video)</li>
           <li>❌ Cannot access private chat invitations during lives</li>
-          <li>❌ Cannot purchase nude photos from profiles</li>
+          <li>❌ Cannot purchase nude photos from streamer profiles</li>
         </ul>
       </section>
 
@@ -27,7 +27,7 @@ export default function VipPage() {
       <section style={{ marginBottom: 40 }}>
         <h2 style={{ color: "#D4AF37" }}>💎 VIP – €9.99/month</h2>
         <p style={{ margin: "4px 0 12px", color: "#d7c9b3" }}>
-          Includes <strong>+1000 Lotus</strong> with every renewal
+          Includes <strong>+1000 Lotus</strong> every month
         </p>
         <ul style={{ paddingLeft: 20, lineHeight: 1.8 }}>
           <li>Access to VIP group chat</li>
@@ -36,13 +36,26 @@ export default function VipPage() {
           <li>Each photo has a custom price set by the streamer</li>
           <li>VIP badge displayed on your profile</li>
         </ul>
+
+        <button style={{
+          marginTop: 20,
+          backgroundColor: "#FFD700",
+          border: "none",
+          color: "#000",
+          padding: "12px 24px",
+          borderRadius: 12,
+          fontWeight: "bold",
+          cursor: "pointer"
+        }}>
+          Subscribe to VIP – €9.99/month
+        </button>
       </section>
 
       {/* VIP Gold */}
       <section>
         <h2 style={{ color: "#D4AF37" }}>👑 VIP Gold</h2>
         <p style={{ margin: "4px 0 12px", color: "#d7c9b3" }}>
-          One-time access: buy the <strong>100,000 Lotus pack</strong> + <strong>5 %</strong>.
+          One-time access: buy the <strong>100,000 Lotus pack</strong> + <strong>5%</strong>.
         </p>
         <ul style={{ paddingLeft: 20, lineHeight: 1.8 }}>
           <li>All VIP features</li>
@@ -50,8 +63,21 @@ export default function VipPage() {
           <li>Ability to save photos to your private folder</li>
           <li>Anonymous purchases enabled</li>
           <li>Watch streams in anonymous mode</li>
-          <li><strong>+5 % extra Lotus</strong> on every pack purchase</li>
+          <li><strong>+5% extra Lotus</strong> on every pack purchase</li>
         </ul>
+
+        <button style={{
+          marginTop: 20,
+          backgroundColor: "#FFD700",
+          border: "none",
+          color: "#000",
+          padding: "12px 24px",
+          borderRadius: 12,
+          fontWeight: "bold",
+          cursor: "pointer"
+        }}>
+          Become VIP Gold (via 100,000 Lotus Pack)
+        </button>
       </section>
     </main>
   );
