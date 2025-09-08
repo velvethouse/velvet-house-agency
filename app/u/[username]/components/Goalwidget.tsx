@@ -17,7 +17,7 @@ function load(): GoalState {
   if (typeof window === "undefined") return { mode: "daily", target: 50000, progress: 0 };
   try {
     const raw = localStorage.getItem(KEY);
-    return raw ? JSON.parse(raw) as GoalState : { mode: "daily", target: 50000, progress: 0 };
+    return raw ? (JSON.parse(raw) as GoalState) : { mode: "daily", target: 50000, progress: 0 };
   } catch {
     return { mode: "daily", target: 50000, progress: 0 };
   }
