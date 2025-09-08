@@ -46,7 +46,7 @@ export default function VipPage() {
       <section>
         <h2 style={{ fontSize: 22, color: "#FFAA00" }}>👑 VIP Gold — One-time access</h2>
         <p style={{ color: "#f5f5f5" }}>
-          Buy the <strong>100,000 Lotus pack +5%</strong> to unlock VIP Gold benefits:
+          Buy the <strong>50,000 Lotus pack +5%</strong> to unlock VIP Gold benefits:
         </p>
         <ul style={{ paddingLeft: 20, color: "#f5f5f5" }}>
           <li>All VIP features</li>
@@ -70,7 +70,7 @@ export default function VipPage() {
             textDecoration: "none",
           }}
         >
-          Buy VIP Gold (100,000 Lotus)
+          Buy VIP Gold (50,000 Lotus)
         </a>
       </section>
     </main>
