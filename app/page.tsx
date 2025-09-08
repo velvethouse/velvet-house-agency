@@ -1,61 +1,64 @@
 // /app/page.tsx
 
-export default function HomePage() {
+export default function Home() {
   return (
     <main
       style={{
-        backgroundImage: "url('/hero-bg.jpg')",
+        backgroundImage: 'url("/hero-bg.jpg")',
         backgroundSize: "cover",
         backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         minHeight: "100vh",
         display: "flex",
-        alignItems: "center",
+        flexDirection: "column",
         justifyContent: "center",
-        padding: "20px",
+        alignItems: "center",
+        padding: "40px 20px",
       }}
     >
       <div
         style={{
-          background: "rgba(0,0,0,0.5)",
+          background: "rgba(0, 0, 0, 0.6)",
           padding: "30px 24px",
-          borderRadius: "16px",
-          maxWidth: "480px",
+          borderRadius: "20px",
+          maxWidth: "400px",
           width: "100%",
           textAlign: "center",
-          color: "#f5f5f5",
         }}
       >
-        <h1 style={{ color: "#FFD700", fontSize: "26px", marginBottom: "16px" }}>
-          Velvet House
-        </h1>
-        <p style={{ fontSize: "16px", lineHeight: "1.6", marginBottom: "24px" }}>
-          More than a platform: an exclusive universe where elegance meets mystery.<br />
+        <h1 style={{ color: "#FFD700", marginBottom: 16 }}>Velvet House</h1>
+        <p style={{ color: "#f5f5f5", fontSize: "16px", marginBottom: 20 }}>
+          More than a platform: an exclusive universe where elegance meets mystery.
+          <br />
           Every creator shines. Every viewer becomes privileged.
         </p>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <div style={{ display: "grid", gap: 12 }}>
           <button
             style={{
               background: "#FFD700",
               color: "#2c0d0d",
+              fontWeight: "bold",
               padding: "12px",
               borderRadius: "12px",
-              fontWeight: "bold",
               border: "none",
               fontSize: "16px",
+              cursor: "pointer",
             }}
           >
             Sign up
           </button>
+
           <button
             style={{
               background: "transparent",
               color: "#FFD700",
-              padding: "12px",
-              borderRadius: "12px",
               border: "2px solid #FFD700",
               fontWeight: "bold",
+              padding: "12px",
+              borderRadius: "12px",
               fontSize: "16px",
+              cursor: "pointer",
             }}
           >
             Log in
