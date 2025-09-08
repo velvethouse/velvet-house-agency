@@ -2,18 +2,25 @@
 "use client";
 
 import CancelSubscription from "./components/CancelSubscription";
+import FavoriteCreators from "./components/FavoriteCreators";
 
 export default function FollowerProfile() {
-  const isVip = true;    // simule un utilisateur VIP
-  const isGold = false;  // simule un VIP Gold
+  const isVip = true;    // Simule un utilisateur VIP
+  const isGold = true;   // Simule un VIP Gold
+  const lotusBalance = 12345;
 
   return (
     <main style={{ padding: "20px", maxWidth: 720, margin: "0 auto" }}>
       {/* Header */}
       <h1 style={{ fontSize: "28px", marginBottom: 20 }}>
-        🙋‍♂️ Welcome back, <br />
-        <span style={{ color: "#D4AF37" }}>Follower</span>
+        🙋‍♂️ Welcome, JohnDoe
       </h1>
+
+      {/* Status + Lotus */}
+      <p style={{ marginBottom: 10 }}>
+        Status: <b>{isGold ? "VIP Gold" : isVip ? "VIP" : "Standard"}</b><br />
+        Lotus Balance: <span style={{ color: "#D4AF37", fontWeight: 600 }}>{lotusBalance.toLocaleString()}</span>
+      </p>
 
       {/* Avatar */}
       <div className="avatar-ring" style={{ marginBottom: 20 }}>
@@ -22,19 +29,25 @@ export default function FollowerProfile() {
 
       {/* Photo gallery (max 5) */}
       <section style={{ marginTop: 20 }}>
-        <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>Your Photos</h2>
+        <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>Your Profile Photos</h2>
         <div className="media-grid">
-          <div className="media-card" />
-          <div className="media-card" />
-          <div className="media-card" />
-          <div className="media-card" />
-          <div className="media-card" />
+          <div className="media-card">+ Add Photo</div>
+          <div className="media-card">+ Add Photo</div>
+          <div className="media-card">+ Add Photo</div>
+          <div className="media-card">+ Add Photo</div>
+          <div className="media-card">+ Add Photo</div>
         </div>
       </section>
 
-      {/* VIP Status */}
+      {/* Favorite creators */}
+      <section style={{ marginTop: 40 }}>
+        <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>Your Favorite Streamers</h2>
+        <FavoriteCreators />
+      </section>
+
+      {/* Subscription status */}
       {(isVip || isGold) && (
-        <section style={{ marginTop: 30 }}>
+        <section style={{ marginTop: 40 }}>
           <div
             style={{
               padding: "14px",
@@ -52,8 +65,12 @@ export default function FollowerProfile() {
         </section>
       )}
 
-      {/* Cancel button */}
-      <CancelSubscription />
+      {/* Cancel VIP subscription */}
+      {(isVip || isGold) && (
+        <section style={{ marginTop: 20 }}>
+          <CancelSubscription />
+        </section>
+      )}
     </main>
   );
 }
