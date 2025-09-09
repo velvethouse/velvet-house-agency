@@ -5,10 +5,11 @@ import GoalWidget from "./components/GoalWidget";
 import StudioGallery from "./components/StudioGallery";
 import StudioSchedule from "./components/StudioSchedule";
 import StudioStats from "./components/StudioStats";
+import GoLiveButton from "./components/GoLiveButton";
 
 export default function StudioPage() {
   const [agreed, setAgreed] = useState(false);
-  const lotusEarned = 216000; // mock à remplacer plus tard
+  const lotusEarned = 216000; // mock
 
   if (!agreed) {
     return (
@@ -52,6 +53,9 @@ export default function StudioPage() {
 
       {/* 📅 Planning des lives */}
       <StudioSchedule />
+
+      {/* 🎥 Go Live */}
+      <GoLiveButton username="testgirl" />
     </main>
   );
 }
