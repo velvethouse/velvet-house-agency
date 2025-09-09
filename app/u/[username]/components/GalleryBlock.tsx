@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 
+type Props = {
+  username: string;
+};
+
 const mockGallery = [
   { id: 1, src: "/mock/photo1.jpg", nsfw: false, likes: 12 },
   { id: 2, src: "/mock/photo2.jpg", nsfw: true, likes: 3, gift: "🎁 Rose" },
@@ -11,7 +15,7 @@ const mockGallery = [
   { id: 6, src: "/mock/photo6.jpg", nsfw: true, likes: 1, gift: "🎁 Diamond" },
 ];
 
-export default function GalleryBlock() {
+export default function GalleryBlock({ username }: Props) {
   const [likes, setLikes] = useState<Record<number, number>>({});
 
   const handleLike = (id: number) => {
@@ -20,7 +24,10 @@ export default function GalleryBlock() {
 
   return (
     <section style={{ marginTop: 32 }}>
-      <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>📷 Gallery</h2>
+      <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>
+        📷 {username}'s Gallery
+      </h2>
+
       <div
         style={{
           display: "grid",
@@ -60,7 +67,7 @@ export default function GalleryBlock() {
             >
               © Velvet House
             </div>
-            {/* Overlay for NSFW */}
+            {/* NSFW overlay */}
             {item.nsfw && (
               <div
                 style={{
@@ -104,4 +111,4 @@ export default function GalleryBlock() {
       </div>
     </section>
   );
-}
+                }
