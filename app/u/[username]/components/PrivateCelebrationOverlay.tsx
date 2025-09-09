@@ -7,7 +7,7 @@ export default function PrivateCelebrationOverlay({ completed }: { completed: bo
   const [visible, setVisible] = useState(false);
   const [animationData, setAnimationData] = useState<any>(null);
 
-  // Charger l'animation depuis /public/lottie
+  // 🎯 Charge le fichier Lottie depuis le dossier public
   useEffect(() => {
     fetch("/lottie/gold-burst.json")
       .then((res) => res.json())
@@ -20,6 +20,7 @@ export default function PrivateCelebrationOverlay({ completed }: { completed: bo
     if (completed && !alreadySeen) {
       setVisible(true);
       localStorage.setItem("goalCelebrationSeen", "1");
+
       setTimeout(() => setVisible(false), 5000);
     }
   }, [completed]);
