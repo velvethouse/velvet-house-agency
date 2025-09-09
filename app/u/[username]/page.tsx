@@ -21,7 +21,7 @@ export default async function UserPage({ params }: { params: { username: string 
 
   return (
     <main>
-      <StreamAccessNotice isLocked={false} />
+      <StreamAccessNotice isLocked={false} isVip={false} />
       <ButterflyRank lotusEarned={lotusEarned} />
       <EventBanner events={events} />
       <GoalWidget lotusEarned={lotusEarned} goal={goal} />
