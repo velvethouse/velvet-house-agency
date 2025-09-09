@@ -3,7 +3,7 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 
-// Lazy-load le graphique quand demandé
+// Lazy-load le graphique uniquement au clic
 const StatsPerformance = dynamic(() => import("./StatsPerformance"), { ssr: false });
 
 export default function StatsToggle() {
@@ -12,23 +12,13 @@ export default function StatsToggle() {
   return (
     <section style={{ marginTop: 32 }}>
       <button
-        className="btn3d btn3d--outline-gold"
-        style={{
-          width: "100%",
-          padding: "12px",
-          fontSize: 16,
-          borderRadius: 10,
-        }}
-        onClick={() => setVisible((v) => !v)}
+        onClick={() => setVisible(!visible)}
+        className="btn3d btn3d--velvet"
       >
-        {visible ? "🔽 Hide performance stats" : "📈 Show performance stats"}
+        {visible ? "Hide performance graph" : "Show performance graph"}
       </button>
 
-      {visible && (
-        <div style={{ marginTop: 20 }}>
-          <StatsPerformance />
-        </div>
-      )}
+      {visible && <StatsPerformance />}
     </section>
   );
 }
