@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
-import celebration from "@/public/lottie/gold-burst.json"; // 🎉 Animation choisie
 
 export default function PrivateCelebrationOverlay({ completed }: { completed: boolean }) {
   const [visible, setVisible] = useState(false);
@@ -36,7 +35,7 @@ export default function PrivateCelebrationOverlay({ completed }: { completed: bo
       <Lottie
         loop={false}
         play
-        animationData={celebration}
+        src="/lottie/gold-burst.json" // ✅ Chargé depuis le dossier public
         style={{ width: 300, height: 300 }}
       />
     </div>
