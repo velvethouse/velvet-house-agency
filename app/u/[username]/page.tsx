@@ -1,48 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Lottie from "react-lottie-player";
+import ButterflyRank from "./components/ButterflyRank";
+import StreamAccessNotice from "./components/StreamAccessNotice";
+import QrInvite from "./components/QrInvite";
+import GoalWidget from "./components/GoalWidget";
+import NovaAssistant from "./components/NovaAssistant";
+import GalleryBlock from "./components/GalleryBlock";
 
-export default function StudioTestPage() {
-  const [visible, setVisible] = useState(false);
-  const [animationData, setAnimationData] = useState<any>(null);
-
-  useEffect(() => {
-    fetch("/lottie/gold-burst.json")
-      .then((res) => res.json())
-      .then(setAnimationData)
-      .catch((err) => console.error("Erreur chargement animation", err));
-  }, []);
-
-  useEffect(() => {
-    const alreadySeen = localStorage.getItem("goalCelebrationTest");
-    if (!alreadySeen) {
-      setVisible(true);
-      localStorage.setItem("goalCelebrationTest", "1");
-      setTimeout(() => setVisible(false), 5000);
-    }
-  }, []);
-
-  if (!visible || !animationData) return null;
+export default function CreatorProfile({ params }: { params: { username: string } }) {
+  const username = params.username;
+  const lotusEarned = 216000; // mock
+  const isVip = false;        // mock
+  const isLocked = false;     // 🔓 default open
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        background: "rgba(0,0,0,0.8)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Lottie
-        loop={false}
-        play
-        animationData={animationData}
-        style={{ width: 320, height: 320 }}
-      />
-    </div>
+    <main style={{ padding: "20px", maxWidth: 720, margin: "0 auto" }}>
+      {/* Header */}
+      <h1 style={{ fontSize: "28px", marginBottom: 12 }}>
+        🦋 Welcome to {username}'s <br />
+        <span style={{ color: "#D4AF37" }}>Creator Profile</span>
+      </h1>
+
+      {/* Rank + access notice */}
+      <ButterflyRank lotusEarned={lotusEarned} />
+      <StreamAccessNotice isLocked={isLocked} isVip={isVip} />
+
+      {/* Objective (daily/weekly + bonus +2%) */}
+      <GoalWidget />
+
+      {/* Nova copilot */}
+      <NovaAssistant username={username} />
+
+      {/* QR individual invite */}
+      <QrInvite username={username} />
+
+      {/* 📷 Galerie de la streameuse */}
+      <GalleryBlock />
+    </main>
   );
 }
