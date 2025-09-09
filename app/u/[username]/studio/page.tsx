@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import GoalWidget from "../components/GoalWidget";
+import StudioGallery from "../components/StudioGallery";
 
 export default function StudioPage() {
   const [agreed, setAgreed] = useState(false);
@@ -37,10 +38,11 @@ export default function StudioPage() {
         🎥 Live Studio Dashboard
       </h1>
 
-      {/* 🎯 Objectif Lotus visible pendant le live */}
+      {/* 🎯 Objectif Lotus pendant le live */}
       <GoalWidget />
 
-      {/* Tu peux ajouter ici : galerie privée, messages VIP, etc. */}
+      {/* 🖼️ Galerie privée de la streameuse */}
+      <StudioGallery />
     </main>
   );
 }
