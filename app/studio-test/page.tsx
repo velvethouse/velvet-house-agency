@@ -1,9 +1,9 @@
+// ✅ Fichier : studio-test/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
-// Chargement dynamique de LottiePlayer
 const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 
 export default function StudioTestPage() {
@@ -11,7 +11,7 @@ export default function StudioTestPage() {
   const [animationData, setAnimationData] = useState<any>(null);
 
   useEffect(() => {
-    fetch("/lottie/gold-burst.json")
+    fetch("/lottie/celebration.json")
       .then((res) => res.json())
       .then(setAnimationData)
       .catch(console.error);
