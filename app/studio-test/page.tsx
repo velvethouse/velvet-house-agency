@@ -46,6 +46,4 @@ export default function StudioTestPage() {
         animationData={animationData}
         style={{ width: 320, height: 320 }}
       />
-    </div>
-  );
-}
+    <
