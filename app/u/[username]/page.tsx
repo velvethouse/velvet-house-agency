@@ -7,6 +7,7 @@ import GoalWidget from "./components/GoalWidget";
 import NovaAssistant from "./components/NovaAssistant";
 import GalleryBlock from "./components/GalleryBlock";
 import EventNotice from "./components/EventNotice";
+import GlobalEventNotice from "./components/GlobalEventNotice";
 
 export default function CreatorProfile({ params }: { params: { username: string } }) {
   const username = params.username;
@@ -31,6 +32,9 @@ export default function CreatorProfile({ params }: { params: { username: string 
 
       {/* 🔔 Streameuse Event */}
       <EventNotice />
+
+      {/* 🏛️ Global Event Velvet House */}
+      <GlobalEventNotice />
 
       {/* 🤖 Nova */}
       <NovaAssistant username={username} />
