@@ -1,15 +1,14 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
-import PrivateCelebrationOverlay from "./components/PrivateCelebrationOverlay";
+import { useState, useEffect, useMemo } from "react";
+import PrivateCelebrationOverlay from "../components/PrivateCelebrationOverlay"; // ✅ Import corrigé
 
 export default function StreamerStudioPage() {
   const [agreed, setAgreed] = useState(false);
 
-  // 🔢 Simule un objectif défini par la streameuse
+  // 🧪 Simulation pour test (à remplacer plus tard par lotusEarned et target dynamiques)
   const target = 10000;
-  const progress = 10200; // à remplacer par lotusEarned réel plus tard
-
+  const progress = 10500;
   const ratio = useMemo(() => {
     if (target <= 0) return 0;
     return progress / target;
@@ -50,7 +49,7 @@ export default function StreamerStudioPage() {
 
   return (
     <main style={{ padding: 24, maxWidth: 960, margin: "0 auto" }}>
-      {/* 🎉 Animation plein écran si objectif atteint */}
+      {/* 🎉 Affiche l'animation plein écran si objectif atteint */}
       <PrivateCelebrationOverlay completed={completed} />
 
       <h1 style={{ color: "#D4AF37" }}>🎥 Your Studio Dashboard</h1>
