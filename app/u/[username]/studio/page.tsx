@@ -1,47 +1,31 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import PrivateCelebrationOverlay from "../components/PrivateCelebrationOverlay"; // ✅ Import corrigé
+import { useState } from "react";
+import GoalWidget from "../components/GoalWidget";
 
-export default function StreamerStudioPage() {
+export default function StudioPage() {
   const [agreed, setAgreed] = useState(false);
-
-  // 🧪 Simulation pour test (à remplacer plus tard par lotusEarned et target dynamiques)
-  const target = 10000;
-  const progress = 10500;
-  const ratio = useMemo(() => {
-    if (target <= 0) return 0;
-    return progress / target;
-  }, [progress, target]);
-
-  const completed = ratio >= 1;
 
   if (!agreed) {
     return (
       <main style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
         <h1 style={{ color: "#D4AF37" }}>📋 Studio Rules & Conditions</h1>
         <p>
-          Welcome to your professional page. Velvet House is a premium platform
-          for streamers and content creators. Before accessing your studio,
-          please make sure you agree with the following rules:
+          Welcome to your private dashboard. Please review the following rules
+          before accessing your studio:
         </p>
         <ul style={{ paddingLeft: 20, lineHeight: 1.7 }}>
-          <li>No explicit nudity or illegal content</li>
+          <li>No nudity or illegal content in public</li>
           <li>Respect others and yourself</li>
-          <li>Gifts are your only unlock trigger</li>
-          <li>VIP and VIP Gold are managed by admins only</li>
-          <li>You are free to create and earn at your rhythm</li>
+          <li>Only send content that you have rights to</li>
+          <li>Content flagged as NSFW will be reviewed</li>
         </ul>
-        <p style={{ marginTop: 16, fontWeight: 600, color: "#f8d7a0" }}>
-          Any violation may result in a ban or removal from the platform.
-        </p>
-
         <button
           className="btn3d btn3d--gold"
-          style={{ marginTop: 28 }}
+          style={{ marginTop: 20 }}
           onClick={() => setAgreed(true)}
         >
-          I understand and want to enter my studio
+          I understand and want to access my studio
         </button>
       </main>
     );
@@ -49,31 +33,14 @@ export default function StreamerStudioPage() {
 
   return (
     <main style={{ padding: 24, maxWidth: 960, margin: "0 auto" }}>
-      {/* 🎉 Affiche l'animation plein écran si objectif atteint */}
-      <PrivateCelebrationOverlay completed={completed} />
+      <h1 style={{ color: "#D4AF37", marginBottom: 16 }}>
+        🎥 Live Studio Dashboard
+      </h1>
 
-      <h1 style={{ color: "#D4AF37" }}>🎥 Your Studio Dashboard</h1>
-      <p>
-        Welcome back! You can manage your schedule, go live, and track your
-        earnings here.
-      </p>
+      {/* 🎯 Objectif Lotus visible pendant le live */}
+      <GoalWidget />
 
-      <div
-        style={{
-          background: "rgba(0,0,0,0.25)",
-          padding: 16,
-          borderRadius: 12,
-          marginTop: 20,
-          border: "1px solid rgba(212,175,55,0.35)",
-        }}
-      >
-        <ul style={{ lineHeight: 2 }}>
-          <li>📅 Schedule your live sessions</li>
-          <li>🎁 View your received gifts</li>
-          <li>💰 Track your Lotus balance</li>
-          <li>🔐 Apply for VIP or Gold status</li>
-        </ul>
-      </div>
+      {/* Tu peux ajouter ici : galerie privée, messages VIP, etc. */}
     </main>
   );
 }
