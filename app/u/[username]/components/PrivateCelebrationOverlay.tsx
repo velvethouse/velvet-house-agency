@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
-import celebration from "@/public/lottie/gold-burst.json"; // 🎉 Ton animation choisie
+import celebration from "@/public/lottie/gold-burst.json"; // 🎉 Animation choisie
 
 export default function PrivateCelebrationOverlay({ completed }: { completed: boolean }) {
   const [visible, setVisible] = useState(false);
@@ -13,7 +13,7 @@ export default function PrivateCelebrationOverlay({ completed }: { completed: bo
       setVisible(true);
       localStorage.setItem("goalCelebrationSeen", "1");
 
-      // Disparaît automatiquement après 5 secondes
+      // Disparaît après 5 secondes
       setTimeout(() => setVisible(false), 5000);
     }
   }, [completed]);
