@@ -5,19 +5,26 @@ import Lottie from "react-lottie-player";
 
 export default function PrivateCelebrationOverlay({ completed }: { completed: boolean }) {
   const [visible, setVisible] = useState(false);
+  const [animationData, setAnimationData] = useState<any>(null);
+
+  // Charger l'animation depuis /public/lottie
+  useEffect(() => {
+    fetch("/lottie/gold-burst.json")
+      .then((res) => res.json())
+      .then(setAnimationData)
+      .catch((err) => console.error("Failed to load animation:", err));
+  }, []);
 
   useEffect(() => {
     const alreadySeen = localStorage.getItem("goalCelebrationSeen");
     if (completed && !alreadySeen) {
       setVisible(true);
       localStorage.setItem("goalCelebrationSeen", "1");
-
-      // Disparaît après 5 secondes
       setTimeout(() => setVisible(false), 5000);
     }
   }, [completed]);
 
-  if (!visible) return null;
+  if (!visible || !animationData) return null;
 
   return (
     <div
@@ -35,7 +42,7 @@ export default function PrivateCelebrationOverlay({ completed }: { completed: bo
       <Lottie
         loop={false}
         play
-        src="/lottie/gold-burst.json" // ✅ Chargé depuis le dossier public
+        animationData={animationData}
         style={{ width: 300, height: 300 }}
       />
     </div>
