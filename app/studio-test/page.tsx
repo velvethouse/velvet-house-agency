@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
+// Chargement dynamique de LottiePlayer
 const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 
 export default function StudioTestPage() {
