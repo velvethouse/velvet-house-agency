@@ -1,49 +1,57 @@
 "use client";
 
-import ButterflyRank from "./components/ButterflyRank";
-import StreamAccessNotice from "./components/StreamAccessNotice";
-import QrInvite from "./components/QrInvite";
+import { useState } from "react";
 import GoalWidget from "./components/GoalWidget";
-import NovaAssistant from "./components/NovaAssistant";
-import GalleryBlock from "./components/GalleryBlock";
-import EventNotice from "./components/EventNotice";
-import GlobalEventNotice from "./components/GlobalEventNotice";
+import StudioGallery from "./components/StudioGallery";
+import StudioSchedule from "./components/StudioSchedule";
+import StudioStats from "./components/StudioStats";
 
-export default function CreatorProfile({ params }: { params: { username: string } }) {
-  const username = params.username;
-  const lotusEarned = 216000; // mock
-  const isVip = false;        // mock
-  const isLocked = false;     // 🔓 default open
+export default function StudioPage() {
+  const [agreed, setAgreed] = useState(false);
+  const lotusEarned = 216000; // mock à remplacer plus tard
+
+  if (!agreed) {
+    return (
+      <main style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
+        <h1 style={{ color: "#D4AF37" }}>📋 Studio Rules & Conditions</h1>
+        <p>
+          Welcome to your private dashboard. Please review the following rules
+          before accessing your studio:
+        </p>
+        <ul style={{ paddingLeft: 20, lineHeight: 1.7 }}>
+          <li>No nudity or illegal content in public</li>
+          <li>Respect others and yourself</li>
+          <li>Only send content that you have rights to</li>
+          <li>Content flagged as NSFW will be reviewed</li>
+        </ul>
+        <button
+          className="btn3d btn3d--gold"
+          style={{ marginTop: 20 }}
+          onClick={() => setAgreed(true)}
+        >
+          I understand and want to access my studio
+        </button>
+      </main>
+    );
+  }
 
   return (
-    <main style={{ padding: "20px", maxWidth: 720, margin: "0 auto" }}>
-      {/* Header */}
-      <h1 style={{ fontSize: "28px", marginBottom: 12 }}>
-        🦋 Welcome to {username}'s <br />
-        <span style={{ color: "#D4AF37" }}>Creator Profile</span>
+    <main style={{ padding: 24, maxWidth: 960, margin: "0 auto" }}>
+      <h1 style={{ color: "#D4AF37", marginBottom: 16 }}>
+        🎥 Live Studio Dashboard
       </h1>
 
-      {/* Rank + access notice */}
-      <ButterflyRank lotusEarned={lotusEarned} />
-      <StreamAccessNotice isLocked={isLocked} isVip={isVip} />
+      {/* 📊 Stats streameuse */}
+      <StudioStats lotusEarned={lotusEarned} />
 
       {/* 🎯 Objectif Lotus */}
       <GoalWidget />
 
-      {/* 🔔 Streameuse Event */}
-      <EventNotice />
+      {/* 🖼️ Galerie privée */}
+      <StudioGallery />
 
-      {/* 🏛️ Global Event Velvet House */}
-      <GlobalEventNotice />
-
-      {/* 🤖 Nova */}
-      <NovaAssistant username={username} />
-
-      {/* 📲 QR Invite */}
-      <QrInvite username={username} />
-
-      {/* 🖼️ Galerie publique */}
-      <GalleryBlock />
+      {/* 📅 Planning des lives */}
+      <StudioSchedule />
     </main>
   );
 }
