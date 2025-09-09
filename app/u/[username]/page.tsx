@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import GoalWidget from "../components/GoalWidget";
-import StudioGallery from "../components/StudioGallery";
-import StudioSchedule from "../components/StudioSchedule";
+import GoalWidget from "./components/GoalWidget";
+import StudioGallery from "./components/StudioGallery";
+import StudioSchedule from "./components/StudioSchedule";
 
 export default function StudioPage() {
   const [agreed, setAgreed] = useState(false);
