@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Lottie from "react-lottie-player";
+import dynamic from "next/dynamic";
+
+// Chargement dynamique de LottiePlayer
+const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 
 export default function StudioTestPage() {
   const [visible, setVisible] = useState(false);
@@ -11,7 +14,7 @@ export default function StudioTestPage() {
     fetch("/lottie/gold-burst.json")
       .then((res) => res.json())
       .then(setAnimationData)
-      .catch((err) => console.error("Erreur chargement animation", err));
+      .catch(console.error);
   }, []);
 
   useEffect(() => {
@@ -31,18 +34,17 @@ export default function StudioTestPage() {
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        background: "rgba(0,0,0,0.8)",
+        background: "rgba(0,0,0,0.85)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
-      onClick={() => setVisible(false)}
     >
       <Lottie
         loop={false}
         play
         animationData={animationData}
-        style={{ width: 300, height: 300 }}
+        style={{ width: 320, height: 320 }}
       />
     </div>
   );
