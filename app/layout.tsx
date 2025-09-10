@@ -1,7 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-import GiftStage from "@/components/GiftStage"; // ✅ Réactivé ici
+import GiftStage from "@/components/GiftStage";
 
 type Announcement = {
   id: string;
@@ -124,7 +124,7 @@ export default async function RootLayout({
               <a href="/ads" style={linkStyle}>
                 Ads <span style={soonStyle}>(soon)</span>
               </a>
-              <a href="/cgu" style={linkStyle}>Terms</a>
+              <a href="/terms" style={linkStyle}>Terms</a>
             </div>
           </nav>
 
@@ -179,7 +179,7 @@ export default async function RootLayout({
                 Legal
               </a>{" "}
               ·{" "}
-              <a href="/cgu" style={{ color: "#D4AF37", textDecoration: "none" }}>
+              <a href="/terms" style={{ color: "#D4AF37", textDecoration: "none" }}>
                 Terms
               </a>
             </span>
@@ -188,4 +188,4 @@ export default async function RootLayout({
       </body>
     </html>
   );
-}
+                }
