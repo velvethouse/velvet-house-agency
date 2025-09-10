@@ -1,6 +1,6 @@
-// /app/terms/page.tsx
+// 📄 /app/terms/page.tsx
 
-export default function TermsPage() {
+export default function TermsAndPrivacyPage() {
   return (
     <main
       style={{
@@ -12,7 +12,9 @@ export default function TermsPage() {
       }}
     >
       <section style={{ maxWidth: 900, margin: "0 auto" }}>
-        <h1 style={{ fontSize: "clamp(24px,6vw,38px)", color: "#D4AF37" }}>Terms & Conditions</h1>
+        <h1 style={{ fontSize: "clamp(24px,6vw,38px)", color: "#D4AF37" }}>
+          📜 Terms & Conditions
+        </h1>
 
         <p style={{ fontSize: 14, lineHeight: 1.6, marginTop: 24 }}>
           By using Velvet House, you agree to the following terms. These terms apply to all users — streamers, viewers, and agencies.
@@ -31,6 +33,29 @@ export default function TermsPage() {
 
         <p style={{ fontSize: 13, marginTop: 30, color: "#d7c9b3" }}>
           By continuing to use the platform, you confirm that you have read and accepted these terms.
+        </p>
+
+        <hr style={{ margin: "48px 0", border: "1px solid rgba(255,255,255,0.1)" }} />
+
+        <h2 style={{ fontSize: 22, color: "#D4AF37", marginBottom: 12 }}>
+          🔐 Privacy Policy
+        </h2>
+
+        <p style={{ fontSize: 14, lineHeight: 1.6 }}>
+          Velvet House is committed to protecting your personal data and respecting your privacy. This policy explains how we collect, use, and protect your data.
+        </p>
+
+        <ul style={{ fontSize: 14, lineHeight: 1.7, paddingLeft: 20, marginTop: 12 }}>
+          <li>📥 We collect minimal personal data: email address, nickname, and device information.</li>
+          <li>💳 Payment data is never stored on our servers. It is handled by secure third-party providers.</li>
+          <li>🔒 Your data is encrypted and protected. We do not sell or rent any personal data.</li>
+          <li>📬 You may receive platform-related emails only (notifications, account, legal changes).</li>
+          <li>❌ You can request deletion of your account and associated data at any time.</li>
+          <li>🌍 We comply with GDPR, CCPA, and international privacy standards.</li>
+        </ul>
+
+        <p style={{ fontSize: 13, marginTop: 30, color: "#d7c9b3" }}>
+          For any question regarding privacy, contact us at support@velvethouseagency.com.
         </p>
 
         <p style={{ fontSize: 12, marginTop: 10, color: "#999" }}>
