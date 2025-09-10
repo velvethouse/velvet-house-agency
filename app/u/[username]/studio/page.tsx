@@ -4,7 +4,7 @@ import { useState } from "react";
 import GoalWidget from "../components/GoalWidget";
 import StudioGallery from "../components/StudioGallery";
 
-export default function StudioPage() {
+export default function StreamerStudioPage() {
   const [agreed, setAgreed] = useState(false);
 
   if (!agreed) {
@@ -12,21 +12,27 @@ export default function StudioPage() {
       <main style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
         <h1 style={{ color: "#D4AF37" }}>📋 Studio Rules & Conditions</h1>
         <p>
-          Welcome to your private dashboard. Please review the following rules
-          before accessing your studio:
+          Welcome to your professional page. Velvet House is a premium platform
+          for streamers and content creators. Before accessing your studio,
+          please make sure you agree with the following rules:
         </p>
         <ul style={{ paddingLeft: 20, lineHeight: 1.7 }}>
-          <li>No nudity or illegal content in public</li>
+          <li>No explicit nudity or illegal content</li>
           <li>Respect others and yourself</li>
-          <li>Only send content that you have rights to</li>
-          <li>Content flagged as NSFW will be reviewed</li>
+          <li>Gifts are your only unlock trigger</li>
+          <li>VIP and VIP Gold are managed by admins only</li>
+          <li>You are free to create and earn at your rhythm</li>
         </ul>
+        <p style={{ marginTop: 16, fontWeight: 600, color: "#f8d7a0" }}>
+          Any violation may result in a ban or removal from the platform.
+        </p>
+
         <button
           className="btn3d btn3d--gold"
-          style={{ marginTop: 20 }}
+          style={{ marginTop: 28 }}
           onClick={() => setAgreed(true)}
         >
-          I understand and want to access my studio
+          I understand and want to enter my studio
         </button>
       </main>
     );
@@ -34,12 +40,31 @@ export default function StudioPage() {
 
   return (
     <main style={{ padding: 24, maxWidth: 960, margin: "0 auto" }}>
-      <h1 style={{ color: "#D4AF37", marginBottom: 16 }}>
-        🎥 Live Studio Dashboard
-      </h1>
+      <h1 style={{ color: "#D4AF37" }}>🎥 Your Studio Dashboard</h1>
+      <p>
+        Welcome back! You can manage your schedule, go live, and track your
+        earnings here.
+      </p>
+
+      <div
+        style={{
+          background: "rgba(0,0,0,0.25)",
+          padding: 16,
+          borderRadius: 12,
+          marginTop: 20,
+          border: "1px solid rgba(212,175,55,0.35)",
+        }}
+      >
+        <ul style={{ lineHeight: 2 }}>
+          <li>📅 Schedule your live sessions</li>
+          <li>🎁 View your received gifts</li>
+          <li>💰 Track your Lotus balance</li>
+          <li>🔐 Apply for VIP or Gold status</li>
+        </ul>
+      </div>
 
       {/* 🎯 Objectif Lotus pendant le live */}
-      <GoalWidget />
+      <GoalWidget lotusEarned={216000} goal={500000} frequency="weekly" />
 
       {/* 🖼️ Galerie privée de la streameuse */}
       <StudioGallery />
