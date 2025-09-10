@@ -1,4 +1,4 @@
-// /app/lotus/page.tsx
+"use client";
 
 export default function LotusPage() {
   const packs = [
@@ -17,50 +17,49 @@ export default function LotusPage() {
   return (
     <main
       style={{
-        padding: "32px 16px",
-        maxWidth: 900,
-        margin: "0 auto",
+        minHeight: "100vh",
+        padding: "40px 20px",
+        background: "linear-gradient(180deg,#4b1c1c 0%,#2e0d0d 100%)",
+        color: "#fff",
+        fontFamily: 'system-ui,"Segoe UI",Roboto,Arial,sans-serif',
       }}
     >
-      <h1 style={{ color: "#D4AF37", fontSize: 32, marginBottom: 24 }}>
-        💎 Buy Lotus Packs
-      </h1>
+      <section style={{ maxWidth: 900, margin: "0 auto" }}>
+        <h1 style={{ fontSize: "clamp(22px,6vw,36px)", color: "#D4AF37" }}>💎 Buy Lotus</h1>
 
-      <div style={{ display: "grid", gap: 24 }}>
-        {packs.map((pack) => (
-          <div
-            key={pack.amount}
-            className="card"
-            style={{
-              padding: 20,
-              border: "1px solid rgba(212,175,55,0.3)",
-              background: "rgba(0,0,0,0.15)",
-              borderRadius: 12,
-            }}
-          >
-            <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>
-              {pack.amount.toLocaleString()} Lotus
-              {pack.label && (
-                <span style={{ marginLeft: 8, color: "#FFD700", fontSize: 14 }}>
-                  • {pack.label}
-                </span>
-              )}
-            </div>
-            <div style={{ fontSize: 16, marginBottom: 6 }}>
-              {pack.price.toFixed(2)} €
-            </div>
-            <div style={{ color: "#00FF99", fontSize: 14, marginBottom: 10 }}>
-              +{pack.bonus.toLocaleString()} Lotus bonus
-            </div>
-            <button
-              className="btn3d btn3d--gold"
-              style={{ width: "100%", padding: "10px 0" }}
+        <p style={{ marginTop: 8, fontSize: 14, color: "#e9dfcf" }}>
+          Select the amount of Lotus you want to buy. Bonus included for each pack!
+        </p>
+
+        <div style={{ display: "grid", gap: 18, marginTop: 32 }}>
+          {packs.map((p) => (
+            <div
+              key={p.amount}
+              style={{
+                background: "#1e0c0c",
+                borderRadius: 12,
+                padding: "20px 16px",
+                border: "1px solid rgba(255,255,255,0.1)",
+              }}
             >
-              Buy
-            </button>
-          </div>
-        ))}
-      </div>
+              <h3 style={{ fontSize: 20, marginBottom: 6 }}>
+                {p.amount.toLocaleString("fr-FR")} Lotus{" "}
+                {p.label && <span style={{ fontSize: 14, color: "#FFD700" }}>• {p.label}</span>}
+              </h3>
+              <p style={{ margin: "4px 0", fontSize: 14 }}>{p.price.toFixed(2)} €</p>
+              <p style={{ color: "lightgreen", fontSize: 13 }}>
+                +{p.bonus.toLocaleString("fr-FR")} Lotus bonus
+              </p>
+              <button
+                className="btn3d btn3d--gold"
+                style={{ marginTop: 10, fontSize: 14, padding: "8px 20px" }}
+              >
+                Buy
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
