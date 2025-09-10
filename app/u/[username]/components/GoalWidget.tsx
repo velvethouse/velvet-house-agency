@@ -2,87 +2,78 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+type Frequency = "daily" | "weekly";
+
 type Props = {
-  lotusEarned?: number;
-  goal?: number;
+  lotusEarned: number;
+  goal: number;
+  frequency: Frequency;
 };
 
-export default function GoalWidget({ lotusEarned, goal }: Props) {
-  const [localProgress, setLocalProgress] = useState(0);
-  const [localGoal, setLocalGoal] = useState(20000);
-
-  // Load fallback from localStorage if no props
-  useEffect(() => {
-    if (!lotusEarned) {
-      const saved = localStorage.getItem("lotusProgress");
-      if (saved) setLocalProgress(Number(saved));
-    }
-    if (!goal) {
-      const savedGoal = localStorage.getItem("lotusGoal");
-      if (savedGoal) setLocalGoal(Number(savedGoal));
-    }
-  }, [lotusEarned, goal]);
-
-  const progress = lotusEarned ?? localProgress;
-  const target = goal ?? localGoal;
+export default function GoalWidget({ lotusEarned, goal, frequency }: Props) {
+  const [progress, setProgress] = useState(0);
+  const [celebrated, setCelebrated] = useState(false);
 
   const ratio = useMemo(() => {
-    if (target <= 0) return 0;
-    return Math.min(1, progress / target);
-  }, [progress, target]);
+    if (goal <= 0) return 0;
+    return Math.min(1, lotusEarned / goal);
+  }, [lotusEarned, goal]);
 
-  const completed = ratio >= 1;
+  useEffect(() => {
+    setProgress(ratio);
+    if (ratio >= 1 && !celebrated) {
+      localStorage.setItem("goalCelebrationTest", "0"); // pour l’animation 🎉
+      setCelebrated(true);
+    }
+  }, [ratio, celebrated]);
 
   return (
     <section style={{ marginTop: 24 }}>
-      <h2 style={{ color: "#D4AF37", marginBottom: 10 }}>🎯 Weekly Goal</h2>
+      <h2 style={{ color: "#D4AF37", marginBottom: 10 }}>
+        🎯 {frequency === "daily" ? "Daily Goal" : "Weekly Goal"}
+      </h2>
 
       <div
-        className="card"
         style={{
-          padding: 14,
-          display: "grid",
-          gap: 12,
-          background: "rgba(0,0,0,.25)",
-          border: "1px solid rgba(212,175,55,.35)",
+          padding: 16,
           borderRadius: 12,
+          border: "1px solid rgba(212,175,55,0.35)",
+          background: "rgba(255,255,255,0.03)",
         }}
       >
-        <div style={{ fontWeight: 700, color: "#FFD700" }}>
-          {progress.toLocaleString()} / {target.toLocaleString()} Lotus
+        <div style={{ marginBottom: 8, color: "#f5f5f5" }}>
+          {lotusEarned.toLocaleString()} / {goal.toLocaleString()} Lotus
         </div>
-
         <div
           style={{
             height: 10,
             borderRadius: 999,
-            background: "rgba(255,255,255,.1)",
+            background: "rgba(255,255,255,0.1)",
             overflow: "hidden",
+            marginBottom: 10,
           }}
         >
           <div
             style={{
-              height: "100%",
               width: `${ratio * 100}%`,
-              background: "linear-gradient(90deg,#D4AF37,#f6dd9d)",
+              height: "100%",
+              background: "linear-gradient(to right, #D4AF37, #fff2c7)",
               transition: "width 0.3s ease",
             }}
           />
         </div>
 
-        {completed && (
+        {ratio >= 1 && (
           <div
             style={{
-              padding: 10,
-              borderRadius: 12,
-              border: "1px dashed rgba(212,175,55,.55)",
-              background: "rgba(212,175,55,.1)",
-              color: "#e9dfcf",
-              fontWeight: 600,
-              marginTop: 8,
+              color: "#FFD700",
+              background: "rgba(255,255,255,0.05)",
+              padding: 8,
+              borderRadius: 8,
+              fontWeight: "bold",
             }}
           >
-            🎉 Goal achieved! Velvet House rewards you with +2% bonus Lotus!
+            🎉 Congratulations! You've reached your goal and earned +2% Lotus!
           </div>
         )}
       </div>
