@@ -7,7 +7,7 @@ import GoalCelebrationOverlay from "./components/GoalCelebrationOverlay";
 import GalleryBlock from "./components/GalleryBlock";
 import StatsToggle from "./components/StatsToggle";
 import QrInvite from "./components/QrInvite";
-import PlanningBlock from "./components/PlanningBlock"; // ✅ Ajout du planning
+import PlanningBlock from "./components/PlanningBlock";
 
 export default function UserProfilePage({ params }: { params: { username: string } }) {
   const lotusEarned = 216_000;
@@ -39,7 +39,7 @@ export default function UserProfilePage({ params }: { params: { username: string
       <EventBanner events={events} />
 
       {/* 🎯 Objectif Lotus */}
-      <GoalWidget lotusEarned={lotusEarned} goal={goal} />
+      <GoalWidget lotusEarned={lotusEarned} goal={goal} frequency="weekly" />
 
       {/* 🎉 Animation 🎊 si objectif atteint */}
       <GoalCelebrationOverlay />
