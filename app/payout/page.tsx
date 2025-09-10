@@ -12,9 +12,8 @@ type Payout = {
 };
 
 const mockPayouts: Payout[] = [
-  { id: 1, name: "LunaFire", amount: 42000, method: "PayPal", status: "paid", date: "2025-09-04" },
-  { id: 2, name: "RedVelvet", amount: 67000, method: "Wise", status: "pending", date: "2025-09-09" },
-  { id: 3, name: "DiamondQueen", amount: 102000, method: "USDT", status: "paid", date: "2025-09-01" },
+  { id: 1, name: "RedVelvet", amount: 67000, method: "Wise", status: "pending", date: "2025-09-09" },
+  { id: 2, name: "DiamondQueen", amount: 102000, method: "USDT", status: "paid", date: "2025-09-01" },
 ];
 
 export default function PayoutPage() {
