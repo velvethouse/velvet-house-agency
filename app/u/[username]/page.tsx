@@ -1,21 +1,17 @@
-import BioBlock from "./components/BioBlock";
-import ButterflyRank from "./components/ButterflyRank";
+// 📄 /app/u/[username]/page.tsx
 import StreamAccessNotice from "./components/StreamAccessNotice";
+import ButterflyRank from "./components/ButterflyRank";
+import EventBanner from "./components/EventBanner";
 import GoalWidget from "./components/GoalWidget";
 import GoalCelebrationOverlay from "./components/GoalCelebrationOverlay";
 import GalleryBlock from "./components/GalleryBlock";
-import EventBanner from "./components/EventBanner";
 import StatsToggle from "./components/StatsToggle";
 import QrInvite from "./components/QrInvite";
-import CTAButtons from "./components/CTAButtons";
-import LivePrivateAccess from "./components/LivePrivateAccess";
+import PlanningBlock from "./components/PlanningBlock"; // ✅ Ajout du planning
 
-export default function CreatorPublicPage({ params }: { params: { username: string } }) {
-  const username = params.username;
-  const lotusEarned = 216000; // mock
-  const goal = 500000;        // mock objectif
-  const isVip = false;        // mock
-  const isLocked = false;     // stream public par défaut
+export default function UserProfilePage({ params }: { params: { username: string } }) {
+  const lotusEarned = 216_000;
+  const goal = 500_000;
   const events = [
     {
       id: "1",
@@ -32,43 +28,33 @@ export default function CreatorPublicPage({ params }: { params: { username: stri
   ];
 
   return (
-    <main style={{ padding: 20, maxWidth: 760, margin: "0 auto" }}>
-      <h1 style={{ fontSize: 28, marginBottom: 12 }}>
-        🦋 Welcome to <span style={{ color: "#D4AF37" }}>{username}'s</span> profile
-      </h1>
+    <main>
+      {/* 🔐 Bloc d’accès */}
+      <StreamAccessNotice isLocked={false} isVip={false} />
 
-      {/* Bio */}
-      <BioBlock username={username} />
-
-      {/* Rang streameuse */}
+      {/* 🦋 Rang streameuse */}
       <ButterflyRank lotusEarned={lotusEarned} />
 
-      {/* Bloc accès au stream */}
-      <StreamAccessNotice isLocked={isLocked} isVip={isVip} />
-
-      {/* Objectif Lotus */}
-      <GoalWidget lotusEarned={lotusEarned} goal={goal} frequency="weekly" />
-
-      {/* Animation 🎉 si objectif atteint */}
-      <GoalCelebrationOverlay />
-
-      {/* Galerie photos */}
-      <GalleryBlock username={username} />
-
-      {/* Stats Lotus par heure */}
-      <StatsToggle />
-
-      {/* Événements (perso ou Velvet) */}
+      {/* 🎉 Événements */}
       <EventBanner events={events} />
 
-      {/* Lien QR vers profil, live, chat, etc. */}
-      <QrInvite username={username} />
+      {/* 🎯 Objectif Lotus */}
+      <GoalWidget lotusEarned={lotusEarned} goal={goal} />
 
-      {/* Boutons vers Live et Chat */}
-      <CTAButtons username={username} />
+      {/* 🎉 Animation 🎊 si objectif atteint */}
+      <GoalCelebrationOverlay />
 
-      {/* Activation live privé */}
-      <LivePrivateAccess />
+      {/* 🖼️ Galerie publique */}
+      <GalleryBlock username={params.username} />
+
+      {/* 📈 Statistiques */}
+      <StatsToggle />
+
+      {/* 📅 Planning des lives */}
+      <PlanningBlock />
+
+      {/* 🔗 QR Code d'invitation */}
+      <QrInvite username={params.username} />
     </main>
   );
 }
