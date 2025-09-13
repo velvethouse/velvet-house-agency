@@ -1,54 +1,58 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Lottie from 'react-lottie-player'
 import { useGiftOverlay } from '@/hooks/useGiftOverlay'
+import gifts from '@/data/gifts.json'
 
-const SendGiftOverlay: React.FC = () => {
-  const { overlayFile, clearOverlay } = useGiftOverlay()
-  const [show, setShow] = useState(false)
+type Props = {
+  onSend?: (gift: GiftData) => void
+}
 
-  useEffect(() => {
-    if (overlayFile) {
-      setShow(true)
+export type GiftData = {
+  id: string
+  name: string
+  file: string // ex: 'lotus.json'
+  price: number
+}
 
-      const timer = setTimeout(() => {
-        setShow(false)
-        clearOverlay()
-      }, 4000) // durée de l'animation en plein écran
+const LiveGiftPanel: React.FC<Props> = ({ onSend }) => {
+  const { showOverlay } = useGiftOverlay()
 
-      return () => clearTimeout(timer)
-    }
-  }, [overlayFile, clearOverlay])
-
-  if (!overlayFile || !show) return null
+  const handleSend = (gift: GiftData) => {
+    showOverlay(gift.file)
+    onSend?.(gift)
+  }
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        zIndex: 9999,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        pointerEvents: 'none',
-      }}
-    >
-      <Lottie
-        play
-        path={`/gifts/${overlayFile}`}
-        style={{
-          width: 240,
-          height: 240,
-        }}
-      />
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', padding: '16px' }}>
+      {gifts.map((gift) => (
+        <div
+          key={gift.id}
+          onClick={() => handleSend(gift)}
+          style={{
+            width: 72,
+            height: 72,
+            borderRadius: 8,
+            background: '#111',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            cursor: 'pointer',
+            boxShadow: '0 0 8px rgba(255,255,255,0.1)',
+          }}
+        >
+          <Lottie
+            loop
+            play
+            animationData={undefined}
+            path={`/gifts/${gift.file}`}
+            style={{ width: 48, height: 48 }}
+          />
+        </div>
+      ))}
     </div>
   )
 }
 
-export default SendGiftOverlay
+export default LiveGiftPanel
