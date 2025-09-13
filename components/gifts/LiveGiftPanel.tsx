@@ -3,7 +3,7 @@
 import React from 'react'
 import Lottie from 'react-lottie-player'
 import { useGiftOverlay } from '@/hooks/useGiftOverlay'
-import gifts from '@/data/gifts.json'
+import { gifts } from '@/data/gifts'
 
 type Props = {
   onSend?: (gift: GiftData) => void
