@@ -59,6 +59,41 @@ export default function LotusPage() {
             </div>
           ))}
         </div>
+
+        {/* 🔽 Ajout : instructions paiement */}
+        <div style={{ marginTop: 60 }}>
+          <h2 style={{ fontSize: 20, color: "#D4AF37" }}>💳 Payment Instructions</h2>
+          <p style={{ marginTop: 8, fontSize: 14, color: "#e9dfcf" }}>
+            After choosing your pack, complete your payment using one of the following methods:
+          </p>
+
+          <ul style={{ fontSize: 14, marginTop: 18, lineHeight: 1.7, paddingLeft: 20 }}>
+            <li>
+              <strong>🏦 Bank Transfer (Hong Kong):</strong><br />
+              Account Name: <code style={{ background: '#222', padding: '2px 6px', borderRadius: 4 }}>Novalink Limited</code><br />
+              Bank: <code style={{ background: '#222', padding: '2px 6px', borderRadius: 4 }}>HSBC Hong Kong</code><br />
+              Account Number: <code style={{ background: '#222', padding: '2px 6px', borderRadius: 4 }}>123-456789-001</code><br />
+              SWIFT Code: <code style={{ background: '#222', padding: '2px 6px', borderRadius: 4 }}>HSBCHKHHHKH</code>
+            </li>
+
+            <li style={{ marginTop: 16 }}>
+              <strong>🪙 USDT (TRC20):</strong><br />
+              Wallet: <code style={{ background: '#222', padding: '2px 6px', borderRadius: 4 }}>
+                TM3XpYa5MVeG8bK8T3XHEDaK4dS8xvPf8T
+              </code>
+            </li>
+
+            <li style={{ marginTop: 16 }}>
+              <strong>💳 Card Payment:</strong><br />
+              Available soon via Stripe
+            </li>
+          </ul>
+
+          <p style={{ fontSize: 13, marginTop: 24, color: "#aaa" }}>
+            Once payment is sent, confirm with our team via WhatsApp or live chat.  
+            Your Lotus balance will be updated within 5 minutes.
+          </p>
+        </div>
       </section>
     </main>
   );
