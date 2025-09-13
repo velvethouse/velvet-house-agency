@@ -20,9 +20,7 @@ const LiveGiftPanel: React.FC<Props> = ({ onSend }) => {
   const { showOverlay } = useGiftOverlay()
 
   const handleSend = (gift: GiftData) => {
-    // Déclenche l’animation overlay
     showOverlay(gift.file)
-    // Envoi au parent si défini (logique backend/chat/etc.)
     onSend?.(gift)
   }
 
@@ -47,7 +45,8 @@ const LiveGiftPanel: React.FC<Props> = ({ onSend }) => {
           <Lottie
             loop
             play
-            animationData={require(`../../../public/gifts/${gift.file}`)}
+            animationData={undefined}
+            path={`/gifts/${gift.file}`} // ✅ utilisation correcte ici
             style={{ width: 48, height: 48 }}
           />
         </div>
