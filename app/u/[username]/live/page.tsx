@@ -2,8 +2,8 @@
 
 import NovaChat from "../../../../components/NovaChat";
 import CreatorTabs from "../../../../components/CreatorTabs";
-import LiveGiftPanelWrapper from "../components/LiveGiftPanel";
-import LiveChat from "../components/LiveChat";
+import LiveGiftPanelWrapper from './components/LiveGiftPanel'
+import LiveChat from './components/LiveChat'
 
 type Props = { params: { username: string } };
 
