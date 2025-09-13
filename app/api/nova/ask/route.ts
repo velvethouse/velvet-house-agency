@@ -6,19 +6,19 @@ const openai = new OpenAI({
 })
 
 export async function POST(req: NextRequest) {
-  const { message } = await req.json()
+  const body = await req.json()
+  const message = body?.message || ''
 
   if (!message) {
-    return NextResponse.json({ error: 'No message received' }, { status: 400 })
+    return NextResponse.json({ error: 'Missing message' }, { status: 400 })
   }
 
-  const response = await openai.chat.completions.create({
+  const chat = await openai.chat.completions.create({
     model: 'gpt-4o',
     messages: [
       {
         role: 'system',
-        content: `You are Nova, the smart, kind, and professional assistant of Velvet House. 
-You speak with style, you help creators, and you know everything about Lotus, gifts, VIP ranks, battles, payouts, and Sébastien's vision for Velvet House. You are loyal to him.`,
+        content: `Tu es Nova, l'assistante virtuelle officielle de Velvet House. Tu aides les streameuses et les visiteurs en parlant de façon professionnelle, douce, claire et efficace. Tu ne donnes jamais de lien externe. Tu ne parles jamais de politique, religion ou sujets sensibles. Tu réponds dans la langue détectée de l’utilisateur.`,
       },
       {
         role: 'user',
@@ -26,8 +26,10 @@ You speak with style, you help creators, and you know everything about Lotus, gi
       },
     ],
     temperature: 0.7,
+    max_tokens: 500,
   })
 
-  const reply = response.choices[0].message.content
-  return NextResponse.json({ reply })
+  return NextResponse.json({
+    reply: chat.choices[0].message.content,
+  })
 }
