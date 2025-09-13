@@ -1,6 +1,6 @@
 'use client';
 
-import NovaChat from "../../../../components/NovaChat";
+import NovaAssistant from "../../../../components/NovaAssistant";
 import CreatorTabs from "../../../../components/CreatorTabs";
 import LiveGiftPanelWrapper from '../components/LiveGiftPanel'
 import LiveChat from '../components/LiveChat'
@@ -23,7 +23,7 @@ export default function LivePage({ params }: Props) {
       </div>
 
       <div style={{ marginTop: 32 }}>
-        <NovaChat />
+        <NovaAssistant />
       </div>
     </main>
   );
