@@ -1,5 +1,11 @@
 "use client";
 
+const codeStyle = {
+  background: '#222',
+  padding: '2px 6px',
+  borderRadius: 4,
+};
+
 export default function PayoutPage() {
   const availableLotus = 46250; // mock
   const exchangeRate = 1000; // 1000 Lotus = 1 €
@@ -19,6 +25,7 @@ export default function PayoutPage() {
         maxWidth: 960,
         margin: "0 auto",
         fontFamily: 'system-ui,Segoe UI,Roboto,sans-serif',
+        color: "#fff"
       }}
     >
       <h1 style={{ fontSize: 26, color: "#D4AF37", marginBottom: 24 }}>
@@ -31,7 +38,6 @@ export default function PayoutPage() {
           border: "1px solid rgba(212,175,55,0.2)",
           padding: 20,
           borderRadius: 12,
-          color: "#f5f5f5",
           marginBottom: 32,
         }}
       >
@@ -62,7 +68,6 @@ export default function PayoutPage() {
             width: "100%",
             borderCollapse: "collapse",
             fontSize: 14,
-            color: "#fff",
           }}
         >
           <thead>
@@ -84,6 +89,34 @@ export default function PayoutPage() {
             ))}
           </tbody>
         </table>
+      </section>
+
+      <section style={{ marginTop: 48 }}>
+        <h2 style={{ fontSize: 18, color: "#D4AF37", marginBottom: 12 }}>💳 Withdrawal Instructions</h2>
+
+        <p style={{ fontSize: 14, color: "#ccc", marginBottom: 16 }}>
+          After clicking the request button, please confirm your preferred withdrawal method via WhatsApp or live chat:
+        </p>
+
+        <ul style={{ fontSize: 14, lineHeight: 1.8, paddingLeft: 20 }}>
+          <li>
+            <strong>🏦 Bank Transfer (Hong Kong):</strong><br />
+            Account Name: <code style={codeStyle}>Novalink Limited</code><br />
+            Bank: <code style={codeStyle}>HSBC Hong Kong</code><br />
+            Account Number: <code style={codeStyle}>123-456789-001</code><br />
+            SWIFT: <code style={codeStyle}>HSBCHKHHHKH</code>
+          </li>
+
+          <li style={{ marginTop: 12 }}>
+            <strong>🪙 USDT (TRC20):</strong><br />
+            Wallet: <code style={codeStyle}>TM3XpYa5MVeG8bK8T3XHEDaK4dS8xvPf8T</code>
+          </li>
+        </ul>
+
+        <p style={{ fontSize: 13, color: "#aaa", marginTop: 16 }}>
+          ✅ Your payout will be processed within 24 hours.  
+          If you're part of an agency, it will be grouped monthly.
+        </p>
       </section>
     </main>
   );
