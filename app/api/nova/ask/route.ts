@@ -1,24 +1,19 @@
-import { OpenAI } from 'openai'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+export async function POST(req: Request) {
+  const { message } = await req.json()
 
-export async function POST(req: NextRequest) {
-  const body = await req.json()
-  const message = body?.message || ''
-
-  if (!message) {
-    return NextResponse.json({ error: 'Missing message' }, { status: 400 })
+  const apiKey = process.env.OPENAI_API_KEY
+  if (!apiKey) {
+    return NextResponse.json({ error: 'Missing OpenAI API key.' }, { status: 500 })
   }
 
-  const chat = await openai.chat.completions.create({
+  const body = {
     model: 'gpt-4o',
     messages: [
       {
         role: 'system',
-        content: `Tu es Nova, l'assistante virtuelle officielle de Velvet House. Tu aides les streameuses et les visiteurs en parlant de façon professionnelle, douce, claire et efficace. Tu ne donnes jamais de lien externe. Tu ne parles jamais de politique, religion ou sujets sensibles. Tu réponds dans la langue détectée de l’utilisateur.`,
+        content: `You are Nova, the assistant of Velvet House. You speak to creators and donors in a kind, respectful, and clear tone. Keep responses concise, helpful, and supportive.`,
       },
       {
         role: 'user',
@@ -26,10 +21,22 @@ export async function POST(req: NextRequest) {
       },
     ],
     temperature: 0.7,
-    max_tokens: 500,
+  }
+
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
   })
 
-  return NextResponse.json({
-    reply: chat.choices[0].message.content,
-  })
+  const data = await res.json()
+
+  if (data.choices && data.choices.length > 0) {
+    return NextResponse.json({ reply: data.choices[0].message.content })
+  } else {
+    return NextResponse.json({ reply: 'Sorry, I had trouble responding. Please try again later.' })
+  }
 }
