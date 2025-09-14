@@ -20,11 +20,11 @@ type Creator = {
 export default function FollowerProfile({ params }: Props) {
   const username = params.username;
 
-  // 🟡 Ces données seront récupérées via API ou backend plus tard
+  // 🟡 Données simulées – à connecter à la base plus tard
   const lotusBalance = 0;
   const isVip = false;
   const isGold = false;
-  const favoriteCreators: Creator[] = []; // ✅ Typé
+  const favoriteCreators: Creator[] = [];
 
   return (
     <main style={{ padding: "20px", maxWidth: 720, margin: "0 auto" }}>
@@ -43,7 +43,7 @@ export default function FollowerProfile({ params }: Props) {
         </span>
       </p>
 
-      {/* Avatar (placeholder) */}
+      {/* Avatar */}
       <div
         className="avatar-ring"
         style={{ marginBottom: 20, textAlign: "center" }}
@@ -88,10 +88,10 @@ export default function FollowerProfile({ params }: Props) {
         </section>
       )}
 
-      {/* Cancel VIP subscription */}
+      {/* Cancel subscription */}
       {(isVip || isGold) && (
         <section style={{ marginTop: 20 }}>
-          <CancelSubscription />
+          <CancelSubscription isVip={isVip} isGold={isGold} />
         </section>
       )}
     </main>
