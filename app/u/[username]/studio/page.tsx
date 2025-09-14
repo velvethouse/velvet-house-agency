@@ -3,6 +3,7 @@
 import { useState } from "react";
 import GoalWidget from "../components/GoalWidget";
 import StudioGallery from "../components/StudioGallery";
+import StatsPerformance from "../components/StatsPerformance";
 import NovaStudioCoach from "@/components/studio/NovaStudioCoach";
 
 export default function StreamerStudioPage() {
@@ -69,6 +70,9 @@ export default function StreamerStudioPage() {
 
       {/* 🖼️ Galerie privée de la streameuse */}
       <StudioGallery />
+
+      {/* 📊 Performances Lotus */}
+      <StatsPerformance />
 
       {/* 🧠 Nova Coach IA */}
       <div style={{ marginTop: 40 }}>
