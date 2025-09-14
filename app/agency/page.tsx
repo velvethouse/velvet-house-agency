@@ -1,103 +1,142 @@
+// app/agency/page.tsx
 "use client";
 
 import { useState } from "react";
-import AgencyStreamerTable, { Streamer } from "./components/AgencyStreamerTable";
+import AgencyStreamerTable from "./components/AgencyStreamerTable";
+
+type Streamer = {
+  id: string;
+  name: string;
+  rank: "Butterfly" | "Golden" | "Fire";
+  lotusEarned: number;
+  agencyRate: number;
+  status: "pending" | "paid";
+};
 
 export default function AgencyDashboardPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     typeof window !== "undefined" && localStorage.getItem("agency-auth") === "1"
   );
 
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
   const handleLogin = () => {
     const validUser = process.env.NEXT_PUBLIC_AGENCY_USERNAME;
     const validPass = process.env.NEXT_PUBLIC_AGENCY_PASSWORD;
-    const inputUser = prompt("Enter agency username:");
-    const inputPass = prompt("Enter agency password:");
-    if (inputUser === validUser && inputPass === validPass) {
+
+    if (username === validUser && password === validPass) {
       localStorage.setItem("agency-auth", "1");
       setIsLoggedIn(true);
     } else {
-      alert("❌ Invalid credentials");
+      setError("❌ Invalid credentials");
     }
   };
 
-  if (!isLoggedIn) {
-    return (
-      <main style={{ padding: 24, maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
-        <h1 style={{ fontSize: 26, color: "#FFD700", marginBottom: 16 }}>
-          🏢 Agency Access
-        </h1>
-        <p style={{ marginBottom: 24, color: "#f5f5f5" }}>
-          Enter your credentials to access your dashboard.
-        </p>
-        <button
-          onClick={handleLogin}
-          className="btn3d btn3d--gold"
-          style={{ padding: "10px 24px" }}
-        >
-          Log in
-        </button>
-      </main>
-    );
-  }
-
   const streamers: Streamer[] = [
     {
-      id: "alice01",
+      id: "alice",
       name: "Alice",
       rank: "Butterfly",
-      lotusEarned: 18400,
+      lotusEarned: 24000,
       agencyRate: 5,
-      status: "paid",
-    },
-    {
-      id: "bella02",
-      name: "Bella",
-      rank: "Golden",
-      lotusEarned: 218000,
-      agencyRate: 7,
       status: "pending",
     },
     {
-      id: "clara03",
+      id: "bella",
+      name: "Bella",
+      rank: "Golden",
+      lotusEarned: 88000,
+      agencyRate: 7,
+      status: "paid",
+    },
+    {
+      id: "clara",
       name: "Clara",
       rank: "Fire",
-      lotusEarned: 1324000,
+      lotusEarned: 360000,
       agencyRate: 10,
       status: "paid",
     },
   ];
 
-  return (
-    <main
-      style={{
-        padding: 24,
-        maxWidth: 960,
-        margin: "0 auto",
-        fontFamily: 'system-ui,Segoe UI,Roboto,sans-serif',
-      }}
-    >
-      <h1 style={{ fontSize: 28, color: "#D4AF37", marginBottom: 24 }}>
-        🏢 Agency Dashboard
-      </h1>
+  if (!isLoggedIn) {
+    return (
+      <main style={{ padding: 24, maxWidth: 420, margin: "0 auto", textAlign: "center" }}>
+        <h1 style={{ color: "#FFD700", marginBottom: 24 }}>🏛️ Agency Login</h1>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          style={inputStyle}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={inputStyle}
+        />
+        <button
+          onClick={handleLogin}
+          style={{
+            marginTop: 16,
+            padding: "10px 20px",
+            background: "#D4AF37",
+            border: "none",
+            borderRadius: 8,
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
+        >
+          Log In
+        </button>
+        {error && <p style={{ color: "red", marginTop: 12 }}>{error}</p>}
+      </main>
+    );
+  }
 
-      <p style={{ marginBottom: 16, color: "#e0e0e0", fontSize: 15 }}>
-        Your streamers' commissions are calculated automatically once their payouts are validated.
+  return (
+    <main style={{ padding: 24, maxWidth: 1000, margin: "0 auto" }}>
+      <h1 style={{ fontSize: 28, color: "#D4AF37", marginBottom: 24 }}>
+        🏛️ Agency Dashboard
+      </h1>
+      <p style={{ color: "#f5f5f5", marginBottom: 20 }}>
+        Here is your list of streamers. You can track commissions and payouts.
       </p>
 
       <AgencyStreamerTable streamers={streamers} />
 
       <section style={{ marginTop: 40 }}>
         <button
-          className="btn3d btn3d--velvet"
-          style={{ padding: "10px 20px", fontSize: 14 }}
+          onClick={() => {
+            localStorage.removeItem("agency-auth");
+            setIsLoggedIn(false);
+          }}
+          style={{
+            background: "transparent",
+            border: "1px solid #FFD700",
+            color: "#FFD700",
+            padding: "8px 14px",
+            borderRadius: 8,
+            fontWeight: 600,
+            cursor: "pointer",
+          }}
         >
-          🔁 Request Payout (manual validation after streamer payout)
+          Log out
         </button>
-        <p style={{ fontSize: 12, color: "#ccc", marginTop: 8 }}>
-          Note: You can only request your payout after the streamer’s payout is marked as “Paid”.
-        </p>
       </section>
     </main>
   );
 }
+
+const inputStyle: React.CSSProperties = {
+  display: "block",
+  width: "100%",
+  padding: "10px",
+  marginBottom: "12px",
+  borderRadius: 6,
+  border: "1px solid #ccc",
+};
