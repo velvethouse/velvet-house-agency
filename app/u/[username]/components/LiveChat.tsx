@@ -1,25 +1,28 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 type Message = {
-  id: number
-  user: string
-  text: string
-}
+  id: string;
+  user: string;
+  text: string;
+};
 
-const LiveChat: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState('')
+type Props = {
+  messages?: Message[];
+  onSend?: (text: string) => void;
+};
 
-  const sendMessage = () => {
-    if (!input.trim()) return
-    setMessages([
-      ...messages,
-      { id: Date.now(), user: 'You', text: input.trim() },
-    ])
-    setInput('')
-  }
+const LiveChat: React.FC<Props> = ({ messages = [], onSend }) => {
+  const [input, setInput] = useState('');
+
+  const handleSend = () => {
+    const trimmed = input.trim();
+    if (!trimmed) return;
+
+    onSend?.(trimmed); // appelle le backend / socket plus tard
+    setInput('');
+  };
 
   return (
     <div
@@ -27,22 +30,36 @@ const LiveChat: React.FC = () => {
         background: '#111',
         borderRadius: 12,
         padding: 12,
-        maxHeight: 280,
-        overflowY: 'auto',
+        maxHeight: 300,
+        overflow: 'hidden',
         fontSize: 14,
         color: '#fff',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <div style={{ marginBottom: 8, fontWeight: 600, fontSize: 16 }}>
         💬 Live Chat
       </div>
 
-      <div style={{ maxHeight: 160, overflowY: 'auto', marginBottom: 8 }}>
-        {messages.map((msg) => (
-          <div key={msg.id} style={{ marginBottom: 4 }}>
-            <strong>{msg.user}:</strong> {msg.text}
-          </div>
-        ))}
+      <div
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          marginBottom: 8,
+          borderTop: '1px solid rgba(255,255,255,0.05)',
+          paddingTop: 8,
+        }}
+      >
+        {messages.length === 0 ? (
+          <p style={{ color: '#888', fontSize: 13 }}>No messages yet…</p>
+        ) : (
+          messages.map((msg) => (
+            <div key={msg.id} style={{ marginBottom: 4 }}>
+              <strong>{msg.user}:</strong> {msg.text}
+            </div>
+          ))
+        )}
       </div>
 
       <div style={{ display: 'flex', gap: 8 }}>
@@ -60,7 +77,7 @@ const LiveChat: React.FC = () => {
           }}
         />
         <button
-          onClick={sendMessage}
+          onClick={handleSend}
           style={{
             padding: '8px 12px',
             background: '#ff007f',
@@ -75,7 +92,7 @@ const LiveChat: React.FC = () => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LiveChat
+export default LiveChat;
