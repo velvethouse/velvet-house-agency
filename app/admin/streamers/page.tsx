@@ -1,5 +1,3 @@
-// 📄 /app/admin/streamers/page.tsx
-
 "use client";
 
 const lowMoralStreamers = [
