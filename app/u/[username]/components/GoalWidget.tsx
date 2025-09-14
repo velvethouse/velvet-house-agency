@@ -1,16 +1,20 @@
-"use client";
+'use client';
 
 import { useEffect, useMemo, useState } from "react";
 
 type Frequency = "daily" | "weekly";
 
 type Props = {
-  lotusEarned: number;
-  goal: number;
+  lotusEarned?: number;
+  goal?: number;
   frequency: Frequency;
 };
 
-export default function GoalWidget({ lotusEarned, goal, frequency }: Props) {
+export default function GoalWidget({
+  lotusEarned = 0,
+  goal = 100000,
+  frequency,
+}: Props) {
   const [progress, setProgress] = useState(0);
   const [celebrated, setCelebrated] = useState(false);
 
@@ -22,7 +26,7 @@ export default function GoalWidget({ lotusEarned, goal, frequency }: Props) {
   useEffect(() => {
     setProgress(ratio);
     if (ratio >= 1 && !celebrated) {
-      localStorage.setItem("goalCelebrationTest", "0"); // pour l’animation 🎉
+      localStorage.setItem("goalCelebrationShown", "1");
       setCelebrated(true);
     }
   }, [ratio, celebrated]);
@@ -44,6 +48,7 @@ export default function GoalWidget({ lotusEarned, goal, frequency }: Props) {
         <div style={{ marginBottom: 8, color: "#f5f5f5" }}>
           {lotusEarned.toLocaleString()} / {goal.toLocaleString()} Lotus
         </div>
+
         <div
           style={{
             height: 10,
