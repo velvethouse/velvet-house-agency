@@ -1,9 +1,13 @@
-'use client'
+'use client';
 
-import React from 'react'
+import React from 'react';
 
-export default function LivePlayer() {
-  const liveStreamUrl = 'https://example.com/live/stream.m3u8' // à remplacer par le vrai lien
+type Props = {
+  streamUrl?: string;
+};
+
+export default function LivePlayer({ streamUrl }: Props) {
+  const fallbackStream = 'https://stream.velvethouse.com/fallback.m3u8'; // à remplacer par ton vrai flux
 
   return (
     <div
@@ -16,7 +20,7 @@ export default function LivePlayer() {
         position: 'relative',
       }}
     >
-      {/* Bannière LIVE (optionnelle) */}
+      {/* 🔴 LIVE Badge */}
       <div
         style={{
           position: 'absolute',
@@ -34,9 +38,9 @@ export default function LivePlayer() {
         🔴 LIVE
       </div>
 
-      {/* Vidéo player */}
+      {/* 🎥 Video player */}
       <video
-        src={liveStreamUrl}
+        src={streamUrl || fallbackStream}
         controls
         autoPlay
         muted
@@ -51,5 +55,5 @@ export default function LivePlayer() {
         Your browser does not support the video tag.
       </video>
     </div>
-  )
+  );
 }
