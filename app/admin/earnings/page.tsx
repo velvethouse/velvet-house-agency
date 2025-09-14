@@ -1,11 +1,14 @@
-// 📄 /app/admin/earnings/page.tsx
-
 "use client";
 
+const mockEarnings = {
+  lotusSold: 2_400_000, // Lotus achetés par les users
+  lotusWithdrawn: 1_050_000, // Lotus reversés aux streameuses
+  exchangeRate: 1000, // 1000 Lotus = 1€
+};
+
 export default function AdminEarningsPage() {
-  const totalLotusBought = 12_500_000;
-  const totalLotusPaidToCreators = 8_750_000;
-  const netProfit = totalLotusBought - totalLotusPaidToCreators;
+  const netLotus = mockEarnings.lotusSold - mockEarnings.lotusWithdrawn;
+  const netEur = netLotus / mockEarnings.exchangeRate;
 
   return (
     <main
@@ -13,11 +16,11 @@ export default function AdminEarningsPage() {
         padding: 24,
         maxWidth: 960,
         margin: "0 auto",
-        fontFamily: 'system-ui,Segoe UI,Roboto,sans-serif',
+        fontFamily: "system-ui,Segoe UI,Roboto,sans-serif",
       }}
     >
       <h1 style={{ fontSize: 26, color: "#D4AF37", marginBottom: 24 }}>
-        💰 Earnings Overview
+        💰 Velvet House Earnings
       </h1>
 
       <div
@@ -27,12 +30,29 @@ export default function AdminEarningsPage() {
           padding: 20,
           borderRadius: 12,
           color: "#f5f5f5",
+          lineHeight: 1.8,
         }}
       >
-        <p><strong>Total Lotus bought:</strong> {totalLotusBought.toLocaleString()} ♢</p>
-        <p><strong>Total paid to streamers:</strong> {totalLotusPaidToCreators.toLocaleString()} ♢</p>
-        <p style={{ marginTop: 16, fontSize: 18, color: "#D4AF37" }}>
-          <strong>Net profit:</strong> {netProfit.toLocaleString()} ♢
+        <p>
+          💎 Total Lotus sold:{" "}
+          <strong style={{ color: "#FFD700" }}>
+            {mockEarnings.lotusSold.toLocaleString()} ♢
+          </strong>
+        </p>
+        <p>
+          💸 Total Lotus withdrawn by streamers:{" "}
+          <strong style={{ color: "#ff7a7a" }}>
+            {mockEarnings.lotusWithdrawn.toLocaleString()} ♢
+          </strong>
+        </p>
+        <p>
+          🧮 Net earnings (Velvet House):{" "}
+          <strong style={{ color: "#90ee90" }}>
+            {netLotus.toLocaleString()} ♢ (~{netEur.toFixed(2)} €)
+          </strong>
+        </p>
+        <p style={{ fontSize: 13, color: "#aaa" }}>
+          * Based on exchange rate 1000 ♢ = 1 €
         </p>
       </div>
     </main>
