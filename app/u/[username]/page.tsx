@@ -11,7 +11,14 @@ type Props = { params: { username: string } };
 
 export default function StreamerPage({ params }: Props) {
   return (
-    <main style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 20px", color: "#f5f5f7" }}>
+    <main
+      style={{
+        maxWidth: 1100,
+        margin: "0 auto",
+        padding: "32px 20px",
+        color: "#f5f5f7",
+      }}
+    >
       <h1>{params.username}</h1>
       <CreatorTabs username={params.username} current="live" />
 
@@ -19,9 +26,13 @@ export default function StreamerPage({ params }: Props) {
 
       <CTAButtons username={params.username} />
 
-      <GalleryBlock username={params.username} />
+      <GalleryBlock
+        username={params.username}
+        photos={[]} // À remplacer par les vraies photos du profil
+        onLike={(id) => console.log("Like photo", id)}
+      />
 
-      <GoalWidget lotusEarned={125000} goal={200000} frequency="weekly" />
+      <GoalWidget lotusEarned={0} goal={100000} frequency="weekly" />
 
       <div style={{ marginTop: 40 }}>
         <NovaAssistant />
