@@ -4,7 +4,6 @@ import CreatorTabs from "@/components/CreatorTabs";
 import LivePlayer from "../components/LivePlayer";
 import LiveGiftPanel from "../components/LiveGiftPanel";
 import LiveChat from "../components/LiveChat";
-import NovaChat from "@/components/NovaChat";
 import NovaAssistant from "../components/NovaAssistant";
 
 type Props = { params: { username: string } };
@@ -26,10 +25,6 @@ export default function LivePage({ params }: Props) {
 
       <div style={{ marginTop: 32 }}>
         <LiveChat />
-      </div>
-
-      <div style={{ marginTop: 40 }}>
-        <NovaChat />
       </div>
 
       <div style={{ marginTop: 40 }}>
