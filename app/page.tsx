@@ -6,15 +6,19 @@ export default function HomePage() {
       style={{
         minHeight: "100vh",
         backgroundImage: "url('/hero.png')",
-        backgroundSize: "contain",
-        backgroundPosition: "center top",
+        backgroundSize: "cover",
+        backgroundPosition: "top center",
         backgroundRepeat: "no-repeat",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        padding: "40px 20px",
+        padding: "20px 16px 40px",
       }}
     >
+      {/* Logo visible */}
+      <div style={{ flex: "1 0 40%" }}></div>
+
+      {/* Bloc d’inscription centré */}
       <div
         style={{
           background: "rgba(0, 0, 0, 0.6)",
@@ -67,8 +71,8 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Réseaux sociaux */}
-      <div style={{ marginTop: 40, textAlign: "center" }}>
+      {/* Réseaux sociaux tout en bas */}
+      <div style={{ marginTop: 32, textAlign: "center" }}>
         <div style={{ display: "flex", justifyContent: "center", gap: 14, flexWrap: "wrap" }}>
           {[
             { name: "TikTok", icon: "tiktok", link: "#" },
@@ -91,7 +95,7 @@ export default function HomePage() {
               <img
                 src={`/icons/${item.icon}.svg`}
                 alt={item.name}
-                style={{ width: 28, height: 28, opacity: 0.85 }}
+                style={{ width: 26, height: 26, opacity: 0.85 }}
               />
             </a>
           ))}
