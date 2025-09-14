@@ -1,13 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import Lottie from 'react-lottie-player'
 
-export default function PhotoGiftUnlock({ src }: { src: string }) {
+type Props = {
+  src: string
+}
+
+export default function PhotoGiftUnlock({ src }: Props) {
   const [unlocked, setUnlocked] = useState(false)
 
   const handleUnlock = () => {
-    // Ici on peut déclencher le gift, ou simuler
+    // 🔒 Simule le déblocage (à relier au système de gift plus tard)
     setUnlocked(true)
   }
 
@@ -24,6 +27,7 @@ export default function PhotoGiftUnlock({ src }: { src: string }) {
               filter: 'blur(12px)',
               borderRadius: 12,
               opacity: 0.7,
+              border: '2px solid #FFD700',
             }}
           />
 
@@ -39,6 +43,9 @@ export default function PhotoGiftUnlock({ src }: { src: string }) {
               fontSize: 14,
               borderRadius: 10,
               zIndex: 10,
+              background: '#FFD700',
+              color: '#2e0d0d',
+              fontWeight: 700,
             }}
           >
             🎁 Unlock with gift
