@@ -13,7 +13,7 @@ export default function StreamerPage({ params }: Props) {
   return (
     <main style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 20px", color: "#f5f5f7" }}>
       <h1>{params.username}</h1>
-      <CreatorTabs username={params.username} current="profile" />
+      <CreatorTabs username={params.username} current="live" />
 
       <BioBlock username={params.username} />
 
