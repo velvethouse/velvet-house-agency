@@ -1,81 +1,65 @@
-// app/admin/login/page.tsx
-'use client';
+// app/admin/page.tsx
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
 
-export default function AdminLoginPage() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+export default function AdminDashboardPage() {
   const router = useRouter();
 
-  const handleLogin = () => {
-    const validUsername = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
-    const validPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
-
-    if (username === validUsername && password === validPassword) {
-      localStorage.setItem('velvet_admin_logged', '1');
-      router.push('/admin');
-    } else {
-      setError('Invalid credentials');
+  useEffect(() => {
+    const isAuth = localStorage.getItem("admin-auth");
+    if (!isAuth) {
+      router.push("/admin/login");
     }
-  };
+  }, []);
 
   return (
     <main
       style={{
-        maxWidth: 400,
-        margin: '80px auto',
         padding: 24,
-        background: '#2e0d0d',
-        borderRadius: 12,
-        color: '#f5f5f5',
+        maxWidth: 960,
+        margin: "0 auto",
+        fontFamily: "system-ui,Segoe UI,Roboto,sans-serif",
       }}
     >
-      <h1 style={{ color: '#D4AF37', marginBottom: 20 }}>👑 Admin Login</h1>
+      <h1 style={{ fontSize: 28, color: "#D4AF37", marginBottom: 24 }}>
+        👑 Velvet House Admin Panel
+      </h1>
 
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+      <p style={{ color: "#f5f5f5", marginBottom: 32 }}>
+        Welcome back! Use the links below to manage your platform.
+      </p>
+
+      <div
         style={{
-          width: '100%',
-          padding: 10,
-          marginBottom: 12,
-          borderRadius: 8,
-          border: '1px solid #444',
-          background: '#1a1a1a',
-          color: '#fff',
+          display: "grid",
+          gap: 16,
+          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
         }}
-      />
-
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        style={{
-          width: '100%',
-          padding: 10,
-          marginBottom: 12,
-          borderRadius: 8,
-          border: '1px solid #444',
-          background: '#1a1a1a',
-          color: '#fff',
-        }}
-      />
-
-      {error && <div style={{ color: 'tomato', marginBottom: 12 }}>{error}</div>}
-
-      <button
-        onClick={handleLogin}
-        className="btn3d btn3d--gold"
-        style={{ width: '100%' }}
       >
-        🔐 Login
-      </button>
+        <a href="/admin/streamers" className="card" style={cardStyle}>
+          🧠 Streamer Mental Health
+        </a>
+        <a href="/admin/earnings" className="card" style={cardStyle}>
+          💰 Earnings Overview
+        </a>
+        <a href="/admin/identity" className="card" style={cardStyle}>
+          👤 Admin Identity
+        </a>
+      </div>
     </main>
   );
 }
+
+const cardStyle: React.CSSProperties = {
+  background: "#2e0d0d",
+  border: "1px solid rgba(212,175,55,0.2)",
+  padding: 20,
+  borderRadius: 12,
+  color: "#f5f5f5",
+  fontWeight: 600,
+  textDecoration: "none",
+  transition: "all 0.2s ease",
+};
