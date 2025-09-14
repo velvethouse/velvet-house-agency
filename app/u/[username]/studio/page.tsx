@@ -6,11 +6,18 @@ import StudioGallery from "../components/StudioGallery";
 import StatsPerformance from "../components/StatsPerformance";
 import NovaStudioCoach from "@/components/studio/NovaStudioCoach";
 
+type Photo = {
+  id: string;
+  src: string;
+  nsfw: boolean;
+  gift?: string | null;
+};
+
 export default function StreamerStudioPage() {
   const [agreed, setAgreed] = useState(false);
 
   // 🔗 À connecter à ta DB plus tard
-  const photos = [];
+  const photos: Photo[] = [];
 
   if (!agreed) {
     return (
