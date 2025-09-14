@@ -1,8 +1,27 @@
-// 📄 /app/admin/page.tsx
+'use client';
 
-"use client";
+import { useEffect, useState } from 'react';
 
 export default function AdminDashboardPage() {
+  const [username, setUsername] = useState<string | null>(null);
+  const [accessGranted, setAccessGranted] = useState(false);
+
+  useEffect(() => {
+    // 🔐 À remplacer plus tard par une vraie session/login
+    const stored = localStorage.getItem("vh_username");
+    setUsername(stored);
+    setAccessGranted(stored === "sebastien"); // ✅ temporaire
+  }, []);
+
+  if (!accessGranted) {
+    return (
+      <main style={{ padding: 40, textAlign: "center", color: "#f5f5f5" }}>
+        <h1 style={{ fontSize: 24, color: "#FFD700" }}>🔒 Access Denied</h1>
+        <p>This page is reserved for the Velvet House founder only.</p>
+      </main>
+    );
+  }
+
   return (
     <main
       style={{
@@ -17,7 +36,7 @@ export default function AdminDashboardPage() {
       </h1>
 
       <p style={{ color: "#f5f5f5", marginBottom: 32 }}>
-        Welcome back! Use the links below to manage your platform.
+        Welcome back {username}! Manage everything from here.
       </p>
 
       <div
