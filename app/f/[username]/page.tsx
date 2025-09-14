@@ -1,47 +1,61 @@
-// /app/f/[username]/page.tsx
-"use client";
+'use client';
 
 import CancelSubscription from "./components/CancelSubscription";
 import FavoriteCreators from "./components/FavoriteCreators";
 
-export default function FollowerProfile() {
-  const isVip = true;    // Simule un utilisateur VIP
-  const isGold = true;   // Simule un VIP Gold
-  const lotusBalance = 12345;
+type Props = {
+  params: {
+    username: string;
+  };
+};
+
+export default function FollowerProfile({ params }: Props) {
+  const username = params.username;
+
+  // 🟡 Ces données seront récupérées via API ou backend plus tard
+  const lotusBalance = 0;
+  const isVip = false;
+  const isGold = false;
 
   return (
     <main style={{ padding: "20px", maxWidth: 720, margin: "0 auto" }}>
       {/* Header */}
       <h1 style={{ fontSize: "28px", marginBottom: 20 }}>
-        🙋‍♂️ Welcome, JohnDoe
+        🙋‍♂️ Welcome, {username}
       </h1>
 
       {/* Status + Lotus */}
       <p style={{ marginBottom: 10 }}>
-        Status: <b>{isGold ? "VIP Gold" : isVip ? "VIP" : "Standard"}</b><br />
-        Lotus Balance: <span style={{ color: "#D4AF37", fontWeight: 600 }}>{lotusBalance.toLocaleString()}</span>
+        Status: <b>{isGold ? "VIP Gold" : isVip ? "VIP" : "Standard"}</b>
+        <br />
+        Lotus Balance:{" "}
+        <span style={{ color: "#D4AF37", fontWeight: 600 }}>
+          {lotusBalance.toLocaleString()} ♢
+        </span>
       </p>
 
-      {/* Avatar */}
-      <div className="avatar-ring" style={{ marginBottom: 20 }}>
-        <img src="/hero.png" alt="Profile" />
+      {/* Avatar (placeholder) */}
+      <div
+        className="avatar-ring"
+        style={{ marginBottom: 20, textAlign: "center" }}
+      >
+        <img
+          src="/avatar-default.png"
+          alt="Profile"
+          style={{
+            width: 96,
+            height: 96,
+            borderRadius: "50%",
+            border: "2px solid #D4AF37",
+          }}
+        />
       </div>
-
-      {/* Photo gallery (max 5) */}
-      <section style={{ marginTop: 20 }}>
-        <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>Your Profile Photos</h2>
-        <div className="media-grid">
-          <div className="media-card">+ Add Photo</div>
-          <div className="media-card">+ Add Photo</div>
-          <div className="media-card">+ Add Photo</div>
-          <div className="media-card">+ Add Photo</div>
-          <div className="media-card">+ Add Photo</div>
-        </div>
-      </section>
 
       {/* Favorite creators */}
       <section style={{ marginTop: 40 }}>
-        <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>Your Favorite Streamers</h2>
+        <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>
+          Your Favorite Streamers
+        </h2>
         <FavoriteCreators />
       </section>
 
