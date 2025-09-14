@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 type Props = {
   username: string;
@@ -8,18 +8,37 @@ export default function CTAButtons({ username }: Props) {
   return (
     <section style={{ margin: "24px 0", textAlign: "center" }}>
       <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>🔗 Quick Actions</h2>
-      <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+
+      <div
+        style={{
+          display: "flex",
+          gap: 12,
+          justifyContent: "center",
+          flexWrap: "wrap",
+        }}
+      >
         <a
           href={`/u/${username}/live`}
           className="btn3d btn3d--gold"
-          style={{ minWidth: 160, textAlign: "center" }}
+          style={{
+            minWidth: 160,
+            textAlign: "center",
+            padding: "10px 16px",
+            borderRadius: 10,
+          }}
         >
           🎥 Join Live
         </a>
+
         <a
           href={`/u/${username}/chat`}
           className="btn3d btn3d--velvet"
-          style={{ minWidth: 160, textAlign: "center" }}
+          style={{
+            minWidth: 160,
+            textAlign: "center",
+            padding: "10px 16px",
+            borderRadius: 10,
+          }}
         >
           💬 Chat with Me
         </a>
