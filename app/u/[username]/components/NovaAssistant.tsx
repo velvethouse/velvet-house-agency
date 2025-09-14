@@ -1,121 +1,92 @@
-// /app/u/[username]/components/NovaAssistant.tsx
-"use client";
+'use client';
 
-import { useMemo, useState } from "react";
+import { useState } from 'react';
 
-export default function NovaAssistant({ username = "demo" }: { username?: string }) {
-  const [open, setOpen] = useState(true);
-  const [msg, setMsg] = useState("");
+export default function NovaAssistant() {
+  const [messages, setMessages] = useState([
+    { role: 'nova', text: "Welcome back! I'm here to help you improve your performance and motivation 🧠✨" },
+  ]);
+  const [input, setInput] = useState('');
+  const [count, setCount] = useState(0);
 
-  // Suggestions simples (mock) — à brancher plus tard
-  const now = new Date();
-  const hour = now.getHours();
-  const tip = useMemo(() => {
-    if (hour >= 20 && hour <= 23) return "Peak time now — go live for higher visibility.";
-    if (hour >= 12 && hour <= 14) return "Lunch time: 20–30min live boosts retention.";
-    return "Plan a 45min live this evening (21:00–21:45).";
-  }, [hour]);
+  const handleSend = () => {
+    if (!input.trim() || count >= 10) return;
 
-  function sendToNova() {
-    if (!msg.trim()) return alert("Type your question first.");
-    // TODO: appeler l'API Nova plus tard
-    alert("Nova received your message. She'll analyze and reply here (demo).");
-    setMsg("");
-  }
+    const userMessage = { role: 'user', text: input };
+    const novaReply = {
+      role: 'nova',
+      text: "Thanks for your message. Keep shining ✨ I'm reviewing your stats and will guide you step by step.",
+    };
+
+    setMessages([...messages, userMessage, novaReply]);
+    setInput('');
+    setCount(count + 1);
+  };
 
   return (
-    <section style={{ marginTop: 24 }}>
+    <section style={{ marginTop: 32 }}>
+      <h2 style={{ color: '#D4AF37' }}>🧠 Nova – Your Studio Coach</h2>
+
       <div
-        className="card"
         style={{
-          padding: 14,
-          border: "1px solid rgba(212,175,55,.35)",
-          background: "linear-gradient(180deg, rgba(212,175,55,.10), rgba(0,0,0,.25))",
+          background: '#1a1a1a',
+          padding: 16,
+          borderRadius: 12,
+          marginTop: 12,
+          border: '1px solid rgba(212,175,55,0.2)',
+          maxHeight: 280,
+          overflowY: 'auto',
+          fontSize: 14,
+          lineHeight: 1.6,
+          color: '#eee',
         }}
       >
-        {/* Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10 }}>
-          <h2 style={{ margin: 0, color: "#D4AF37", fontSize: "clamp(18px,4.5vw,22px)" }}>🧠 Nova — your studio copilot</h2>
-          <button
-            className="btn3d btn3d--outline-gold"
-            onClick={() => setOpen((s) => !s)}
-            style={{ minHeight: 36, padding: "6px 12px" }}
-          >
-            {open ? "Hide" : "Show"}
-          </button>
-        </div>
-
-        {open && (
-          <div style={{ display: "grid", gap: 12, marginTop: 12 }}>
-            {/* Quick tip */}
-            <div
-              style={{
-                padding: 10,
-                borderRadius: 12,
-                background: "rgba(0,0,0,.35)",
-                border: "1px dashed rgba(212,175,55,.35)",
-                color: "#e9dfcf",
-              }}
-            >
-              <b>Quick tip:</b> {tip}
-            </div>
-
-            {/* Quick actions */}
-            <div className="btn-row-3" style={{ maxWidth: 760 }}>
-              <button
-                className="btn3d btn3d--gold"
-                onClick={() => alert("Best live window today: 21:00–23:00 (demo).")}
-              >
-                Best live time today
-              </button>
-              <button
-                className="btn3d btn3d--velvet"
-                onClick={() => alert("Profile checklist sent (demo): avatar, bio, 6 photos, 2 short clips.")}
-              >
-                Optimize profile
-              </button>
-              <button
-                className="btn3d btn3d--outline-gold"
-                onClick={() => alert("Safety rules recap sent (demo).")}
-              >
-                Safety reminder
-              </button>
-            </div>
-
-            {/* Message to Nova */}
-            <div style={{ display: "grid", gap: 8 }}>
-              <label style={{ color: "#d7c9b3", fontSize: 13 }}>
-                Ask Nova anything (planning, content ideas, gifts, pricing…)
-              </label>
-              <textarea
-                className="input-velvet"
-                rows={3}
-                placeholder={`Hi Nova, it’s ${username}. I need help with…`}
-                value={msg}
-                onChange={(e) => setMsg(e.target.value)}
-                style={{ resize: "vertical" }}
-              />
-              <div className="btn-row-2" style={{ maxWidth: 320 }}>
-                <button className="btn3d btn3d--gold" onClick={sendToNova}>
-                  Send to Nova
-                </button>
-                <button
-                  className="btn3d btn3d--outline-gold"
-                  onClick={() => setMsg("")}
-                >
-                  Clear
-                </button>
-              </div>
-            </div>
-
-            {/* Rules */}
-            <div style={{ fontSize: 12, color: "#d7c9b3" }}>
-              <b>Reminder:</b> No explicit nudity on previews. NSFW is gift-unlock only. Keep one rest day weekly, max 10h/day.  
-              Report harassment immediately via Contact.
-            </div>
+        {messages.map((msg, i) => (
+          <div key={i} style={{ marginBottom: 8 }}>
+            <b style={{ color: msg.role === 'nova' ? '#FFD700' : '#aaa' }}>
+              {msg.role === 'nova' ? 'Nova' : 'You'}:
+            </b>{' '}
+            {msg.text}
           </div>
-        )}
+        ))}
       </div>
+
+      <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Ask Nova for help..."
+          style={{
+            flex: 1,
+            padding: '8px 12px',
+            borderRadius: 8,
+            border: '1px solid #555',
+            background: '#000',
+            color: '#fff',
+          }}
+        />
+        <button
+          onClick={handleSend}
+          disabled={count >= 10}
+          style={{
+            padding: '8px 14px',
+            borderRadius: 8,
+            background: count >= 10 ? '#444' : '#FFD700',
+            color: count >= 10 ? '#999' : '#2e0d0d',
+            fontWeight: 700,
+            border: 'none',
+            cursor: count >= 10 ? 'not-allowed' : 'pointer',
+          }}
+        >
+          Send
+        </button>
+      </div>
+
+      {count >= 10 && (
+        <p style={{ color: '#ff9999', fontSize: 13, marginTop: 6 }}>
+          ⚠️ You’ve reached the maximum of 10 messages. Nova will be back soon!
+        </p>
+      )}
     </section>
   );
 }
