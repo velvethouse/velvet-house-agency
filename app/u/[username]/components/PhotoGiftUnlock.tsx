@@ -1,22 +1,17 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
+import { useState } from 'react';
 
 type Props = {
-  src: string
-}
+  src: string; // lien vers la photo floutée
+  isUnlocked: boolean; // l’état réel envoyé par le backend
+  onUnlock?: () => void; // déclencheur gift si nécessaire
+};
 
-export default function PhotoGiftUnlock({ src }: Props) {
-  const [unlocked, setUnlocked] = useState(false)
-
-  const handleUnlock = () => {
-    // 🔒 Simule le déblocage (à relier au système de gift plus tard)
-    setUnlocked(true)
-  }
-
+export default function PhotoGiftUnlock({ src, isUnlocked, onUnlock }: Props) {
   return (
     <div style={{ position: 'relative', marginTop: 12 }}>
-      {!unlocked ? (
+      {!isUnlocked ? (
         <div style={{ position: 'relative', display: 'inline-block' }}>
           <img
             src={src}
@@ -32,7 +27,7 @@ export default function PhotoGiftUnlock({ src }: Props) {
           />
 
           <button
-            onClick={handleUnlock}
+            onClick={onUnlock}
             className="btn3d btn3d--gold"
             style={{
               position: 'absolute',
@@ -64,5 +59,5 @@ export default function PhotoGiftUnlock({ src }: Props) {
         />
       )}
     </div>
-  )
+  );
 }
