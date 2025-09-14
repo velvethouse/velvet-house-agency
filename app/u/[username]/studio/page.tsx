@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import GoalWidget from "../components/GoalWidget";
@@ -8,6 +8,9 @@ import NovaStudioCoach from "@/components/studio/NovaStudioCoach";
 
 export default function StreamerStudioPage() {
   const [agreed, setAgreed] = useState(false);
+
+  // 🔗 À connecter à ta DB plus tard
+  const photos = [];
 
   if (!agreed) {
     return (
@@ -66,10 +69,14 @@ export default function StreamerStudioPage() {
       </div>
 
       {/* 🎯 Objectif Lotus pendant le live */}
-      <GoalWidget lotusEarned={216000} goal={500000} frequency="weekly" />
+      <GoalWidget lotusEarned={0} goal={100000} frequency="weekly" />
 
       {/* 🖼️ Galerie privée de la streameuse */}
-      <StudioGallery />
+      <StudioGallery
+        photos={photos}
+        onToggleNSFW={(id) => console.log("Toggle NSFW", id)}
+        onAssignGift={(id, gift) => console.log("Assign gift", gift, "to", id)}
+      />
 
       {/* 📊 Performances Lotus */}
       <StatsPerformance />
