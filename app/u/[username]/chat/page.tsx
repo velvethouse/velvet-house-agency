@@ -1,7 +1,7 @@
 'use client';
 
-import NovaChat from "../../../../components/NovaChat";
-import CreatorTabs from "../../../../components/CreatorTabs";
+import NovaChat from "@/components/NovaChat";
+import CreatorTabs from "@/components/CreatorTabs";
 import PhotoGiftUnlock from "../components/PhotoGiftUnlock";
 
 type Props = { params: { username: string } };
