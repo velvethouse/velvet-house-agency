@@ -11,7 +11,7 @@ export default function HomePage() {
         backgroundRepeat: "no-repeat",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "flex-end",
+        justifyContent: "space-between",
         padding: "40px 20px",
       }}
     >
@@ -66,6 +66,41 @@ export default function HomePage() {
           </a>
         </div>
       </div>
+
+      {/* Réseaux sociaux */}
+      <div style={{ marginTop: 40, textAlign: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: 14, flexWrap: "wrap" }}>
+          {[
+            { name: "TikTok", icon: "tiktok", link: "#" },
+            { name: "Instagram", icon: "instagram", link: "#" },
+            { name: "Facebook", icon: "facebook", link: "#" },
+            { name: "X", icon: "twitter-x", link: "#" },
+            { name: "LinkedIn", icon: "linkedin", link: "#" },
+            { name: "Reddit", icon: "reddit", link: "#" },
+            { name: "Snapchat", icon: "snapchat", link: "#" },
+            { name: "Twitch", icon: "twitch", link: "#" },
+            { name: "Pinterest", icon: "pinterest", link: "#" },
+          ].map((item) => (
+            <a
+              key={item.name}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={item.name}
+            >
+              <img
+                src={`/icons/${item.icon}.svg`}
+                alt={item.name}
+                style={{ width: 28, height: 28, opacity: 0.85 }}
+              />
+            </a>
+          ))}
+        </div>
+
+        <p style={{ fontSize: 12, color: "#aaa", marginTop: 20 }}>
+          © 2025 Velvet House Agency
+        </p>
+      </div>
     </main>
-  );
+  )
 }
