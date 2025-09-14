@@ -1,9 +1,11 @@
 'use client';
 
-import NovaAssistant from "../../../../components/NovaAssistant";
-import CreatorTabs from "../../../../components/CreatorTabs";
-import LiveGiftPanelWrapper from '../components/LiveGiftPanel'
-import LiveChat from '../components/LiveChat'
+import CreatorTabs from "@/components/CreatorTabs";
+import LivePlayer from "../components/LivePlayer";
+import LiveGiftPanel from "../components/LiveGiftPanel";
+import LiveChat from "../components/LiveChat";
+import NovaChat from "@/components/NovaChat";
+import NovaAssistant from "../components/NovaAssistant";
 
 type Props = { params: { username: string } };
 
@@ -13,16 +15,24 @@ export default function LivePage({ params }: Props) {
       <h1>Live — {params.username}</h1>
       <CreatorTabs username={params.username} current="live" />
 
-      <div style={{ marginTop: 24, background: "#111", padding: 16, borderRadius: 12 }}>
+      <div style={{ marginTop: 24 }}>
+        <LivePlayer />
+      </div>
+
+      <div style={{ marginTop: 24 }}>
         <h2 style={{ marginBottom: 12 }}>🎁 Send a Gift</h2>
-        <LiveGiftPanelWrapper />
+        <LiveGiftPanel />
       </div>
 
       <div style={{ marginTop: 32 }}>
         <LiveChat />
       </div>
 
-      <div style={{ marginTop: 32 }}>
+      <div style={{ marginTop: 40 }}>
+        <NovaChat />
+      </div>
+
+      <div style={{ marginTop: 40 }}>
         <NovaAssistant />
       </div>
     </main>
