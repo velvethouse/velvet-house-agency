@@ -1,21 +1,30 @@
-// /app/f/[username]/components/FavoriteCreators.tsx
-"use client";
+'use client';
 
-import { useState } from "react";
+type Creator = {
+  id: string;
+  name: string;
+  avatar: string;
+  isLive: boolean;
+  rank: string;
+};
 
-// 💡 Données fictives pour test
-const MOCK_CREATORS = [
-  { id: "alice", name: "Alice", avatar: "/hero.png", isLive: true, rank: "🦋 Butterfly" },
-  { id: "bella", name: "Bella", avatar: "/hero.png", isLive: false, rank: "💛 Golden" },
-  { id: "clara", name: "Clara", avatar: "/hero.png", isLive: false, rank: "🔥 Fire" },
-  { id: "dora", name: "Dora", avatar: "/hero.png", isLive: true, rank: "🦋 Butterfly" },
-  { id: "elsa", name: "Elsa", avatar: "/hero.png", isLive: false, rank: "💛 Golden" },
-];
+type Props = {
+  creators: Creator[];
+};
 
-export default function FavoriteCreators() {
-  const [creators] = useState(MOCK_CREATORS);
+export default function FavoriteCreators({ creators }: Props) {
+  if (creators.length === 0) {
+    return (
+      <section style={{ marginTop: 40 }}>
+        <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>My Favorite Creators</h2>
+        <p style={{ fontSize: 14, color: "#ccc" }}>
+          You haven’t added any favorites yet.
+        </p>
+      </section>
+    );
+  }
 
-  // Tri : en live d'abord
+  // Tri : créateurs en live en haut
   const sorted = [...creators].sort((a, b) => Number(b.isLive) - Number(a.isLive));
 
   return (
@@ -39,7 +48,12 @@ export default function FavoriteCreators() {
               <img
                 src={c.avatar}
                 alt={c.name}
-                style={{ width: 48, height: 48, borderRadius: "50%", objectFit: "cover" }}
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
               />
               {c.isLive && (
                 <span
@@ -56,10 +70,12 @@ export default function FavoriteCreators() {
                 />
               )}
             </div>
+
             <div style={{ flex: 1 }}>
               <div style={{ fontWeight: 700 }}>{c.name}</div>
               <div style={{ fontSize: 12, color: "#d7c9b3" }}>{c.rank}</div>
             </div>
+
             <a
               href={`/u/${c.id}`}
               className="btn3d btn3d--gold"
