@@ -1,20 +1,11 @@
-"use client";
-
-import { useState, useEffect } from "react";
+'use client';
 
 type Props = {
   username: string;
+  bio?: string;
 };
 
-export default function BioBlock({ username }: Props) {
-  const [bio, setBio] = useState("");
-
-  useEffect(() => {
-    // À remplacer plus tard par une vraie requête à la base
-    const saved = localStorage.getItem(`bio_${username}`);
-    if (saved) setBio(saved);
-  }, [username]);
-
+export default function BioBlock({ username, bio }: Props) {
   if (!bio) return null;
 
   return (
