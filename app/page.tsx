@@ -1,4 +1,6 @@
-// /app/page.tsx
+'use client'
+
+import Image from 'next/image'
 
 export default function HomePage() {
   return (
@@ -10,8 +12,8 @@ export default function HomePage() {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        flexDirection: "column",
+        justifyContent: "space-between",
         padding: "40px 20px",
       }}
     >
@@ -24,12 +26,20 @@ export default function HomePage() {
           width: "100%",
           textAlign: "center",
           color: "#fff",
+          margin: "auto",
         }}
       >
-        <h1 style={{ fontSize: "28px", color: "#FFD700", marginBottom: "20px" }}>
+        <h1
+          style={{
+            fontSize: "clamp(22px, 6vw, 36px)",
+            color: "#FFD700",
+            marginBottom: "20px",
+          }}
+        >
           Velvet House
         </h1>
-        <p style={{ marginBottom: "24px", lineHeight: 1.5 }}>
+
+        <p style={{ marginBottom: "24px", lineHeight: 1.5, fontSize: "clamp(14px, 4vw, 18px)" }}>
           More than a platform: an exclusive universe where elegance meets mystery.
           <br />
           Every creator shines. Every viewer becomes privileged.
@@ -65,6 +75,48 @@ export default function HomePage() {
           </a>
         </div>
       </div>
+
+      {/* Réseaux sociaux */}
+      <footer
+        style={{
+          marginTop: 40,
+          padding: "20px 0 10px",
+          display: "flex",
+          justifyContent: "center",
+          gap: 16,
+          flexWrap: "wrap",
+          borderTop: "1px solid rgba(255,255,255,0.1)",
+        }}
+      >
+        {[
+          "tiktok",
+          "instagram",
+          "facebook",
+          "twitter",
+          "snapchat",
+          "reddit",
+          "linkedin",
+          "pinterest",
+          "twitch",
+          "youtube",
+        ].map((name) => (
+          <a
+            key={name}
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            title={name}
+          >
+            <Image
+              src={`/social/${name}.svg`}
+              alt={name}
+              width={24}
+              height={24}
+              style={{ filter: "invert(1)" }}
+            />
+          </a>
+        ))}
+      </footer>
     </main>
-  );
+  )
 }
