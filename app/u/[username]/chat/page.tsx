@@ -2,7 +2,6 @@
 
 import CreatorTabs from "@/components/CreatorTabs";
 import PhotoGiftUnlock from "../components/PhotoGiftUnlock";
-import NovaChat from "@/components/NovaChat";
 import NovaAssistant from "../components/NovaAssistant";
 
 type Props = { params: { username: string } };
@@ -16,10 +15,6 @@ export default function ChatPage({ params }: Props) {
 
       <div style={{ marginTop: 24 }}>
         <PhotoGiftUnlock src="/example-photo.jpg" />
-      </div>
-
-      <div style={{ marginTop: 40 }}>
-        <NovaChat />
       </div>
 
       <div style={{ marginTop: 40 }}>
