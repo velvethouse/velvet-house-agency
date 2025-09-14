@@ -9,6 +9,14 @@ type Props = {
   };
 };
 
+type Creator = {
+  id: string;
+  name: string;
+  avatar: string;
+  isLive: boolean;
+  rank: string;
+};
+
 export default function FollowerProfile({ params }: Props) {
   const username = params.username;
 
@@ -16,7 +24,7 @@ export default function FollowerProfile({ params }: Props) {
   const lotusBalance = 0;
   const isVip = false;
   const isGold = false;
-  const favoriteCreators = []; // à connecter à la vraie liste plus tard
+  const favoriteCreators: Creator[] = []; // ✅ Typé
 
   return (
     <main style={{ padding: "20px", maxWidth: 720, margin: "0 auto" }}>
