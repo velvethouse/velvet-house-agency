@@ -1,11 +1,11 @@
-// /app/f/[username]/components/CancelSubscription.tsx
-"use client";
+'use client';
 
-export default function CancelSubscription() {
-  // ⚠️ En prod, il faudra détecter via la session utilisateur
-  const isVip = true;    // simule un utilisateur VIP
-  const isGold = false;  // simule un VIP Gold
+type Props = {
+  isVip: boolean;
+  isGold: boolean;
+};
 
+export default function CancelSubscription({ isVip, isGold }: Props) {
   if (!isVip && !isGold) return null;
 
   return (
@@ -26,8 +26,16 @@ export default function CancelSubscription() {
         You're currently subscribed to <b>{isGold ? "VIP Gold" : "VIP"}</b>.<br />
         You can stop your subscription anytime from your payment settings.
       </p>
-      <button className="btn3d btn3d--outline-gold" disabled>
-        Cancel (demo)
+
+      <button
+        className="btn3d btn3d--outline-gold"
+        style={{ padding: "8px 16px", fontSize: 14 }}
+        onClick={() => {
+          // 🔴 À relier plus tard à l’API d’annulation
+          alert("Your subscription will be canceled (feature coming soon).");
+        }}
+      >
+        Cancel subscription
       </button>
     </div>
   );
