@@ -1,4 +1,5 @@
-'use client'
+// app/page.tsx
+"use client";
 
 export default function HomePage() {
   return (
@@ -6,19 +7,17 @@ export default function HomePage() {
       style={{
         minHeight: "100vh",
         backgroundImage: "url('/hero.png')",
-        backgroundSize: "cover",
+        backgroundSize: "contain",
         backgroundPosition: "top center",
         backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
         padding: "20px 16px 40px",
       }}
     >
-      {/* Logo visible */}
-      <div style={{ flex: "1 0 40%" }}></div>
-
-      {/* Bloc d’inscription centré */}
+      {/* Bloc central d’intro */}
       <div
         style={{
           background: "rgba(0, 0, 0, 0.6)",
@@ -31,10 +30,10 @@ export default function HomePage() {
           margin: "0 auto",
         }}
       >
-        <h1 style={{ fontSize: "clamp(24px, 6vw, 36px)", color: "#FFD700", marginBottom: "20px" }}>
+        <h1 style={{ fontSize: "28px", color: "#FFD700", marginBottom: "20px" }}>
           Velvet House
         </h1>
-        <p style={{ marginBottom: "24px", lineHeight: 1.5, fontSize: "clamp(14px, 4vw, 18px)" }}>
+        <p style={{ marginBottom: "24px", lineHeight: 1.5 }}>
           More than a platform: an exclusive universe where elegance meets mystery.
           <br />
           Every creator shines. Every viewer becomes privileged.
@@ -71,40 +70,45 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Réseaux sociaux tout en bas */}
-      <div style={{ marginTop: 32, textAlign: "center" }}>
-        <div style={{ display: "flex", justifyContent: "center", gap: 14, flexWrap: "wrap" }}>
-          {[
-            { name: "TikTok", icon: "tiktok", link: "#" },
-            { name: "Instagram", icon: "instagram", link: "#" },
-            { name: "Facebook", icon: "facebook", link: "#" },
-            { name: "X", icon: "twitter-x", link: "#" },
-            { name: "LinkedIn", icon: "linkedin", link: "#" },
-            { name: "Reddit", icon: "reddit", link: "#" },
-            { name: "Snapchat", icon: "snapchat", link: "#" },
-            { name: "Twitch", icon: "twitch", link: "#" },
-            { name: "Pinterest", icon: "pinterest", link: "#" },
-          ].map((item) => (
-            <a
-              key={item.name}
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={item.name}
-            >
-              <img
-                src={`/icons/${item.icon}.svg`}
-                alt={item.name}
-                style={{ width: 26, height: 26, opacity: 0.85 }}
-              />
-            </a>
-          ))}
-        </div>
-
-        <p style={{ fontSize: 12, color: "#aaa", marginTop: 20 }}>
-          © 2025 Velvet House Agency
-        </p>
-      </div>
+      {/* Réseaux sociaux */}
+      <footer
+        style={{
+          marginTop: 40,
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: 12,
+          paddingTop: 20,
+        }}
+      >
+        {[
+          { name: "TikTok", url: "#", icon: "/icons/tiktok.png" },
+          { name: "Instagram", url: "#", icon: "/icons/instagram.png" },
+          { name: "Facebook", url: "#", icon: "/icons/facebook.png" },
+          { name: "X", url: "#", icon: "/icons/x.png" },
+          { name: "LinkedIn", url: "#", icon: "/icons/linkedin.png" },
+          { name: "Reddit", url: "#", icon: "/icons/reddit.png" },
+          { name: "Snapchat", url: "#", icon: "/icons/snapchat.png" },
+          { name: "Twitch", url: "#", icon: "/icons/twitch.png" },
+          { name: "Pinterest", url: "#", icon: "/icons/pinterest.png" },
+        ].map((network) => (
+          <a
+            key={network.name}
+            href={network.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: "inline-block" }}
+          >
+            <img
+              src={network.icon}
+              alt={network.name}
+              width={24}
+              height={24}
+              style={{ filter: "brightness(1.2)" }}
+            />
+          </a>
+        ))}
+      </footer>
     </main>
-  )
+  );
 }
