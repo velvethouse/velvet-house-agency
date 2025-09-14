@@ -6,28 +6,28 @@ export default function HomePage() {
     <main
       style={{
         minHeight: "100vh",
+        background: "#2e0d0d",
         backgroundImage: "url('/hero.png')",
         backgroundSize: "contain",
-        backgroundPosition: "top center",
         backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
+        backgroundPosition: "top center",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        padding: "20px 16px 40px",
+        padding: "20px 16px 80px",
       }}
     >
-      {/* Bloc central d’intro */}
+      {/* Bloc texte + inscription */}
       <div
         style={{
           background: "rgba(0, 0, 0, 0.6)",
           borderRadius: 20,
           padding: "30px 20px",
-          maxWidth: 480,
+          maxWidth: 460,
           width: "100%",
           textAlign: "center",
           color: "#fff",
-          margin: "0 auto",
+          margin: "120px auto 0",
         }}
       >
         <h1 style={{ fontSize: "28px", color: "#FFD700", marginBottom: "20px" }}>
@@ -70,15 +70,15 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Réseaux sociaux */}
+      {/* Réseaux sociaux en bas */}
       <footer
         style={{
           marginTop: 40,
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
-          gap: 12,
-          paddingTop: 20,
+          gap: 16,
+          paddingTop: 32,
         }}
       >
         {[
@@ -102,8 +102,8 @@ export default function HomePage() {
             <img
               src={network.icon}
               alt={network.name}
-              width={24}
-              height={24}
+              width={28}
+              height={28}
               style={{ filter: "brightness(1.2)" }}
             />
           </a>
