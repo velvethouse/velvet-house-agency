@@ -1,72 +1,97 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function AdminDashboardPage() {
-  const [username, setUsername] = useState<string | null>(null);
-  const [accessGranted, setAccessGranted] = useState(false);
+export default function AdminLoginPage() {
+  const router = useRouter();
 
-  useEffect(() => {
-    // 🔐 À remplacer plus tard par une vraie session/login
-    const stored = localStorage.getItem("vh_username");
-    setUsername(stored);
-    setAccessGranted(stored === "sebastien"); // ✅ temporaire
-  }, []);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  if (!accessGranted) {
-    return (
-      <main style={{ padding: 40, textAlign: "center", color: "#f5f5f5" }}>
-        <h1 style={{ fontSize: 24, color: "#FFD700" }}>🔒 Access Denied</h1>
-        <p>This page is reserved for the Velvet House founder only.</p>
-      </main>
-    );
-  }
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const envUser = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
+    const envPass = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+
+    if (username === envUser && password === envPass) {
+      localStorage.setItem('vh_username', username);
+      router.push('/admin');
+    } else {
+      setError('Incorrect login or password');
+    }
+  };
 
   return (
     <main
       style={{
-        padding: 24,
-        maxWidth: 960,
-        margin: "0 auto",
-        fontFamily: 'system-ui,Segoe UI,Roboto,sans-serif',
+        minHeight: '100vh',
+        background: '#1e0c0c',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20,
       }}
     >
-      <h1 style={{ fontSize: 28, color: "#D4AF37", marginBottom: 24 }}>
-        👑 Velvet House Admin Panel
-      </h1>
-
-      <p style={{ color: "#f5f5f5", marginBottom: 32 }}>
-        Welcome back {username}! Manage everything from here.
-      </p>
-
-      <div
+      <form
+        onSubmit={handleLogin}
         style={{
-          display: "grid",
-          gap: 16,
-          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+          background: '#2e0d0d',
+          padding: 32,
+          borderRadius: 12,
+          maxWidth: 360,
+          width: '100%',
+          color: '#fff',
+          border: '1px solid rgba(255,255,255,0.1)',
         }}
       >
-        <a href="/admin/streamers" className="card" style={cardStyle}>
-          🧠 Streamer Mental Health
-        </a>
-        <a href="/admin/earnings" className="card" style={cardStyle}>
-          💰 Earnings Overview
-        </a>
-        <a href="/admin/identity" className="card" style={cardStyle}>
-          👤 Admin Identity
-        </a>
-      </div>
+        <h1 style={{ color: '#FFD700', marginBottom: 20, textAlign: 'center' }}>
+          👑 Admin Login
+        </h1>
+
+        <label style={{ fontSize: 14 }}>Username</label>
+        <input
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          style={inputStyle}
+          placeholder="Enter username"
+          required
+        />
+
+        <label style={{ fontSize: 14, marginTop: 16 }}>Password</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={inputStyle}
+          placeholder="Enter password"
+          required
+        />
+
+        {error && (
+          <p style={{ color: 'red', marginTop: 10, fontSize: 13 }}>{error}</p>
+        )}
+
+        <button
+          type="submit"
+          className="btn3d btn3d--gold"
+          style={{ marginTop: 24, width: '100%', padding: 10 }}
+        >
+          🔐 Log in
+        </button>
+      </form>
     </main>
   );
 }
 
-const cardStyle: React.CSSProperties = {
-  background: "#2e0d0d",
-  border: "1px solid rgba(212,175,55,0.2)",
-  padding: 20,
-  borderRadius: 12,
-  color: "#f5f5f5",
-  fontWeight: 600,
-  textDecoration: "none",
-  transition: "all 0.2s ease",
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  padding: '10px 12px',
+  borderRadius: 8,
+  border: '1px solid #444',
+  background: '#1b1b1b',
+  color: '#fff',
+  marginTop: 4,
 };
