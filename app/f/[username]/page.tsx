@@ -16,6 +16,7 @@ export default function FollowerProfile({ params }: Props) {
   const lotusBalance = 0;
   const isVip = false;
   const isGold = false;
+  const favoriteCreators = []; // à connecter à la vraie liste plus tard
 
   return (
     <main style={{ padding: "20px", maxWidth: 720, margin: "0 auto" }}>
@@ -56,7 +57,7 @@ export default function FollowerProfile({ params }: Props) {
         <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>
           Your Favorite Streamers
         </h2>
-        <FavoriteCreators />
+        <FavoriteCreators creators={favoriteCreators} />
       </section>
 
       {/* Subscription status */}
