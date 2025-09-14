@@ -2,7 +2,7 @@
 
 import React from "react";
 
-type Streamer = {
+export type Streamer = {
   id: string;
   name: string;
   rank: "Butterfly" | "Golden" | "Fire";
@@ -33,7 +33,7 @@ export default function AgencyStreamerTable({ streamers }: Props) {
     status === "paid" ? "#6cc66c" : "#FFD700";
 
   const calculateDollar = (lotus: number, rate: number) =>
-    ((lotus * rate * 0.00465).toFixed(2));
+    (lotus * rate * 0.00465).toFixed(2);
 
   return (
     <section style={{ marginTop: 32 }}>
@@ -41,7 +41,14 @@ export default function AgencyStreamerTable({ streamers }: Props) {
         👯 Streamers linked to your agency
       </h2>
 
-      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14, color: "#fff" }}>
+      <table
+        style={{
+          width: "100%",
+          borderCollapse: "collapse",
+          fontSize: 14,
+          color: "#fff",
+        }}
+      >
         <thead>
           <tr style={{ background: "#3a1515" }}>
             <th style={th}>Streamer</th>
@@ -55,15 +62,23 @@ export default function AgencyStreamerTable({ streamers }: Props) {
         <tbody>
           {streamers.length === 0 ? (
             <tr>
-              <td colSpan={6} style={{ padding: 16, textAlign: "center", color: "#ccc" }}>
+              <td
+                colSpan={6}
+                style={{ padding: 16, textAlign: "center", color: "#ccc" }}
+              >
                 No streamers connected yet.
               </td>
             </tr>
           ) : (
             streamers.map((s) => (
-              <tr key={s.id} style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+              <tr
+                key={s.id}
+                style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+              >
                 <td style={td}>{s.name}</td>
-                <td style={td}>{getRankEmoji(s.rank)} {s.rank}</td>
+                <td style={td}>
+                  {getRankEmoji(s.rank)} {s.rank}
+                </td>
                 <td style={td}>{s.lotusEarned.toLocaleString()} ♢</td>
                 <td style={td}>{s.agencyRate} %</td>
                 <td style={td}>${calculateDollar(s.lotusEarned, s.agencyRate)}</td>
