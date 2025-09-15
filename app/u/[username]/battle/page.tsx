@@ -1,3 +1,4 @@
+// app/u/[username]/battle/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -8,24 +9,25 @@ export default function BattlePage() {
   const [showResult, setShowResult] = useState(false);
 
   const handleMute = () => {
-    setMuted(!muted);
+    setMuted((prev) => !prev);
   };
 
   useEffect(() => {
     if (timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      const timer = setTimeout(() => setTimeLeft((prev) => prev - 1), 1000);
       return () => clearTimeout(timer);
     } else {
       setShowResult(true);
     }
   }, [timeLeft]);
 
-  const formatTime = (s: number) =>
-    `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
+  const formatTime = (s: number) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
 
   return (
     <main style={{ padding: 20, maxWidth: 960, margin: "0 auto", color: "#f5f5f5" }}>
-      <h1 style={{ fontSize: 26, color: "#FFD700", marginBottom: 24 }}>🔥 Battle in Progress</h1>
+      <h1 style={{ fontSize: 26, color: "#FFD700", marginBottom: 24 }}>
+        🔥 Battle in Progress
+      </h1>
 
       {/* Timer */}
       <div style={{ fontSize: 24, fontWeight: 700, marginBottom: 16 }}>
@@ -41,28 +43,40 @@ export default function BattlePage() {
         {muted ? "🔇 Unmute Opponent" : "🔊 Mute Opponent"}
       </button>
 
-      {/* Streams side by side */}
+      {/* Streams */}
       <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-        <div style={{ flex: 1, minWidth: 300, background: "#000", borderRadius: 12 }}>
-          <video src="https://example.com/stream1.m3u8" controls autoPlay muted style={{ width: "100%", borderRadius: 12 }} />
-          <p style={{ padding: 8, textAlign: "center" }}>🦋 Streameuse 1</p>
+        <div style={{ flex: 1, minWidth: 300 }}>
+          <video
+            src="https://example.com/stream1.m3u8"
+            controls
+            autoPlay
+            muted
+            style={{ width: "100%", borderRadius: 12 }}
+          />
+          <p style={{ textAlign: "center", marginTop: 8 }}>🦋 Streamer 1</p>
         </div>
-        <div style={{ flex: 1, minWidth: 300, background: "#000", borderRadius: 12 }}>
-          <video src="https://example.com/stream2.m3u8" controls autoPlay muted={muted} style={{ width: "100%", borderRadius: 12 }} />
-          <p style={{ padding: 8, textAlign: "center" }}>🦋 Streameuse 2</p>
+        <div style={{ flex: 1, minWidth: 300 }}>
+          <video
+            src="https://example.com/stream2.m3u8"
+            controls
+            autoPlay
+            muted={muted}
+            style={{ width: "100%", borderRadius: 12 }}
+          />
+          <p style={{ textAlign: "center", marginTop: 8 }}>🦋 Streamer 2</p>
         </div>
       </div>
 
-      {/* Gifts + Chat */}
+      {/* Gift Support */}
       <div style={{ marginTop: 32 }}>
         <h2 style={{ color: "#D4AF37", marginBottom: 12 }}>🎁 Support Your Favorite</h2>
-        <p>Send gifts to help your favorite win. All gifts count towards the battle total!</p>
+        <p>Send gifts to help your favorite win. All gifts count toward the total!</p>
         <div style={{ marginTop: 16, padding: 16, border: "1px solid #FFD700", borderRadius: 10 }}>
           🔥 Chat is open for viewers. Cheer and gift freely!
         </div>
       </div>
 
-      {/* Result */}
+      {/* Results */}
       {showResult && (
         <div
           style={{
@@ -76,7 +90,7 @@ export default function BattlePage() {
         >
           <h2 style={{ fontSize: 22, color: "#FFD700" }}>🏆 Battle Over</h2>
           <p style={{ fontSize: 18, marginTop: 8 }}>
-            Winner: <b>Streameuse 1</b> (based on gifts received)
+            Winner: <b>Streamer 1</b> (based on gifts received)
           </p>
           <p style={{ fontSize: 14, color: "#aaa", marginTop: 4 }}>
             +2% bonus Lotus for the winner!
@@ -85,4 +99,4 @@ export default function BattlePage() {
       )}
     </main>
   );
-            }
+}
