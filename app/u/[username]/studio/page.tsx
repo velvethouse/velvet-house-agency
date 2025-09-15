@@ -12,6 +12,13 @@ type Props = {
   };
 };
 
+type Photo = {
+  id: number;
+  src: string;
+  nsfw: boolean;
+  gift?: string;
+};
+
 export default function StreamerStudioPage({ params }: Props) {
   const username = params.username;
 
@@ -21,7 +28,12 @@ export default function StreamerStudioPage({ params }: Props) {
 
   const toggleAllowBattle = () => setAllowBattle(!allowBattle);
 
-  const photos = []; // Future DB connection
+  // 🖼️ Galerie mockée (remplacée par DB plus tard)
+  const photos: Photo[] = [
+    { id: 1, src: "/mock/photo1.jpg", nsfw: false },
+    { id: 2, src: "/mock/photo2.jpg", nsfw: true, gift: "🎁 Rose" },
+  ];
+
   const onToggleNSFW = (id: number) => {};
   const onAssignGift = (id: number, gift: string) => {};
 
@@ -121,4 +133,4 @@ export default function StreamerStudioPage({ params }: Props) {
       </div>
     </main>
   );
-}
+      }
