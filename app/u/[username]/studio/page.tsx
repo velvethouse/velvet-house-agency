@@ -6,61 +6,37 @@ import StudioGallery from "../components/StudioGallery";
 import NovaStudioCoach from "@/components/studio/NovaStudioCoach";
 import StatsPerformance from "../components/StatsPerformance";
 
-type Props = {
-  params: {
-    username: string;
-  };
-};
-
-type Photo = {
-  id: number;
-  src: string;
-  nsfw: boolean;
-  gift?: string;
-};
-
-export default function StreamerStudioPage({ params }: Props) {
-  const username = params.username;
-
+export default function StreamerStudioPage() {
   const [agreed, setAgreed] = useState(false);
-  const [allowBattle, setAllowBattle] = useState(false);
-  const [battleFrequency, setBattleFrequency] = useState(1);
+  const [allowBattle, setAllowBattle] = useState(true);
+  const [battleFrequency, setBattleFrequency] = useState(3);
 
   const toggleAllowBattle = () => setAllowBattle(!allowBattle);
 
-  // 🖼️ Galerie mockée (remplacée par DB plus tard)
-  const photos: Photo[] = [
-    { id: 1, src: "/mock/photo1.jpg", nsfw: false },
-    { id: 2, src: "/mock/photo2.jpg", nsfw: true, gift: "🎁 Rose" },
-  ];
-
-  const onToggleNSFW = (id: number) => {};
-  const onAssignGift = (id: number, gift: string) => {};
+  const photos: any[] = []; // Future DB
+  const onToggleNSFW = (id: string | number) => {};
+  const onAssignGift = (id: string | number, gift: string) => {};
 
   if (!agreed) {
     return (
       <main style={{ padding: 24, maxWidth: 720, margin: "0 auto" }}>
         <h1 style={{ color: "#D4AF37" }}>📋 Studio Rules & Conditions</h1>
-        <p>
-          Before accessing your studio, please confirm the following rules:
-        </p>
         <ul style={{ paddingLeft: 20, lineHeight: 1.7 }}>
-          <li>No explicit nudity or illegal content</li>
-          <li>Respect others and yourself</li>
-          <li>Gifts are your only unlock method</li>
-          <li>VIP and Gold status managed by admin</li>
-          <li>You are free to create at your rhythm</li>
+          <li>No nudity or illegal content</li>
+          <li>Respect yourself and others</li>
+          <li>Only gifts unlock content</li>
+          <li>VIP/Gold are admin-managed</li>
+          <li>Work at your own pace</li>
         </ul>
         <p style={{ marginTop: 16, fontWeight: 600, color: "#f8d7a0" }}>
-          Any violation may lead to a ban or account removal.
+          Violations can lead to ban or removal.
         </p>
-
         <button
           className="btn3d btn3d--gold"
-          style={{ marginTop: 28 }}
           onClick={() => setAgreed(true)}
+          style={{ marginTop: 24 }}
         >
-          I understand and want to enter my studio
+          I understand and accept
         </button>
       </main>
     );
@@ -68,21 +44,15 @@ export default function StreamerStudioPage({ params }: Props) {
 
   return (
     <main style={{ padding: 24, maxWidth: 960, margin: "0 auto" }}>
-      <h1 style={{ color: "#D4AF37" }}>🎥 Studio Dashboard</h1>
-      <p>
-        Manage your schedule, go live, track your earnings, and adjust your battle preferences.
-      </p>
+      <h1 style={{ color: "#D4AF37" }}>🎥 Your Studio</h1>
+      <p>Welcome! You can manage your profile and stream settings here.</p>
 
-      {/* 🖼️ Gallery */}
-      <StudioGallery photos={photos} onToggleNSFW={onToggleNSFW} onAssignGift={onAssignGift} />
+      {/* 🧠 Nova Coach */}
+      <div style={{ marginTop: 32 }}>
+        <NovaStudioCoach />
+      </div>
 
-      {/* 🎯 Weekly Goal */}
-      <GoalWidget lotusEarned={216000} goal={500000} frequency="weekly" />
-
-      {/* 📊 Lotus stats */}
-      <StatsPerformance />
-
-      {/* ⚔️ Battle frequency settings */}
+      {/* ⚔️ Battle settings */}
       <section style={{ marginTop: 40 }}>
         <h2 style={{ color: "#FFD700", marginBottom: 12 }}>⚔️ Battle Frequency</h2>
 
@@ -91,14 +61,14 @@ export default function StreamerStudioPage({ params }: Props) {
             type="checkbox"
             checked={allowBattle}
             onChange={toggleAllowBattle}
-          />{" "}
-          Allow battles
+          />
+          Allow Battles
         </label>
 
         {allowBattle && (
           <>
             <label style={{ display: "block", marginTop: 12 }}>
-              Desired frequency (per hour):
+              Battle frequency per hour:
               <select
                 value={battleFrequency}
                 onChange={(e) => setBattleFrequency(parseInt(e.target.value))}
@@ -121,16 +91,24 @@ export default function StreamerStudioPage({ params }: Props) {
               </select>
             </label>
             <p style={{ fontSize: 13, color: "#aaa", marginTop: 10 }}>
-              You can adjust this at any time if you feel it's affecting your audience.
+              You can adjust this anytime if viewers drop.
             </p>
           </>
         )}
       </section>
 
-      {/* 🧠 Nova assistant */}
-      <div style={{ marginTop: 40 }}>
-        <NovaStudioCoach />
-      </div>
+      {/* 🖼️ Gallery */}
+      <StudioGallery
+        photos={photos}
+        onToggleNSFW={onToggleNSFW}
+        onAssignGift={onAssignGift}
+      />
+
+      {/* 🎯 Weekly Goal */}
+      <GoalWidget lotusEarned={216000} goal={500000} frequency="weekly" />
+
+      {/* 📊 Stats */}
+      <StatsPerformance />
     </main>
   );
-      }
+}
