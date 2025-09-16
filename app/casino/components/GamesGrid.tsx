@@ -6,48 +6,48 @@ const games = [
   {
     name: 'Slots',
     emoji: '🎰',
-    color: 'bg-yellow-600',
     href: '/casino/slots',
+    color: 'bg-yellow-600',
   },
   {
     name: 'Roulette',
     emoji: '🎯',
-    color: 'bg-red-600',
     href: '/casino/roulette',
+    color: 'bg-red-600',
   },
   {
     name: 'Dice',
     emoji: '🎲',
-    color: 'bg-indigo-600',
     href: '/casino/dice',
+    color: 'bg-indigo-600',
   },
   {
     name: 'Poker',
     emoji: '🃏',
-    color: 'bg-green-600',
     href: '/casino/poker',
+    color: 'bg-green-600',
   },
   {
     name: 'Coinflip',
     emoji: '🪙',
-    color: 'bg-pink-600',
     href: '/casino/coinflip',
+    color: 'bg-pink-600',
   },
 ];
 
 export default function GamesGrid() {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
       {games.map((game) => (
         <Link
           key={game.name}
           href={game.href}
-          className={`${game.color} hover:brightness-110 transition-all rounded-xl p-5 flex flex-col items-center justify-center text-white text-center shadow-md`}
+          className={`rounded-2xl shadow-xl text-white p-6 flex flex-col items-center justify-center space-y-2 ${game.color} hover:brightness-110 transition-all`}
         >
-          <div className="text-4xl mb-2">{game.emoji}</div>
-          <div className="text-lg font-bold">{game.name}</div>
+          <div className="text-5xl">{game.emoji}</div>
+          <div className="text-lg font-semibold">{game.name}</div>
         </Link>
       ))}
     </div>
   );
-  }
+}
