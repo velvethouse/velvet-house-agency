@@ -42,12 +42,12 @@ export default function GamesGrid() {
         <Link
           key={game.name}
           href={game.href}
-          className={`${game.bg} rounded-2xl p-6 flex flex-col items-center justify-center shadow-xl hover:scale-105 transition-all duration-200`}
+          className={`${game.bg} no-underline text-white rounded-2xl p-6 flex flex-col items-center justify-center shadow-xl hover:scale-105 transition-all duration-200`}
         >
           <div className="text-6xl mb-2">{game.emoji}</div>
-          <div className="text-lg font-bold text-white">{game.name}</div>
+          <div className="text-lg font-bold">{game.name}</div>
         </Link>
       ))}
     </div>
   );
-}
+  }
