@@ -2,30 +2,20 @@
 
 import { useState } from 'react';
 
-const diceFaces = [1, 2, 3, 4, 5, 6, 7]; // On autorise le "7" pour le jackpot
+const diceFaces = [1, 2, 3, 4, 5, 6, 7]; // le 7 pour jackpot
 const rollCost = 100;
 
 export default function DicePage() {
   const [dice, setDice] = useState<number[]>([0, 0, 0]);
   const [message, setMessage] = useState('');
-  const [lotus, setLotus] = useState(1000); // Solde simulé
+  const [lotus, setLotus] = useState(1000);
   const [rolling, setRolling] = useState(false);
 
-  const rollDice = () => {
+  const rollDice = async () => {
     if (rolling || lotus < rollCost) return;
     setRolling(true);
     setMessage('');
     setLotus((prev) => prev - rollCost);
-
-    // Répartition Lotus
-    const jackpotPart = rollCost * 0.3;
-    const smallWinsPart = rollCost * 0.3;
-    const velvetPart = rollCost * 0.4;
-
-    console.log('🎲 Real redistribution:');
-    console.log(`- Jackpot +${jackpotPart} Lotus`);
-    console.log(`- Small Wins +${smallWinsPart} Lotus`);
-    console.log(`- Velvet House +${velvetPart} Lotus`);
 
     const results: number[] = [];
     for (let i = 0; i < 3; i++) {
@@ -33,27 +23,55 @@ export default function DicePage() {
     }
     setDice(results);
 
-    setTimeout(() => {
-      const [a, b, c] = results;
-      const isTriple7 = a === 7 && b === 7 && c === 7;
-      const isDouble6 = [a, b, c].filter((n) => n === 6).length >= 2;
-      const isPair = a === b || b === c || a === c;
+    const [a, b, c] = results;
+    let combo: string | null = null;
 
-      if (isTriple7) {
-        setMessage('🎉 JACKPOT! Triple 7 rolled!');
-        setLotus((prev) => prev + 10000);
-      } else if (isDouble6) {
-        setMessage('🎉 JACKPOT! Double 6!');
-        setLotus((prev) => prev + 7000);
-      } else if (isPair) {
-        setMessage('✨ You win! A matching pair!');
-        setLotus((prev) => prev + 500);
-      } else {
-        setMessage('😢 No win. Try again!');
-      }
+    const isTriple7 = a === 7 && b === 7 && c === 7;
+    const isDouble6 = [a, b, c].filter((n) => n === 6).length >= 2;
+    const isPair = a === b || b === c || a === c;
 
+    if (isTriple7) combo = 'triple-7';
+    else if (isDouble6) combo = 'double-6';
+    else if (isPair) combo = 'pair';
+
+    // 🔁 Appel API réelle
+    try {
+      const res = await fetch('/api/casino/play', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: 'demoUser123',
+          game: 'dice',
+          betAmount: rollCost,
+          combo,
+        }),
+      });
+
+      const data = await res.json();
+      console.log('🎲 API response:', data);
+
+      // 💥 Résultat
+      setTimeout(() => {
+        if (combo === 'triple-7') {
+          setMessage('🎉 JACKPOT! Triple 7!');
+          setLotus((prev) => prev + 10000);
+        } else if (combo === 'double-6') {
+          setMessage('🎉 JACKPOT! Double 6!');
+          setLotus((prev) => prev + 7000);
+        } else if (combo === 'pair') {
+          setMessage('✨ Win! Matching pair!');
+          setLotus((prev) => prev + 500);
+        } else {
+          setMessage('😢 No win. Try again!');
+        }
+
+        setRolling(false);
+      }, 1200);
+    } catch (err) {
+      console.error('API error', err);
+      setMessage('❌ Server error. Please try again.');
       setRolling(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -88,4 +106,4 @@ export default function DicePage() {
       )}
     </main>
   );
-    }
+        }
