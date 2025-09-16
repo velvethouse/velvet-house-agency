@@ -1,13 +1,12 @@
 'use client';
 
-import { Sparkles } from 'lucide-react';
 import { LotusIcon } from '@/components/icons/LotusIcon';
 
 export default function CasinoIntro() {
   return (
     <div className="bg-black text-white rounded-2xl p-6 shadow-xl border border-yellow-500 space-y-4">
       <h1 className="text-3xl font-bold flex items-center gap-3">
-        <Sparkles className="text-yellow-400" />
+        <span className="text-yellow-400 text-2xl">✨</span>
         Velvet House Casino
       </h1>
 
@@ -44,4 +43,4 @@ export default function CasinoIntro() {
       </div>
     </div>
   );
-      }
+}
