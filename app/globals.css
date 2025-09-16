@@ -29,9 +29,9 @@ html, body {
 }
 
 /* ✅ Corrige tous les liens bleus soulignés */
-a {
-  color: inherit;
-  text-decoration: none;
+a, a:visited, a:active {
+  color: inherit !important;
+  text-decoration: none !important;
 }
 
 /* Neutraliser le rendu natif des boutons (iOS/Android) */
@@ -146,4 +146,18 @@ h1, h2, h3 {
 }
 .btn3d--outline-gold::before { display: none; }
 
-/* ... le reste de tes styles (cards, galerie, profil, etc.) reste inchangé */
+/* =========================================================
+   Améliorations globales
+   ========================================================= */
+
+/* ✅ Icônes, images, vidéos responsives */
+img, svg, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ✅ Supprime les effets moches iOS Android */
+* {
+  -webkit-tap-highlight-color: transparent;
+            }
