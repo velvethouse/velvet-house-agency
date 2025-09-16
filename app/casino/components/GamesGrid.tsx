@@ -44,10 +44,10 @@ export default function GamesGrid() {
           href={game.href}
           className={`${game.bg} text-white no-underline rounded-2xl p-6 flex flex-col items-center justify-center shadow-xl hover:scale-105 transition-all duration-200`}
         >
-          <div className="text-[90px] leading-none">{game.emoji}</div>
-          <div className="text-lg font-bold mt-2">{game.name}</div>
+          <div className="text-[110px] leading-none">{game.emoji}</div>
+          <div className="text-lg font-bold mt-4">{game.name}</div>
         </Link>
       ))}
     </div>
   );
-}
+      }
