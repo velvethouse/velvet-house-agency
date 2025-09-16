@@ -1,3 +1,5 @@
+'use client';
+
 import JackpotDisplay from './components/JackpotDisplay';
 import JackpotTicker from './components/JackpotTicker';
 import GamesGrid from './components/GamesGrid';
@@ -12,7 +14,6 @@ export default function CasinoPage() {
         <GamesGrid />
       </div>
 
-      {/* 📖 Livre des règles (bouton fixe) */}
       <RulesBookButton />
     </main>
   );
