@@ -3,43 +3,52 @@
 import { useState } from 'react';
 
 const symbols = ['💠', '7️⃣', '🍒', '🔔', '⭐', '💎'];
+const spinCost = 100; // 100 Lotus par spin
 
 export default function SlotsPage() {
   const [reels, setReels] = useState(['❓', '❓', '❓']);
   const [message, setMessage] = useState('');
+  const [lotus, setLotus] = useState(1000); // solde actuel simulé
   const [spinning, setSpinning] = useState(false);
 
-  const spin = () => {
-    if (spinning) return;
+  const handleSpin = () => {
+    if (spinning || lotus < spinCost) return;
     setSpinning(true);
     setMessage('');
 
-    const newReels: string[] = [];
+    // Déduire le coût du spin
+    const newLotus = lotus - spinCost;
+    setLotus(newLotus);
 
-    const interval = setInterval(() => {
-      for (let i = 0; i < 3; i++) {
-        newReels[i] = symbols[Math.floor(Math.random() * symbols.length)];
-      }
-      setReels([...newReels]);
-    }, 80);
+    // Répartition réelle (simulée ici en console)
+    const jackpotPart = spinCost * 0.3;
+    const smallPoolPart = spinCost * 0.3;
+    const velvetPart = spinCost * 0.4;
+
+    console.log('🔁 Real redistribution:');
+    console.log(`- Jackpot +${jackpotPart} Lotus`);
+    console.log(`- Small Pool +${smallPoolPart} Lotus`);
+    console.log(`- Velvet House +${velvetPart} Lotus`);
+
+    const newReels = [];
+    for (let i = 0; i < 3; i++) {
+      newReels[i] = symbols[Math.floor(Math.random() * symbols.length)];
+    }
+    setReels([...newReels]);
 
     setTimeout(() => {
-      clearInterval(interval);
+      const [a, b, c] = newReels;
 
-      for (let i = 0; i < 3; i++) {
-        newReels[i] = symbols[Math.floor(Math.random() * symbols.length)];
-      }
-      setReels([...newReels]);
-
-      // Check win
-      if (newReels[0] === newReels[1] && newReels[1] === newReels[2]) {
-        if (newReels[0] === '💠' || newReels[0] === '7️⃣') {
-          setMessage('🎉 JACKPOT! Triple ' + newReels[0]);
+      if (a === b && b === c) {
+        if (a === '💠' || a === '7️⃣') {
+          setMessage(`🎉 JACKPOT! Triple ${a}`);
+          setLotus((prev) => prev + 10000); // Simule un gros gain
         } else {
-          setMessage('✨ You win! Triple ' + newReels[0]);
+          setMessage(`✨ WIN! Triple ${a}`);
+          setLotus((prev) => prev + 500); // Simule un petit gain
         }
       } else {
-        setMessage('😢 No win. Try again!');
+        setMessage('😢 You lost. Try again!');
       }
 
       setSpinning(false);
@@ -49,6 +58,10 @@ export default function SlotsPage() {
   return (
     <main className="min-h-screen bg-black text-white p-6 flex flex-col items-center justify-start space-y-8">
       <h1 className="text-3xl font-bold text-yellow-400">🎰 Velvet Slots</h1>
+
+      <p className="text-sm text-gray-400">
+        Balance: <span className="text-yellow-300 font-semibold">{lotus.toLocaleString()} Lotus</span>
+      </p>
 
       <div className="flex space-x-6 text-6xl font-mono">
         {reels.map((symbol, index) => (
@@ -62,11 +75,11 @@ export default function SlotsPage() {
       </div>
 
       <button
-        onClick={spin}
-        disabled={spinning}
+        onClick={handleSpin}
+        disabled={spinning || lotus < spinCost}
         className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-6 rounded-full shadow-lg disabled:opacity-50"
       >
-        {spinning ? 'Spinning...' : 'Spin'}
+        {spinning ? 'Spinning...' : `Spin (-${spinCost} Lotus)`}
       </button>
 
       {message && (
@@ -76,4 +89,4 @@ export default function SlotsPage() {
       )}
     </main>
   );
-        }
+}
