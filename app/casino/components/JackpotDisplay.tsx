@@ -10,27 +10,27 @@ export default function JackpotDisplay() {
       try {
         const res = await fetch('/api/casino/jackpot');
         const data = await res.json();
-        setJackpot(data.jackpot);
+        if (typeof data.jackpot === 'number') {
+          setJackpot(data.jackpot);
+        }
       } catch (err) {
         console.error('❌ Failed to fetch jackpot:', err);
       }
     };
 
     fetchJackpot();
-    const interval = setInterval(fetchJackpot, 10000);
+    const interval = setInterval(fetchJackpot, 15000);
     return () => clearInterval(interval);
   }, []);
+
+  if (jackpot === null) return null;
 
   return (
     <div className="bg-gradient-to-r from-yellow-800 to-yellow-600 text-white text-center rounded-xl p-4 border border-yellow-400 shadow-xl">
       <h2 className="text-xl font-semibold tracking-wide">🎉 Global Jackpot</h2>
       <p className="text-3xl font-bold text-yellow-100 mt-1">
-        {jackpot !== null ? jackpot.toLocaleString() : 'Loading...'}{' '}
-        <span className="text-yellow-300">♢ Lotus</span>
-      </p>
-      <p className="text-xs italic text-gray-200 mt-2">
-        This pot increases every time someone plays across the casino.
+        {jackpot.toLocaleString()} <span className="text-yellow-300">♢ Lotus</span>
       </p>
     </div>
   );
-}
+                      }
