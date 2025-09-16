@@ -7,45 +7,45 @@ const games = [
     name: 'Slots',
     emoji: '🎰',
     href: '/casino/slots',
-    color: 'bg-yellow-600',
+    bg: 'bg-gradient-to-br from-yellow-500 to-yellow-700',
   },
   {
     name: 'Roulette',
     emoji: '🎯',
     href: '/casino/roulette',
-    color: 'bg-red-600',
+    bg: 'bg-gradient-to-br from-red-500 to-red-700',
   },
   {
     name: 'Dice',
     emoji: '🎲',
     href: '/casino/dice',
-    color: 'bg-indigo-600',
+    bg: 'bg-gradient-to-br from-indigo-500 to-indigo-700',
   },
   {
     name: 'Poker',
     emoji: '🃏',
     href: '/casino/poker',
-    color: 'bg-green-600',
+    bg: 'bg-gradient-to-br from-green-500 to-green-700',
   },
   {
     name: 'Coinflip',
     emoji: '🪙',
     href: '/casino/coinflip',
-    color: 'bg-pink-600',
+    bg: 'bg-gradient-to-br from-pink-500 to-pink-700',
   },
 ];
 
 export default function GamesGrid() {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 mt-8 px-2">
       {games.map((game) => (
         <Link
           key={game.name}
           href={game.href}
-          className={`rounded-2xl shadow-xl text-white p-6 flex flex-col items-center justify-center space-y-2 ${game.color} hover:brightness-110 transition-all no-underline`}
+          className={`${game.bg} rounded-2xl p-6 flex flex-col items-center justify-center shadow-xl hover:scale-105 transition-all duration-200`}
         >
-          <div className="text-5xl">{game.emoji}</div>
-          <div className="text-lg font-semibold">{game.name}</div>
+          <div className="text-6xl mb-2">{game.emoji}</div>
+          <div className="text-lg font-bold text-white">{game.name}</div>
         </Link>
       ))}
     </div>
