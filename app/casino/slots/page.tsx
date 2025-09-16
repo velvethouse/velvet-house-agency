@@ -3,56 +3,74 @@
 import { useState } from 'react';
 
 const symbols = ['💠', '7️⃣', '🍒', '🔔', '⭐', '💎'];
-const spinCost = 100; // 100 Lotus par spin
+const spinCost = 100;
 
 export default function SlotsPage() {
   const [reels, setReels] = useState<string[]>(['❓', '❓', '❓']);
   const [message, setMessage] = useState('');
-  const [lotus, setLotus] = useState(1000); // solde actuel simulé
+  const [lotus, setLotus] = useState(1000); // Solde simulé local
   const [spinning, setSpinning] = useState(false);
 
-  const handleSpin = () => {
+  const handleSpin = async () => {
     if (spinning || lotus < spinCost) return;
     setSpinning(true);
     setMessage('');
 
-    // Déduire le coût du spin
-    const newLotus = lotus - spinCost;
-    setLotus(newLotus);
-
-    // Répartition réelle (simulée ici)
-    const jackpotPart = spinCost * 0.3;
-    const smallPoolPart = spinCost * 0.3;
-    const velvetPart = spinCost * 0.4;
-
-    console.log('🔁 Real redistribution:');
-    console.log(`- Jackpot +${jackpotPart} Lotus`);
-    console.log(`- Small Pool +${smallPoolPart} Lotus`);
-    console.log(`- Velvet House +${velvetPart} Lotus`);
-
+    // Tirage visuel immédiat
     const newReels: string[] = [];
     for (let i = 0; i < 3; i++) {
       newReels[i] = symbols[Math.floor(Math.random() * symbols.length)];
     }
     setReels([...newReels]);
 
-    setTimeout(() => {
-      const [a, b, c] = newReels;
+    // Déduction du solde local simulé
+    setLotus((prev) => prev - spinCost);
 
-      if (a === b && b === c) {
-        if (a === '💠' || a === '7️⃣') {
+    // Détection du combo
+    const [a, b, c] = newReels;
+    let combo: string | null = null;
+
+    if (a === b && b === c) {
+      if (a === '💠') combo = 'triple-lotus';
+      else if (a === '7️⃣') combo = 'triple-7';
+      else combo = 'triple-other';
+    }
+
+    // Appel API réelle
+    try {
+      const res = await fetch('/api/casino/play', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: 'demoUser123', // à remplacer plus tard par auth
+          game: 'slots',
+          betAmount: spinCost,
+          combo: combo,
+        }),
+      });
+
+      const data = await res.json();
+      console.log('🎯 API response:', data);
+
+      // Traitement du gain
+      setTimeout(() => {
+        if (combo === 'triple-lotus' || combo === 'triple-7') {
           setMessage(`🎉 JACKPOT! Triple ${a}`);
-          setLotus((prev) => prev + 10000); // Gain jackpot simulé
-        } else {
+          setLotus((prev) => prev + 10000);
+        } else if (combo === 'triple-other') {
           setMessage(`✨ WIN! Triple ${a}`);
-          setLotus((prev) => prev + 500); // Gain normal
+          setLotus((prev) => prev + 500);
+        } else {
+          setMessage('😢 You lost. Try again!');
         }
-      } else {
-        setMessage('😢 You lost. Try again!');
-      }
 
+        setSpinning(false);
+      }, 1200);
+    } catch (err) {
+      console.error('API error', err);
+      setMessage('❌ Server error. Please try again.');
       setSpinning(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -89,4 +107,4 @@ export default function SlotsPage() {
       )}
     </main>
   );
-         }
+}
