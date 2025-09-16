@@ -6,7 +6,7 @@ const symbols = ['💠', '7️⃣', '🍒', '🔔', '⭐', '💎'];
 const spinCost = 100; // 100 Lotus par spin
 
 export default function SlotsPage() {
-  const [reels, setReels] = useState(['❓', '❓', '❓']);
+  const [reels, setReels] = useState<string[]>(['❓', '❓', '❓']);
   const [message, setMessage] = useState('');
   const [lotus, setLotus] = useState(1000); // solde actuel simulé
   const [spinning, setSpinning] = useState(false);
@@ -20,7 +20,7 @@ export default function SlotsPage() {
     const newLotus = lotus - spinCost;
     setLotus(newLotus);
 
-    // Répartition réelle (simulée ici en console)
+    // Répartition réelle (simulée ici)
     const jackpotPart = spinCost * 0.3;
     const smallPoolPart = spinCost * 0.3;
     const velvetPart = spinCost * 0.4;
@@ -30,7 +30,7 @@ export default function SlotsPage() {
     console.log(`- Small Pool +${smallPoolPart} Lotus`);
     console.log(`- Velvet House +${velvetPart} Lotus`);
 
-    const newReels = [];
+    const newReels: string[] = [];
     for (let i = 0; i < 3; i++) {
       newReels[i] = symbols[Math.floor(Math.random() * symbols.length)];
     }
@@ -42,10 +42,10 @@ export default function SlotsPage() {
       if (a === b && b === c) {
         if (a === '💠' || a === '7️⃣') {
           setMessage(`🎉 JACKPOT! Triple ${a}`);
-          setLotus((prev) => prev + 10000); // Simule un gros gain
+          setLotus((prev) => prev + 10000); // Gain jackpot simulé
         } else {
           setMessage(`✨ WIN! Triple ${a}`);
-          setLotus((prev) => prev + 500); // Simule un petit gain
+          setLotus((prev) => prev + 500); // Gain normal
         }
       } else {
         setMessage('😢 You lost. Try again!');
@@ -89,4 +89,4 @@ export default function SlotsPage() {
       )}
     </main>
   );
-}
+         }
