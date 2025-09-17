@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import JackpotCelebration from '../components/JackpotCelebration';
 
 const betAmount = 100;
 
@@ -8,21 +9,26 @@ export default function RoulettePage() {
   const [message, setMessage] = useState('');
   const [lotus, setLotus] = useState(1000);
   const [spinning, setSpinning] = useState(false);
+  const [jackpotWin, setJackpotWin] = useState(false);
+  const [result, setResult] = useState<number | null>(null);
 
   const handlePlay = async () => {
     if (spinning || lotus < betAmount) return;
+
     setSpinning(true);
     setMessage('');
+    setJackpotWin(false);
     setLotus((prev) => prev - betAmount);
 
-    // 🔢 Simulation simple (à remplacer plus tard)
-    const result = Math.floor(Math.random() * 37); // 0 à 36
-    const isJackpot = result === 7 || result === 0;
+    const outcome = Math.floor(Math.random() * 37); // 0–36
+    setResult(outcome);
 
+    const isJackpot = outcome === 0 || outcome === 7;
     const combo = isJackpot ? 'jackpot-roulette' : null;
-    const jackpotShare = betAmount * 0.3;
-    const smallWinsShare = betAmount * 0.3;
-    const velvetShare = betAmount * 0.4;
+
+    const jackpot = betAmount * 0.3;
+    const smallPool = betAmount * 0.3;
+    const velvet = betAmount * 0.4;
 
     try {
       await fetch('/api/casino/play', {
@@ -32,26 +38,26 @@ export default function RoulettePage() {
           userId: 'demoUser123',
           game: 'roulette',
           betAmount,
-          jackpot: jackpotShare,
-          smallPool: smallWinsShare,
-          velvet: velvetShare,
+          jackpot,
+          smallPool,
+          velvet,
           combo,
         }),
       });
 
       setTimeout(() => {
-        if (combo === 'jackpot-roulette') {
-          setMessage(`🎉 JACKPOT! Number ${result}`);
+        if (isJackpot) {
+          setMessage(`🎉 JACKPOT! Number ${outcome}`);
+          setJackpotWin(true);
           setLotus((prev) => prev + 12000);
-        } else if (result % 2 === 0) {
-          setMessage(`✨ You win! Number ${result}`);
+        } else if (outcome % 2 === 0) {
+          setMessage(`✨ You win! Number ${outcome}`);
           setLotus((prev) => prev + 300);
         } else {
-          setMessage(`😢 You lost. Number was ${result}`);
+          setMessage(`😢 You lost. Number was ${outcome}`);
         }
-
         setSpinning(false);
-      }, 1200);
+      }, 1000);
     } catch (err) {
       console.error('API error:', err);
       setMessage('❌ Server error.');
@@ -60,26 +66,34 @@ export default function RoulettePage() {
   };
 
   return (
-    <main className="min-h-screen bg-black text-white p-6 flex flex-col items-center space-y-8">
+    <main className="min-h-screen bg-black text-white p-6 flex flex-col items-center space-y-6 relative">
+      {jackpotWin && <JackpotCelebration />}
+
       <h1 className="text-3xl font-bold text-yellow-400">🎯 Velvet Roulette</h1>
 
       <p className="text-sm text-gray-400">
         Balance: <span className="text-yellow-300 font-semibold">{lotus} Lotus</span>
       </p>
 
+      {result !== null && (
+        <div className="text-5xl font-bold text-yellow-300">
+          🎱 {result}
+        </div>
+      )}
+
       <button
         onClick={handlePlay}
         disabled={spinning || lotus < betAmount}
-        className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-6 rounded-full shadow-lg disabled:opacity-50"
+        className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-6 rounded-full shadow-lg transition disabled:opacity-50"
       >
-        {spinning ? 'Spinning...' : `Play (-${betAmount} Lotus)`}
+        {spinning ? 'Spinning...' : `Spin (-${betAmount} Lotus)`}
       </button>
 
       {message && (
-        <div className="text-lg font-semibold text-center text-yellow-300">
+        <div className="text-lg font-semibold text-yellow-300 text-center">
           {message}
         </div>
       )}
     </main>
   );
-      }
+}
