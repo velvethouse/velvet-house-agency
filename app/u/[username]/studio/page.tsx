@@ -6,7 +6,13 @@ import StudioGallery from '../components/StudioGallery';
 import NovaStudioCoach from '@/components/studio/NovaStudioCoach';
 import StatsPerformance from '../components/StatsPerformance';
 
-export default function StreamerStudioPage() {
+type Props = {
+  params: { username: string };
+};
+
+export default function StreamerStudioPage({ params }: Props) {
+  const username = params.username;
+
   const [agreed, setAgreed] = useState(false);
   const [allowBattle, setAllowBattle] = useState(false);
   const [battleFrequency, setBattleFrequency] = useState(3);
@@ -78,7 +84,7 @@ export default function StreamerStudioPage() {
       <StudioGallery photos={photos} onToggleNSFW={onToggleNSFW} onAssignGift={onAssignGift} />
 
       {/* 🎯 Weekly Goal */}
-      <GoalWidget lotusEarned={216000} goal={500000} frequency="weekly" />
+      <GoalWidget username={username} lotusEarned={216000} goal={500000} frequency="weekly" />
 
       {/* 📊 Stats */}
       <StatsPerformance />
@@ -162,4 +168,4 @@ export default function StreamerStudioPage() {
       </div>
     </main>
   );
-    }
+      }
