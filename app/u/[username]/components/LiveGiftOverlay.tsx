@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
+import champagne from '@/public/gifts/champagne.json'; // ✅ import direct du JSON
 
 type Gift = {
   id: string;
-  file: string; // Chemin JSON dans /public/gifts/
+  file: object;
   from: string;
   name: string;
 };
@@ -14,11 +15,11 @@ export default function LiveGiftOverlay() {
   const [queue, setQueue] = useState<Gift[]>([]);
   const [current, setCurrent] = useState<Gift | null>(null);
 
-  // Simule un gift (test uniquement)
   useEffect(() => {
-    const testGift = {
+    // 🎁 Test : simule un gift
+    const testGift: Gift = {
       id: '1',
-      file: require('@/public/gifts/champagne.json'), // ✅ CORRECT pour Lottie
+      file: champagne,
       from: 'Sacha',
       name: 'Champagne',
     };
@@ -30,7 +31,6 @@ export default function LiveGiftOverlay() {
     return () => clearTimeout(timer);
   }, []);
 
-  // File d'attente
   useEffect(() => {
     if (!current && queue.length > 0) {
       const next = queue[0];
@@ -64,7 +64,7 @@ export default function LiveGiftOverlay() {
         <Lottie
           loop
           play
-          animationData={current.file} // ✅ CORRECT
+          animationData={current.file}
           style={{ width: 220, height: 220, margin: '0 auto' }}
         />
         <div style={{ marginTop: 12, color: '#FFD700', fontWeight: 'bold', fontSize: 18 }}>
