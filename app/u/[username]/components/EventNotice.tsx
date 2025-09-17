@@ -1,6 +1,10 @@
-"use client";
+'use client';
 
-export default function EventNotice() {
+type Props = {
+  username: string; // même si pas utilisé, on le déclare
+};
+
+export default function EventNotice({ username }: Props) {
   const message =
     "🦋 This Saturday at 9 PM — special live with surprises. Join me, I’ll be waiting 💋";
 
