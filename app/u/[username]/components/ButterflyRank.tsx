@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect, useState } from "react";
 
@@ -10,7 +10,12 @@ type Rank = {
   commission: string;
 };
 
-export default function ButterflyRank({ lotusEarned }: { lotusEarned: number }) {
+type Props = {
+  username: string;
+  lotusEarned: number;
+};
+
+export default function ButterflyRank({ username, lotusEarned }: Props) {
   const [rank, setRank] = useState<Rank | null>(null);
 
   useEffect(() => {
@@ -20,7 +25,7 @@ export default function ButterflyRank({ lotusEarned }: { lotusEarned: number }) 
         emoji: "🔥🦋",
         next: "",
         required: 0,
-        commission: "65%",
+        commission: "70%",
       });
     } else if (lotusEarned >= 200_000) {
       setRank({
@@ -28,7 +33,7 @@ export default function ButterflyRank({ lotusEarned }: { lotusEarned: number }) 
         emoji: "💛🦋",
         next: "Fire Butterfly",
         required: 1_000_000,
-        commission: "63%",
+        commission: "67%",
       });
     } else if (lotusEarned >= 10_000) {
       setRank({
@@ -36,7 +41,7 @@ export default function ButterflyRank({ lotusEarned }: { lotusEarned: number }) 
         emoji: "🦋",
         next: "Golden Butterfly",
         required: 200_000,
-        commission: "61%",
+        commission: "64%",
       });
     } else {
       setRank({
@@ -44,7 +49,7 @@ export default function ButterflyRank({ lotusEarned }: { lotusEarned: number }) 
         emoji: "🐛",
         next: "Butterfly",
         required: 10_000,
-        commission: "60%",
+        commission: "62%",
       });
     }
   }, [lotusEarned]);
@@ -57,7 +62,7 @@ export default function ButterflyRank({ lotusEarned }: { lotusEarned: number }) 
         {rank.emoji} {rank.name}
       </h2>
       <p style={{ margin: 0, color: "#f5f5f5" }}>
-        Total Lotus earned: <strong>{lotusEarned.toLocaleString()}</strong>
+        @{username} — Total Lotus: <strong>{lotusEarned.toLocaleString()}</strong>
       </p>
       <p style={{ margin: 0, color: "#f5f5f5" }}>
         Commission: <strong>{rank.commission}</strong>
@@ -70,4 +75,4 @@ export default function ButterflyRank({ lotusEarned }: { lotusEarned: number }) 
       )}
     </div>
   );
-}
+          }
