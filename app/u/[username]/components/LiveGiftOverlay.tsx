@@ -3,60 +3,60 @@
 import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
 
-type Gift = {
-  name: string;
-  amount: number;
-  file: string;
+// 🎁 Tu peux ajouter d'autres animations ici
+import lotus from '@/public/gifts/lotus.json';
+import rose from '@/public/gifts/rose.json';
+
+const giftAnimations: Record<string, object> = {
+  lotus,
+  rose,
+  // 🔜 Ajouter les autres plus tard : heart, champagne, etc.
 };
 
 type Props = {
-  visible: boolean;
-  gift: Gift | null;
+  giftName: string | null;
 };
 
-export default function LiveGiftOverlay({ visible, gift }: Props) {
-  const [animationData, setAnimationData] = useState<any>(null);
+export default function LiveGiftOverlay({ giftName }: Props) {
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (gift?.file) {
-      import(`@/public/gifts/${gift.file}`)
-        .then((mod) => {
-          setAnimationData(mod.default);
-        })
-        .catch(() => {
-          setAnimationData(null);
-        });
+    if (giftName && giftAnimations[giftName]) {
+      setVisible(true);
+      const timer = setTimeout(() => setVisible(false), 3200);
+      return () => clearTimeout(timer);
     }
-  }, [gift]);
+  }, [giftName]);
 
-  if (!visible || !gift || !animationData) return null;
+  if (!giftName || !visible || !giftAnimations[giftName]) return null;
 
   return (
     <div
       style={{
         position: 'fixed',
-        top: 0,
+        top: 80,
         left: 0,
         right: 0,
-        bottom: 0,
-        background: 'rgba(0,0,0,0.5)',
+        zIndex: 9999,
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 1000,
         pointerEvents: 'none',
       }}
     >
-      <div style={{ textAlign: 'center' }}>
+      <div
+        style={{
+          background: 'rgba(0,0,0,0.6)',
+          padding: 12,
+          borderRadius: 12,
+          border: '1px solid #FFD700',
+          maxWidth: 260,
+        }}
+      >
         <Lottie
           loop
           play
-          animationData={animationData}
-          style={{
-            width: 220,
-            height: 220,
-            margin: '0 auto',
-          }}
+          animationData={giftAnimations[giftName]}
+          style={{ width: 220, height: 220, margin: '0 auto' }}
         />
         <div
           style={{
@@ -64,11 +64,12 @@ export default function LiveGiftOverlay({ visible, gift }: Props) {
             color: '#FFD700',
             fontWeight: 'bold',
             fontSize: 18,
+            textAlign: 'center',
           }}
         >
-          🎁 {gift.name} — {gift.amount.toLocaleString()} Lotus
+          {giftName.toUpperCase()} GIFT 🎁
         </div>
       </div>
     </div>
   );
-            }
+}
