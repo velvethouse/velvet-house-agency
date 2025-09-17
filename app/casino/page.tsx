@@ -8,7 +8,7 @@ const games = [
   {
     name: 'Slots',
     href: '/casino/slots',
-    img: '/casino/slots.png', // à mettre dans public/casino/
+    img: '/casino/slots.png', // fichier à mettre dans public/casino/
   },
   {
     name: 'Roulette',
@@ -34,7 +34,9 @@ const games = [
 
 export default function CasinoPage() {
   return (
-    <main className="min-h-screen bg-black text-white px-4 py-6 relative">
+    <main className="min-h-screen bg-black text-white px-4 py-6 relative pb-24">
+      <h1 className="text-3xl font-bold gold-gradient-text text-center mb-8">🎰 Velvet Casino</h1>
+
       <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 gap-5">
         {games.map((game) => (
           <Link
