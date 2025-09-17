@@ -1,56 +1,31 @@
 'use client';
 
-import CreatorTabs from "@/components/CreatorTabs";
-import LivePlayer from "./components/LivePlayer";
-import LiveGiftPanel from "./components/LiveGiftPanel";
-import LiveChat from "./components/LiveChat";
-import NovaAssistant from "./components/NovaAssistant";
-import LiveGiftOverlay from "./components/LiveGiftOverlay"; // ✅ nouvelle intégration
-import { useState } from "react";
+import LivePlayer from './components/LivePlayer';
+import LiveChat from './components/LiveChat';
+import LiveGiftPanel from './components/LiveGiftPanel';
+import LiveGiftOverlay from './components/LiveGiftOverlay';
 
-type Props = {
-  params: {
-    username: string;
-  };
-};
+import { useState } from 'react';
 
-export default function LivePage({ params }: Props) {
-  const [lastGift, setLastGift] = useState<string | null>(null);
-
-  const handleGiftSend = (giftName: string) => {
-    setLastGift(giftName);
-    // ⏱️ Réinitialise après 3.5 secondes
-    setTimeout(() => setLastGift(null), 3500);
-  };
+export default function LivePage() {
+  const [activeGift, setActiveGift] = useState<string | null>(null);
 
   return (
-    <main style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 20px", color: "#f5f5f7", position: "relative" }}>
-      <h1>Live — {params.username}</h1>
-      <CreatorTabs username={params.username} current="live" />
+    <main style={{ padding: '20px', background: '#000', color: '#fff' }}>
+      <h1 style={{ color: '#FFD700' }}>🔴 Live Stream</h1>
 
-      {/* 🔴 Lecteur vidéo */}
-      <section style={{ marginTop: 24 }}>
-        <LivePlayer />
-      </section>
+      <LivePlayer streamUrl="https://stream.velvethouse.com/fallback.m3u8" />
 
-      {/* 🎁 Cadeaux */}
-      <section style={{ marginTop: 32 }}>
-        <h2 style={{ marginBottom: 12 }}>🎁 Send a Gift</h2>
-        <LiveGiftPanel onSendGift={handleGiftSend} />
-      </section>
+      <div style={{ display: 'flex', gap: 20, marginTop: 20 }}>
+        <div style={{ flex: 1 }}>
+          <LiveChat />
+        </div>
+        <div style={{ width: 280 }}>
+          <LiveGiftPanel onGiftSend={setActiveGift} />
+        </div>
+      </div>
 
-      {/* 💬 Chat public */}
-      <section style={{ marginTop: 32 }}>
-        <LiveChat username={params.username} />
-      </section>
-
-      {/* 🤖 Nova Coach */}
-      <section style={{ marginTop: 40 }}>
-        <NovaAssistant username={params.username} />
-      </section>
-
-      {/* ✨ Overlay cadeau */}
-      <LiveGiftOverlay giftName={lastGift} />
+      <LiveGiftOverlay giftName={activeGift} />
     </main>
   );
 }
