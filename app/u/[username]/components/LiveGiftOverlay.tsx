@@ -3,14 +3,14 @@
 import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
 
-// 🎁 Tu peux ajouter d'autres animations ici
+// 🎁 Importe ici les Lottie animations (tu peux en ajouter d'autres ensuite)
 import lotus from '@/public/gifts/lotus.json';
 import rose from '@/public/gifts/rose.json';
 
 const giftAnimations: Record<string, object> = {
   lotus,
   rose,
-  // 🔜 Ajouter les autres plus tard : heart, champagne, etc.
+  // 💡 Ex : 'heart': heart, 'champagne': champagne, etc.
 };
 
 type Props = {
