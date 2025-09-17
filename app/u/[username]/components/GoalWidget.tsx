@@ -5,12 +5,14 @@ import { useEffect, useMemo, useState } from "react";
 type Frequency = "daily" | "weekly";
 
 type Props = {
+  username: string; // 👈 ajout ici
   lotusEarned?: number;
   goal?: number;
   frequency: Frequency;
 };
 
 export default function GoalWidget({
+  username, // 👈 ajout ici
   lotusEarned = 0,
   goal = 100000,
   frequency,
@@ -84,4 +86,4 @@ export default function GoalWidget({
       </div>
     </section>
   );
-}
+              }
