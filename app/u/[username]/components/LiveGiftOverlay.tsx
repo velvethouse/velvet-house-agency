@@ -2,75 +2,54 @@
 
 import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
-import champagne from '@/public/gifts/champagne.json'; // ✅ import direct du JSON
 
 type Gift = {
-  id: string;
-  file: object;
-  from: string;
   name: string;
+  file: string; // chemin vers le .json (ex: /gifts/lotus.json)
 };
 
-export default function LiveGiftOverlay() {
-  const [queue, setQueue] = useState<Gift[]>([]);
-  const [current, setCurrent] = useState<Gift | null>(null);
+type Props = {
+  gift: Gift | null;
+};
+
+export default function LiveGiftOverlay({ gift }: Props) {
+  const [show, setShow] = useState(false);
+  const [animationData, setAnimationData] = useState<any>(null);
 
   useEffect(() => {
-    // 🎁 Test : simule un gift
-    const testGift: Gift = {
-      id: '1',
-      file: champagne,
-      from: 'Sacha',
-      name: 'Champagne',
-    };
+    if (!gift) return;
+    fetch(gift.file)
+      .then((res) => res.json())
+      .then((data) => {
+        setAnimationData(data);
+        setShow(true);
+        setTimeout(() => setShow(false), 3000); // Cache après 3s
+      });
+  }, [gift]);
 
-    const timer = setTimeout(() => {
-      setQueue((prev) => [...prev, testGift]);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    if (!current && queue.length > 0) {
-      const next = queue[0];
-      setCurrent(next);
-      setQueue((prev) => prev.slice(1));
-
-      const timeout = setTimeout(() => {
-        setCurrent(null);
-      }, 4000);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [queue, current]);
-
-  if (!current) return null;
+  if (!show || !animationData) return null;
 
   return (
     <div
       style={{
         position: 'fixed',
-        inset: 0,
-        zIndex: 90,
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        background: 'rgba(0,0,0,0.65)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        pointerEvents: 'none',
-        background: 'rgba(0,0,0,0.2)',
+        zIndex: 1000,
       }}
     >
-      <div style={{ textAlign: 'center' }}>
-        <Lottie
-          loop
-          play
-          animationData={current.file}
-          style={{ width: 220, height: 220, margin: '0 auto' }}
-        />
-        <div style={{ marginTop: 12, color: '#FFD700', fontWeight: 'bold', fontSize: 18 }}>
-          💝 {current.from} sent a {current.name}!
-        </div>
-      </div>
+      <Lottie
+        play
+        loop={false}
+        animationData={animationData}
+        style={{ width: 300, height: 300 }}
+      />
     </div>
   );
 }
