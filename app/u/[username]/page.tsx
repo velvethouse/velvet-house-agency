@@ -26,7 +26,11 @@ export default function UserProfilePage({ params }: Props) {
         <GalleryBlock username={username} photos={[]} />
         <EventNotice username={username} />
         <GlobalEventNotice />
-        <GoalWidget username={username} />
+
+        {/* 🎯 Objectifs Lotus */}
+        <GoalWidget username={username} frequency="daily" />
+        <GoalWidget username={username} frequency="weekly" />
+
         <ButterflyRank username={username} />
         <NovaAssistant username={username} />
       </div>
