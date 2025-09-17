@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import JackpotCelebration from '../components/JackpotCelebration';
 
 const suits = ['♠', '♥', '♦', '♣'];
 const ranks = ['10', 'J', 'Q', 'K', 'A'];
@@ -13,6 +14,7 @@ export default function PokerPage() {
   const [lotus, setLotus] = useState(1000);
   const [hasRedrawn, setHasRedrawn] = useState(false);
   const [drawing, setDrawing] = useState(false);
+  const [jackpotWin, setJackpotWin] = useState(false);
 
   const drawCards = () => {
     const newDeck = [...deck];
@@ -25,11 +27,11 @@ export default function PokerPage() {
   };
 
   const detectCombo = (cards: string[]) => {
-    const suits = cards.map((c) => c.slice(-1));
-    const ranks = cards.map((c) => c.slice(0, -1));
-    const allSameSuit = suits.every((s) => s === suits[0]);
-    const hasRoyal = ['10', 'J', 'Q', 'K', 'A'].every((r) => ranks.includes(r));
-    const counts = ranks.reduce<Record<string, number>>((acc, r) => {
+    const suitsOnly = cards.map((c) => c.slice(-1));
+    const ranksOnly = cards.map((c) => c.slice(0, -1));
+    const allSameSuit = suitsOnly.every((s) => s === suitsOnly[0]);
+    const hasRoyal = ['10', 'J', 'Q', 'K', 'A'].every((r) => ranksOnly.includes(r));
+    const counts = ranksOnly.reduce<Record<string, number>>((acc, r) => {
       acc[r] = (acc[r] || 0) + 1;
       return acc;
     }, {});
@@ -48,16 +50,17 @@ export default function PokerPage() {
     if (drawing || lotus < betAmount) return;
     setDrawing(true);
     setMessage('');
+    setJackpotWin(false);
+    setHasRedrawn(false);
     setLotus((prev) => prev - betAmount);
 
     const newHand = drawCards();
     setHand(newHand);
-    setHasRedrawn(false);
 
     const combo = detectCombo(newHand);
-    const jackpotShare = betAmount * 0.3;
-    const smallWinsShare = betAmount * 0.3;
-    const velvetShare = betAmount * 0.4;
+    const jackpot = betAmount * 0.3;
+    const smallPool = betAmount * 0.3;
+    const velvet = betAmount * 0.4;
 
     try {
       await fetch('/api/casino/play', {
@@ -67,9 +70,9 @@ export default function PokerPage() {
           userId: 'demoUser123',
           game: 'poker',
           betAmount,
-          jackpot: jackpotShare,
-          smallPool: smallWinsShare,
-          velvet: velvetShare,
+          jackpot,
+          smallPool,
+          velvet,
           combo,
         }),
       });
@@ -77,6 +80,7 @@ export default function PokerPage() {
       setTimeout(() => {
         if (combo === 'royal-flush') {
           setMessage('🎉 JACKPOT! Royal Flush!');
+          setJackpotWin(true);
           setLotus((prev) => prev + 15000);
         } else if (combo === 'full-house') {
           setMessage('✨ Full House!');
@@ -90,7 +94,6 @@ export default function PokerPage() {
         } else {
           setMessage('😢 No combo. Try again!');
         }
-
         setDrawing(false);
       }, 1000);
     } catch (err) {
@@ -102,13 +105,17 @@ export default function PokerPage() {
 
   const redraw = () => {
     if (hasRedrawn || hand.length === 0) return;
-    setHand(drawCards());
+    const newHand = drawCards();
+    setHand(newHand);
     setHasRedrawn(true);
+    setJackpotWin(false);
     setMessage('');
   };
 
   return (
-    <main className="min-h-screen bg-black text-white p-6 flex flex-col items-center space-y-6">
+    <main className="min-h-screen bg-black text-white p-6 flex flex-col items-center space-y-6 relative">
+      {jackpotWin && <JackpotCelebration />}
+
       <h1 className="text-3xl font-bold text-yellow-400">🃏 Velvet Poker</h1>
 
       <p className="text-sm text-gray-400">
@@ -119,14 +126,14 @@ export default function PokerPage() {
         {hand.map((card, index) => (
           <div
             key={index}
-            className="w-16 h-24 bg-zinc-800 border border-yellow-600 rounded-lg flex items-center justify-center"
+            className="w-16 h-24 bg-zinc-800 border border-yellow-600 rounded-lg flex items-center justify-center text-yellow-300 font-bold text-lg"
           >
             {card}
           </div>
         ))}
       </div>
 
-      <div className="flex gap-4 mt-4">
+      <div className="flex gap-4">
         <button
           onClick={play}
           disabled={drawing || lotus < betAmount}
@@ -145,10 +152,8 @@ export default function PokerPage() {
       </div>
 
       {message && (
-        <div className="text-lg font-semibold text-center text-yellow-300">
-          {message}
-        </div>
+        <div className="text-lg font-semibold text-yellow-300 text-center">{message}</div>
       )}
     </main>
   );
-}
+  }
