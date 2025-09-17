@@ -2,16 +2,15 @@
 
 import React from 'react';
 import Lottie from 'react-lottie-player';
-import type { AnimationItem } from 'lottie-web';
 
 type Props = {
   name: string;
-  file: object; // contenu JSON déjà importé
   amount: number;
+  animationData: object;
   onSend: () => void;
 };
 
-export default function GiftItem({ name, file, amount, onSend }: Props) {
+export default function GiftItem({ name, amount, animationData, onSend }: Props) {
   return (
     <div
       onClick={onSend}
@@ -28,15 +27,15 @@ export default function GiftItem({ name, file, amount, onSend }: Props) {
       }}
     >
       <Lottie
-        loop
         play
-        animationData={file}
+        loop
+        animationData={animationData}
         style={{ width: 80, height: 80, margin: '0 auto' }}
       />
-      <div style={{ color: '#FFD700', fontWeight: 600, fontSize: 13, marginTop: 8 }}>
+      <div style={{ color: '#FFD700', fontWeight: 600, fontSize: 13 }}>
         {name}
       </div>
-      <div style={{ fontSize: 12, color: '#ccc' }}>{amount} Lotus</div>
+      <div style={{ color: '#aaa', fontSize: 12 }}>{amount} Lotus</div>
     </div>
   );
 }
