@@ -7,7 +7,8 @@ type Props = {
 };
 
 export default function LivePlayer({ streamUrl }: Props) {
-  const fallbackStream = 'https://stream.velvethouse.com/fallback.m3u8'; // à remplacer par ton vrai flux
+  const fallbackStream = 'https://stream.velvethouse.com/fallback.m3u8'; // 🔧 à modifier pour ton flux réel
+  const isActive = !!streamUrl;
 
   return (
     <div
@@ -21,22 +22,24 @@ export default function LivePlayer({ streamUrl }: Props) {
       }}
     >
       {/* 🔴 LIVE Badge */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 8,
-          left: 8,
-          backgroundColor: 'red',
-          color: 'white',
-          fontWeight: 'bold',
-          fontSize: 12,
-          padding: '2px 6px',
-          borderRadius: 6,
-          zIndex: 10,
-        }}
-      >
-        🔴 LIVE
-      </div>
+      {isActive && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 8,
+            left: 8,
+            backgroundColor: 'red',
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: 12,
+            padding: '2px 6px',
+            borderRadius: 6,
+            zIndex: 10,
+          }}
+        >
+          🔴 LIVE
+        </div>
+      )}
 
       {/* 🎥 Video player */}
       <video
