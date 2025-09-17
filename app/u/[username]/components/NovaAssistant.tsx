@@ -2,9 +2,16 @@
 
 import { useState } from 'react';
 
-export default function NovaAssistant() {
+type Props = {
+  username: string;
+};
+
+export default function NovaAssistant({ username }: Props) {
   const [messages, setMessages] = useState([
-    { role: 'nova', text: "Welcome back! I'm here to help you improve your performance and motivation 🧠✨" },
+    {
+      role: 'nova',
+      text: "Welcome back! I'm here to help you improve your performance and motivation 🧠✨",
+    },
   ]);
   const [input, setInput] = useState('');
   const [count, setCount] = useState(0);
