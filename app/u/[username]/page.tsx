@@ -22,7 +22,7 @@ export default function UserProfilePage({ params }: Props) {
       <div className="max-w-4xl mx-auto space-y-8">
         <BioBlock username={username} />
         <CTAButtons username={username} />
-        <StreamAccessNotice username={username} />
+        <StreamAccessNotice isLocked={true} isVip={false} />
         <GalleryBlock username={username} />
         <EventNotice username={username} />
         <GlobalEventNotice />
@@ -32,4 +32,4 @@ export default function UserProfilePage({ params }: Props) {
       </div>
     </main>
   );
-}
+          }
