@@ -23,7 +23,7 @@ export default function UserProfilePage({ params }: Props) {
         <BioBlock username={username} />
         <CTAButtons username={username} />
         <StreamAccessNotice isLocked={true} isVip={false} />
-        <GalleryBlock username={username} />
+        <GalleryBlock username={username} photos={[]} />
         <EventNotice username={username} />
         <GlobalEventNotice />
         <GoalWidget username={username} />
@@ -32,4 +32,4 @@ export default function UserProfilePage({ params }: Props) {
       </div>
     </main>
   );
-          }
+}
