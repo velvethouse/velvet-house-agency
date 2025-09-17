@@ -8,53 +8,52 @@ const games = [
   {
     name: 'Slots',
     href: '/casino/slots',
-    img: '/casino/slots.png', // fichier à mettre dans public/casino/
+    icon: '/casino/icons/slots.svg',
   },
   {
     name: 'Roulette',
     href: '/casino/roulette',
-    img: '/casino/roulette.png',
+    icon: '/casino/icons/roulette.svg',
   },
   {
     name: 'Dice',
     href: '/casino/dice',
-    img: '/casino/dice.png',
+    icon: '/casino/icons/dice.svg',
   },
   {
     name: 'Poker',
     href: '/casino/poker',
-    img: '/casino/poker.png',
+    icon: '/casino/icons/poker.svg',
   },
   {
     name: 'Coinflip',
     href: '/casino/coinflip',
-    img: '/casino/coinflip.png',
+    icon: '/casino/icons/coinflip.svg',
   },
 ];
 
 export default function CasinoPage() {
   return (
-    <main className="min-h-screen bg-black text-white px-4 py-6 relative pb-24">
-      <h1 className="text-3xl font-bold gold-gradient-text text-center mb-8">🎰 Velvet Casino</h1>
+    <main className="min-h-screen bg-black text-white px-4 py-6 relative">
+      <h1 className="text-3xl font-bold text-yellow-400 mb-6">🎰 Velvet Casino</h1>
 
-      <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 gap-5">
+      <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 gap-6">
         {games.map((game) => (
           <Link
             key={game.name}
             href={game.href}
-            className="rounded-xl overflow-hidden shadow-lg group relative"
+            className="flex flex-col items-center justify-center p-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 transition-all shadow-lg"
           >
-            <div className="relative aspect-[4/5] w-full bg-zinc-900">
+            <div className="w-20 h-20 mb-3">
               <Image
-                src={game.img}
+                src={game.icon}
                 alt={game.name}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                width={80}
+                height={80}
+                className="object-contain"
               />
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-center py-2 text-lg font-bold text-yellow-300">
-              {game.name}
-            </div>
+            <span className="text-lg font-semibold text-yellow-300">{game.name}</span>
           </Link>
         ))}
       </div>
