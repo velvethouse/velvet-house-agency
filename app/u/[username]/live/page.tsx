@@ -10,26 +10,39 @@ type Props = { params: { username: string } };
 
 export default function LivePage({ params }: Props) {
   return (
-    <main style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 20px", color: "#f5f5f7" }}>
-      <h1>Live — {params.username}</h1>
+    <main
+      style={{
+        maxWidth: 1100,
+        margin: "0 auto",
+        padding: "32px 20px",
+        color: "#f5f5f7",
+        minHeight: "100vh",
+      }}
+    >
+      <h1 style={{ fontSize: "1.8rem", fontWeight: "bold", color: "#FFD700" }}>
+        🔴 Live — {params.username}
+      </h1>
+
       <CreatorTabs username={params.username} current="live" />
 
-      <div style={{ marginTop: 24 }}>
-        <LivePlayer />
-      </div>
+      <section style={{ marginTop: 32 }}>
+        <LivePlayer username={params.username} />
+      </section>
 
-      <div style={{ marginTop: 24 }}>
-        <h2 style={{ marginBottom: 12 }}>🎁 Send a Gift</h2>
-        <LiveGiftPanel />
-      </div>
+      <section style={{ marginTop: 40 }}>
+        <h2 style={{ marginBottom: 12, color: "#FFD700", fontSize: "1.2rem" }}>
+          🎁 Send a Gift
+        </h2>
+        <LiveGiftPanel username={params.username} />
+      </section>
 
-      <div style={{ marginTop: 32 }}>
-        <LiveChat />
-      </div>
+      <section style={{ marginTop: 40 }}>
+        <LiveChat username={params.username} />
+      </section>
 
-      <div style={{ marginTop: 40 }}>
-        <NovaAssistant />
-      </div>
+      <section style={{ marginTop: 50 }}>
+        <NovaAssistant username={params.username} />
+      </section>
     </main>
   );
-}
+        }
