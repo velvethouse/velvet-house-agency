@@ -8,9 +8,9 @@ export default function HomePage() {
         minHeight: "100vh",
         background: "#2e0d0d",
         backgroundImage: "url('/hero.png')",
-        backgroundSize: "contain",
+        backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "top center",
+        backgroundPosition: "center top",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -18,9 +18,9 @@ export default function HomePage() {
       }}
     >
       {/* Bloc texte + inscription */}
-      <div
+      <section
         style={{
-          background: "rgba(0, 0, 0, 0.6)",
+          background: "rgba(0, 0, 0, 0.65)",
           borderRadius: 20,
           padding: "30px 20px",
           maxWidth: 460,
@@ -30,10 +30,10 @@ export default function HomePage() {
           margin: "120px auto 0",
         }}
       >
-        <h1 style={{ fontSize: "28px", color: "#FFD700", marginBottom: "20px" }}>
+        <h1 style={{ fontSize: "32px", color: "#FFD700", marginBottom: "20px" }}>
           Velvet House
         </h1>
-        <p style={{ marginBottom: "24px", lineHeight: 1.5 }}>
+        <p style={{ marginBottom: "24px", lineHeight: 1.6 }}>
           More than a platform: an exclusive universe where elegance meets
           mystery.
           <br />
@@ -50,6 +50,7 @@ export default function HomePage() {
               padding: "12px 20px",
               borderRadius: 14,
               textDecoration: "none",
+              transition: "all 0.3s ease",
             }}
           >
             Sign up
@@ -64,12 +65,13 @@ export default function HomePage() {
               padding: "12px 20px",
               borderRadius: 14,
               textDecoration: "none",
+              transition: "all 0.3s ease",
             }}
           >
             Log in
           </a>
         </div>
-      </div>
+      </section>
 
       {/* Réseaux sociaux en bas */}
       <footer
@@ -98,7 +100,10 @@ export default function HomePage() {
             href={network.url}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ display: "inline-block" }}
+            style={{
+              display: "inline-block",
+              transition: "transform 0.2s ease",
+            }}
           >
             <img
               src={network.icon}
@@ -112,4 +117,4 @@ export default function HomePage() {
       </footer>
     </main>
   );
-}
+              }
