@@ -38,4 +38,4 @@ export default function PrivateLiveToggle({ username, isPrivate = false }: Priva
         : "🔒 Start Private Live (20 max)"}
     </button>
   );
-}
+      }
