@@ -10,7 +10,6 @@ interface LiveGiftOverlayProps {
 export default function LiveGiftOverlay({ username }: LiveGiftOverlayProps) {
   const [activeGift, setActiveGift] = useState<string | null>(null);
 
-  // Liste officielle des 48 gifts
   const giftList = [
     "lotus", "rose", "heart", "champagne", "crown", "star", "diamond",
     "butterfly", "fireworks", "lightning", "music", "ring", "car",
@@ -22,15 +21,13 @@ export default function LiveGiftOverlay({ username }: LiveGiftOverlayProps) {
     "sun", "moon", "galaxy",
   ];
 
-  // Simulation → quand un gift est cliqué, il s'affiche en overlay
   const handleGiftClick = (gift: string) => {
     setActiveGift(gift);
-    setTimeout(() => setActiveGift(null), 4000); // disparaît après 4s
+    setTimeout(() => setActiveGift(null), 4000);
   };
 
   return (
     <div className="relative w-full h-full">
-      {/* Zone de test rapide pour cliquer sur un gift */}
       <div className="absolute top-4 left-4 bg-white bg-opacity-80 p-2 rounded shadow">
         <h3 className="font-bold mb-2 text-sm">🎁 Gifts</h3>
         <div className="grid grid-cols-3 gap-2 max-h-48 overflow-y-auto">
@@ -46,7 +43,6 @@ export default function LiveGiftOverlay({ username }: LiveGiftOverlayProps) {
         </div>
       </div>
 
-      {/* Overlay animé */}
       {activeGift && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <GiftPlayer name={activeGift} size={300} play loop={false} />
@@ -54,4 +50,4 @@ export default function LiveGiftOverlay({ username }: LiveGiftOverlayProps) {
       )}
     </div>
   );
-      }
+}
