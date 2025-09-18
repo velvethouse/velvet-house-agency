@@ -1,11 +1,11 @@
 'use client';
 
+import { useState } from 'react';
+
 import LivePlayer from './components/LivePlayer';
 import LiveChat from './components/LiveChat';
 import LiveGiftPanel from './components/LiveGiftPanel';
 import LiveGiftOverlay from './components/LiveGiftOverlay';
-
-import { useState } from 'react';
 
 export default function LivePage() {
   const [activeGift, setActiveGift] = useState<string | null>(null);
