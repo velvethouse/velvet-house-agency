@@ -1,34 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Lottie from "react-lottie-player";
-
-function GiftPlayer({ name }: { name: string }) {
-  const [anim, setAnim] = useState<any>(null);
-
-  useEffect(() => {
-    fetch(`/gifts/${name}.json`)
-      .then((res) => res.json())
-      .then((data) => setAnim(data))
-      .catch((err) =>
-        console.error(`❌ Erreur chargement ${name}.json :`, err)
-      );
-  }, [name]);
-
-  if (!anim) return <div style={{ color: "#fff" }}>⏳ {name}...</div>;
-
-  return (
-    <div style={{ textAlign: "center", margin: 20 }}>
-      <div style={{ width: 150, height: 150, margin: "0 auto" }}>
-        <Lottie loop play animationData={anim} style={{ width: "100%", height: "100%" }} />
-      </div>
-      <p style={{ color: "#fff", marginTop: 8 }}>{name}</p>
-    </div>
-  );
-}
+import GiftPlayer from "../components/GiftPlayer";
 
 export default function GiftsPreviewPage() {
-  const gifts = ["lotus", "rose", "crown"];
+  const gifts = ["lotus1", "lotus2", "lotus3"]; // noms des futurs fichiers .webm
 
   return (
     <main
@@ -42,9 +17,12 @@ export default function GiftsPreviewPage() {
         padding: 20,
       }}
     >
-      {gifts.map((g) => (
-        <GiftPlayer key={g} name={g} />
+      {gifts.map((name) => (
+        <div key={name} style={{ margin: 20, textAlign: "center" }}>
+          <GiftPlayer src={`/gifts/${name}.webm`} size={200} />
+          <p style={{ color: "#fff", marginTop: 8 }}>{name}</p>
+        </div>
       ))}
     </main>
   );
-    }
+            }
