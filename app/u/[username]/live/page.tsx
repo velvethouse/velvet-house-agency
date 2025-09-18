@@ -7,7 +7,7 @@ export default function LivePage({ params }: { params: { username: string } }) {
 
   return (
     <div className="relative w-full h-screen bg-black text-white">
-      {/* Bouton pour passer en live privé */}
+      {/* Bouton pour basculer en live privé */}
       <div className="absolute top-4 right-4">
         <PrivateLiveToggle username={username} isPrivate={false} />
       </div>
@@ -26,4 +26,4 @@ export default function LivePage({ params }: { params: { username: string } }) {
       </div>
     </div>
   );
-      }
+        }
