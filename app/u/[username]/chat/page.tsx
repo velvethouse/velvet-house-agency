@@ -1,45 +1,40 @@
-'use client';
+"use client";
 
-import CreatorTabs from "@/components/CreatorTabs";
-import PhotoGiftUnlock from "../components/PhotoGiftUnlock";
-import NovaAssistant from "../components/NovaAssistant";
+import React, { useState } from "react";
+import GiftPlayer from "@/components/GiftPlayer";
 
 export default function ChatPage({ params }: { params: { username: string } }) {
-  const username = params.username;
+  const { username } = params;
+  const [activeGift, setActiveGift] = useState<string | null>(null);
 
-  // 🚨 À brancher plus tard : tableau de photos (mock vide pour l’instant)
-  const photos: {
-    id: string;
-    url: string;
-    unlocked: boolean;
-  }[] = [];
+  const handleSendGift = (gift: string) => {
+    setActiveGift(gift);
+    setTimeout(() => setActiveGift(null), 4000);
+  };
 
   return (
-    <main style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 20px", color: "#f5f5f7" }}>
-      <h1>Chat privé — {username}</h1>
-      <CreatorTabs username={username} current="chat" />
-      <p>Espace de chat privé avec la streameuse. Nova est là pour t’accompagner ✨</p>
-
-      <div style={{ marginTop: 24 }}>
-        {photos.length === 0 ? (
-          <p style={{ fontSize: 14, color: "#999" }}>
-            No private media yet. Upload to activate unlockables.
-          </p>
-        ) : (
-          photos.map((photo) => (
-            <PhotoGiftUnlock
-              key={photo.id}
-              src={photo.url}
-              isUnlocked={photo.unlocked}
-              onUnlock={() => console.log("Trigger gift unlock for photo:", photo.id)}
-            />
-          ))
+    <div className="w-full h-screen flex flex-col bg-gray-100">
+      <div className="flex-1 p-4 overflow-y-auto">
+        <p className="text-gray-600">💬 Private chat with {username}</p>
+        {activeGift && (
+          <div className="mt-4 flex justify-center">
+            <GiftPlayer name={activeGift} size={200} play loop={false} />
+          </div>
         )}
       </div>
-
-      <div style={{ marginTop: 40 }}>
-        <NovaAssistant username={username} />
+      <div className="p-4 bg-white flex items-center space-x-2 border-t">
+        <input
+          type="text"
+          placeholder="Type your message..."
+          className="flex-1 border rounded px-3 py-2"
+        />
+        <button
+          onClick={() => handleSendGift("rose")}
+          className="px-3 py-2 bg-pink-500 text-white rounded"
+        >
+          🌹 Send Gift
+        </button>
       </div>
-    </main>
+    </div>
   );
 }
