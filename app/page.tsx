@@ -1,10 +1,21 @@
 // app/page.tsx
 "use client";
 
+import { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
-import lotus from "@/../public/gifts/lotus.json";
 
 export default function HomePage() {
+  const [lotus, setLotus] = useState<any>(null);
+
+  useEffect(() => {
+    fetch("/gifts/lotus.json")
+      .then((res) => res.json())
+      .then((data) => setLotus(data))
+      .catch((err) =>
+        console.error("❌ Erreur lors du chargement de lotus.json :", err)
+      );
+  }, []);
+
   return (
     <main
       style={{
@@ -23,12 +34,16 @@ export default function HomePage() {
       {/* ✅ Test Lotus */}
       <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
         <div style={{ width: 200, height: 200 }}>
-          <Lottie
-            loop
-            play
-            animationData={lotus}
-            style={{ width: "100%", height: "100%" }}
-          />
+          {lotus ? (
+            <Lottie
+              loop
+              play
+              animationData={lotus}
+              style={{ width: "100%", height: "100%" }}
+            />
+          ) : (
+            <div style={{ color: "#fff" }}>⏳ Loading Lotus...</div>
+          )}
         </div>
       </div>
 
@@ -49,7 +64,8 @@ export default function HomePage() {
           Velvet House
         </h1>
         <p style={{ marginBottom: "24px", lineHeight: 1.5 }}>
-          More than a platform: an exclusive universe where elegance meets mystery.
+          More than a platform: an exclusive universe where elegance meets
+          mystery.
           <br />
           Every creator shines. Every viewer becomes privileged.
         </p>
@@ -126,4 +142,4 @@ export default function HomePage() {
       </footer>
     </main>
   );
-          }
+                     }
