@@ -1,32 +1,23 @@
-'use client';
+import LiveGiftOverlay from "../components/LiveGiftOverlay";
+import LiveGiftPanel from "../components/LiveGiftPanel";
 
-import BioBlock from './components/BioBlock';
-import CTAButtons from './components/CTAButtons';
-import GalleryBlock from './components/GalleryBlock';
-import EventNotice from './components/EventNotice';
-import GlobalEventNotice from './components/GlobalEventNotice';
-import GoalWidget from './components/GoalWidget';
-import ButterflyRank from './components/ButterflyRank';
-import NovaAssistant from './components/NovaAssistant';
-import StreamAccessNotice from './components/StreamAccessNotice';
-
-export default function UserProfilePage({ params }: { params: { username: string } }) {
-  const username = params.username;
+export default function LivePage({ params }: { params: { username: string } }) {
+  const { username } = params;
 
   return (
-    <main className="min-h-screen bg-black text-white px-4 py-10">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <BioBlock username={username} />
-        <CTAButtons username={username} />
-        <StreamAccessNotice isLocked={true} isVip={false} />
-        <GalleryBlock username={username} photos={[]} />
-        <EventNotice username={username} />
-        <GlobalEventNotice />
-        <GoalWidget username={username} frequency="daily" />
-        <GoalWidget username={username} frequency="weekly" />
-        <ButterflyRank username={username} lotusEarned={216000} />
-        <NovaAssistant username={username} />
+    <div className="relative w-full h-screen bg-black text-white">
+      {/* Placeholder du live */}
+      <div className="w-full h-full flex items-center justify-center">
+        <p className="text-gray-400">🎥 Live stream of {username} will appear here</p>
       </div>
-    </main>
+
+      {/* Overlay (gifts qui apparaissent en animation) */}
+      <LiveGiftOverlay username={username} />
+
+      {/* Panel latéral premium (dragon, phoenix, worldtour) */}
+      <div className="absolute bottom-4 right-4 w-64">
+        <LiveGiftPanel />
+      </div>
+    </div>
   );
-}
+        }
