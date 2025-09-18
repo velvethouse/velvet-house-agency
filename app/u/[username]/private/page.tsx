@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import LiveGiftOverlay from "../components/LiveGiftOverlay";
 import PrivateLiveToggle from "../components/PrivateLiveToggle";
-import GiftPlayer from "@/components/GiftPlayer";
+import GiftPlayer from "@/app/components/GiftPlayer";
 
 export default function PrivateLivePage({ params }: { params: { username: string } }) {
   const { username } = params;
-  const [participants, setParticipants] = useState<number>(0); // compteur dynamique
+  const [participants, setParticipants] = useState<number>(0);
   const [hasAccess, setHasAccess] = useState<boolean>(false);
   const [activeGift, setActiveGift] = useState<string | null>(null);
 
@@ -51,16 +51,16 @@ export default function PrivateLivePage({ params }: { params: { username: string
           </div>
 
           {/* Overlay gifts */}
-          <LiveGiftOverlay username={username} />
+          <LiveGiftOverlay activeGift={activeGift} />
 
           {/* Animation cadeau d’accès */}
           {activeGift && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <GiftPlayer name={activeGift} size={300} play loop={false} />
+              <GiftPlayer name={activeGift} size={300} autoPlay loop={false} />
             </div>
           )}
         </>
       )}
     </div>
   );
-                            }
+      }
