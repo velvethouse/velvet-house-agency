@@ -7,12 +7,17 @@ import GiftPlayer from "@/components/GiftPlayer";
 
 export default function PrivateLivePage({ params }: { params: { username: string } }) {
   const { username } = params;
-  const [participants, setParticipants] = useState<number>(3);
+  const [participants, setParticipants] = useState<number>(0); // compteur dynamique
   const [hasAccess, setHasAccess] = useState<boolean>(false);
   const [activeGift, setActiveGift] = useState<string | null>(null);
 
   const handleGiftUnlock = (gift: string) => {
+    if (participants >= 20) {
+      alert("❌ This private live is full (20/20 viewers).");
+      return;
+    }
     setHasAccess(true);
+    setParticipants((prev) => Math.min(prev + 1, 20));
     setActiveGift(gift);
     setTimeout(() => setActiveGift(null), 4000);
   };
@@ -26,7 +31,9 @@ export default function PrivateLivePage({ params }: { params: { username: string
 
       {!hasAccess ? (
         <div className="w-full h-full flex flex-col items-center justify-center">
-          <p className="text-gray-300 mb-4">🔒 This private live requires a gift to join</p>
+          <p className="text-gray-300 mb-4">
+            🔒 This private live requires a gift to join ({participants}/20 viewers)
+          </p>
           <button
             onClick={() => handleGiftUnlock("champagne")}
             className="px-4 py-2 bg-pink-600 hover:bg-pink-700 rounded text-white font-bold"
@@ -56,4 +63,4 @@ export default function PrivateLivePage({ params }: { params: { username: string
       )}
     </div>
   );
-        }
+                            }
