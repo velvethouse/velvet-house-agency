@@ -2,9 +2,16 @@
 
 import React from 'react';
 import GiftItem from './GiftItem';
+import lotus from '@/public/gifts/lotus.json';
+import rose from '@/public/gifts/rose.json';
 
 type Props = {
   onGiftSend: (name: string) => void;
+};
+
+const giftAnimations: Record<string, object> = {
+  lotus,
+  rose,
 };
 
 export default function LiveGiftPanel({ onGiftSend }: Props) {
@@ -33,11 +40,11 @@ export default function LiveGiftPanel({ onGiftSend }: Props) {
             key={gift.name}
             name={gift.name}
             amount={gift.amount}
-            animationData={null} // ⚠️ Remplacer par le vrai JSON si besoin
+            animationData={giftAnimations[gift.name]}
             onSend={() => onGiftSend(gift.name)}
           />
         ))}
       </div>
     </div>
   );
-}
+                                     }
