@@ -50,4 +50,4 @@ export default function LiveGiftOverlay({ username }: LiveGiftOverlayProps) {
       )}
     </div>
   );
-}
+          }
