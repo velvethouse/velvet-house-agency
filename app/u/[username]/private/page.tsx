@@ -2,50 +2,58 @@
 
 import React, { useState } from "react";
 import LiveGiftOverlay from "../components/LiveGiftOverlay";
+import PrivateLiveToggle from "../components/PrivateLiveToggle";
+import GiftPlayer from "@/components/GiftPlayer";
 
 export default function PrivateLivePage({ params }: { params: { username: string } }) {
   const { username } = params;
-  const [participants] = useState<number>(5); // simulation: 5 connectés, limite 20
+  const [participants, setParticipants] = useState<number>(3);
+  const [hasAccess, setHasAccess] = useState<boolean>(false);
   const [activeGift, setActiveGift] = useState<string | null>(null);
 
-  const handleSendGift = (gift: string) => {
+  const handleGiftUnlock = (gift: string) => {
+    setHasAccess(true);
     setActiveGift(gift);
     setTimeout(() => setActiveGift(null), 4000);
   };
 
   return (
     <div className="relative w-full h-screen bg-black text-white">
-      {/* Placeholder vidéo live privé */}
-      <div className="w-full h-full flex items-center justify-center">
-        <p className="text-gray-400">
-          🔒 Private live with {username} ({participants}/20 viewers)
-        </p>
+      {/* Bouton retour au public */}
+      <div className="absolute top-4 right-4">
+        <PrivateLiveToggle username={username} isPrivate={true} />
       </div>
 
-      {/* Gifts overlay */}
-      <LiveGiftOverlay username={username} />
-
-      {/* Chat privé du groupe */}
-      <div className="absolute bottom-0 left-0 right-0 bg-white text-black p-3 flex items-center space-x-2">
-        <input
-          type="text"
-          placeholder="Message the private group..."
-          className="flex-1 border rounded px-3 py-2"
-        />
-        <button
-          onClick={() => handleSendGift("champagne")}
-          className="px-3 py-2 bg-yellow-500 text-white rounded"
-        >
-          🍾 Send Gift
-        </button>
-      </div>
-
-      {/* Gift affiché si envoyé */}
-      {activeGift && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <LiveGiftOverlay username={username} />
+      {!hasAccess ? (
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <p className="text-gray-300 mb-4">🔒 This private live requires a gift to join</p>
+          <button
+            onClick={() => handleGiftUnlock("champagne")}
+            className="px-4 py-2 bg-pink-600 hover:bg-pink-700 rounded text-white font-bold"
+          >
+            🎁 Send Gift to Unlock
+          </button>
         </div>
+      ) : (
+        <>
+          {/* Zone vidéo live privé */}
+          <div className="w-full h-full flex items-center justify-center">
+            <p className="text-gray-400">
+              🔒 Private live with {username} ({participants}/20 viewers)
+            </p>
+          </div>
+
+          {/* Overlay gifts */}
+          <LiveGiftOverlay username={username} />
+
+          {/* Animation cadeau d’accès */}
+          {activeGift && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <GiftPlayer name={activeGift} size={300} play loop={false} />
+            </div>
+          )}
+        </>
       )}
     </div>
   );
-    }
+        }
