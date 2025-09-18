@@ -1,21 +1,7 @@
 // app/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-import Lottie from "react-lottie-player";
-
 export default function HomePage() {
-  const [lotus, setLotus] = useState<any>(null);
-
-  useEffect(() => {
-    fetch("/gifts/lotus.json")
-      .then((res) => res.json())
-      .then((data) => setLotus(data))
-      .catch((err) =>
-        console.error("❌ Erreur lors du chargement de lotus.json :", err)
-      );
-  }, []);
-
   return (
     <main
       style={{
@@ -31,22 +17,6 @@ export default function HomePage() {
         padding: "20px 16px 80px",
       }}
     >
-      {/* ✅ Test Lotus */}
-      <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
-        <div style={{ width: 200, height: 200 }}>
-          {lotus ? (
-            <Lottie
-              loop
-              play
-              animationData={lotus}
-              style={{ width: "100%", height: "100%" }}
-            />
-          ) : (
-            <div style={{ color: "#fff" }}>⏳ Loading Lotus...</div>
-          )}
-        </div>
-      </div>
-
       {/* Bloc texte + inscription */}
       <div
         style={{
@@ -142,4 +112,4 @@ export default function HomePage() {
       </footer>
     </main>
   );
-                     }
+        }
