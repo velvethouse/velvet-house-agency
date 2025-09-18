@@ -1,6 +1,6 @@
 "use client";
 
-import LiveGiftOverlay from "./components/LiveGiftOverlay";
+import LiveGiftOverlay from "../components/LiveGiftOverlay";
 
 export default function LivePage({ params }: { params: { username: string } }) {
   const { username } = params;
