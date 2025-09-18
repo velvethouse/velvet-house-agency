@@ -1,3 +1,4 @@
+// app/u/[username]/components/LiveGiftOverlay.tsx
 "use client";
 
 import GiftPlayer from "@/app/components/GiftPlayer";
