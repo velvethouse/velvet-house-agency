@@ -1,51 +1,43 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React from 'react';
 import GiftItem from './GiftItem';
 
-type Gift = {
-  name: string;
-  file: string; // chemin du JSON
-  amount: number;
+type Props = {
+  onGiftSend: (name: string) => void;
 };
 
-const giftList: Gift[] = [
-  { name: 'Lotus', file: '/gifts/lotus.json', amount: 100 },
-  { name: 'Rose', file: '/gifts/rose.json', amount: 300 },
-  { name: 'Heart', file: '/gifts/heart.json', amount: 500 },
-];
-
-export default function LiveGiftPanel() {
-  const [animations, setAnimations] = useState<Record<string, object>>({});
-
-  useEffect(() => {
-    giftList.forEach((gift) => {
-      fetch(gift.file)
-        .then((res) => res.json())
-        .then((data) => {
-          setAnimations((prev) => ({ ...prev, [gift.name]: data }));
-        });
-    });
-  }, []);
-
-  const handleSend = (giftName: string) => {
-    console.log('🎁 Sent gift:', giftName);
-    // 👉 tu peux déclencher ici la logique de LiveGiftOverlay
-  };
+export default function LiveGiftPanel({ onGiftSend }: Props) {
+  const gifts = [
+    { name: 'lotus', amount: 100 },
+    { name: 'rose', amount: 250 },
+  ];
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-      {giftList.map((gift) =>
-        animations[gift.name] ? (
+    <div
+      style={{
+        background: '#1a1a1a',
+        borderRadius: 12,
+        padding: 20,
+        border: '1px solid #333',
+        color: '#f5f5f7',
+        textAlign: 'center',
+      }}
+    >
+      <p style={{ fontWeight: 'bold', fontSize: '1rem', marginBottom: 8 }}>
+        🎁 Send a gift
+      </p>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+        {gifts.map((gift) => (
           <GiftItem
             key={gift.name}
             name={gift.name}
             amount={gift.amount}
-            animationData={animations[gift.name]}
-            onSend={() => handleSend(gift.name)}
+            animationData={null} // ⚠️ Remplacer par le vrai JSON si besoin
+            onSend={() => onGiftSend(gift.name)}
           />
-        ) : null
-      )}
+        ))}
+      </div>
     </div>
   );
-              }
+}
