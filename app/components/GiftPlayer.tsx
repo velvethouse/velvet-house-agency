@@ -1,7 +1,7 @@
 "use client";
 
 interface GiftPlayerProps {
-  name: string;      // ex: "lotus"
+  name: string;      // nom du gift = nom du fichier (ex: lotus → lotus.webm)
   size?: number;     // taille en px
   loop?: boolean;    // boucle ?
   autoPlay?: boolean;// auto-play ?
@@ -30,4 +30,4 @@ export default function GiftPlayer({
       />
     </div>
   );
-}
+      }
