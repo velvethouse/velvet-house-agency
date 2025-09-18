@@ -1,23 +1,18 @@
-import LiveGiftOverlay from "../components/LiveGiftOverlay";
-import LiveGiftPanel from "../components/LiveGiftPanel";
+import LiveGiftOverlay from "./components/LiveGiftOverlay";
+import LiveGiftPanel from "./components/LiveGiftPanel";
 
-export default function LivePage({ params }: { params: { username: string } }) {
+export default function UserPage({ params }: { params: { username: string } }) {
   const { username } = params;
 
   return (
-    <div className="relative w-full h-screen bg-black text-white">
-      {/* Placeholder du live */}
-      <div className="w-full h-full flex items-center justify-center">
-        <p className="text-gray-400">🎥 Live stream of {username} will appear here</p>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold">👤 Profile of {username}</h1>
+      <div className="mt-6">
+        <LiveGiftOverlay username={username} />
       </div>
-
-      {/* Overlay (gifts qui apparaissent en animation) */}
-      <LiveGiftOverlay username={username} />
-
-      {/* Panel latéral premium (dragon, phoenix, worldtour) */}
-      <div className="absolute bottom-4 right-4 w-64">
+      <div className="mt-6">
         <LiveGiftPanel />
       </div>
     </div>
   );
-        }
+}
