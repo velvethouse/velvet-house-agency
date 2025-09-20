@@ -1,7 +1,0 @@
-<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-  <rect x="8" y="8" width="48" height="48" rx="6" fill="#fff" stroke="#FFD700" stroke-width="3"/>
-  <text x="50%" y="25%" dominant-baseline="middle" text-anchor="middle"
-    font-size="18" fill="#7a1d1d" font-weight="bold">A</text>
-  <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle"
-    font-size="14" fill="#7a1d1d" font-weight="bold">♥</text>
-</svg>
