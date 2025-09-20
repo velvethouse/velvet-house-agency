@@ -1,10 +1,9 @@
-// app/gifts/page.tsx
 "use client";
 
 import GiftPlayer from "../components/GiftPlayer";
 
 export default function GiftsPage() {
-  const gifts = ["lotus1", "lotus2", "lotus3"];
+  const gifts = ["lotus"]; // gift officiel à afficher
 
   return (
     <main
@@ -26,4 +25,4 @@ export default function GiftsPage() {
       ))}
     </main>
   );
-}
+      }
