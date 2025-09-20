@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 interface GiftPlayerProps {
   name: string;      // nom du gift = nom du fichier (ex: lotus → lotus.webm)
@@ -24,10 +24,10 @@ export default function GiftPlayer({
         style={{
           width: size,
           height: size,
-          objectFit: "contain",
-          background: "transparent",
+          objectFit: 'contain',
+          background: 'transparent',
         }}
       />
     </div>
   );
-}
+          }
