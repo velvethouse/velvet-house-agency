@@ -1,20 +1,15 @@
 {
-  "name": "Velvet House Admin",
-  "short_name": "VelvetAdmin",
-  "start_url": "/admin",
+  "name": "Velvet House",
+  "short_name": "Velvet",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#2e0d0d",
   "theme_color": "#FFD700",
   "icons": [
     {
-      "src": "/icons/icon-192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/icons/icon-512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "/icons/lotus.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }
