@@ -1,9 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import NovaCareerHeader from './components/NovaCareerHeader'
+import NovaUsageLimit from './components/NovaUsageLimit'
+import NovaCareerCoach from './components/NovaCareerCoach'
 
 export default function CareerPage() {
   const [answers, setAnswers] = useState<Record<string, string[]>>({})
+
   const toggleAnswer = (questionId: string, option: string) => {
     setAnswers((prev) => {
       const current = prev[questionId] || []
@@ -20,96 +24,49 @@ export default function CareerPage() {
       id: 'goal',
       label: '🎯 What is your main goal on Velvet House?',
       type: 'radio',
-      options: [
-        'Earn money',
-        'Become famous',
-        'Build a community',
-        'Explore my sexuality',
-        'Have fun & feel free',
-      ],
+      options: ['Earn money', 'Become famous', 'Build a community', 'Explore my sexuality', 'Have fun & feel free'],
     },
     {
       id: 'style',
       label: '🎭 What type of live content fits you best?',
       type: 'checkbox',
-      options: [
-        'Sexy & intimate',
-        'Funny & light',
-        'Gamer & interactive',
-        'Romantic & chill',
-        'Domination / control',
-      ],
+      options: ['Sexy & intimate', 'Funny & light', 'Gamer & interactive', 'Romantic & chill', 'Domination / control'],
     },
     {
       id: 'music',
       label: '🎵 Your favorite music style?',
       type: 'radio',
-      options: [
-        'R&B / Soul',
-        'Rap / Hip-Hop',
-        'Pop / Dance',
-        'Rock / Metal',
-        'Relax / Lofi / Piano',
-      ],
+      options: ['R&B / Soul', 'Rap / Hip-Hop', 'Pop / Dance', 'Rock / Metal', 'Relax / Lofi / Piano'],
     },
     {
       id: 'anime',
       label: '🎥 Favorite anime or show genre?',
       type: 'radio',
-      options: [
-        'Romantic / School life',
-        'Dark / Psychological',
-        'Funny / Slice of life',
-        'Action / Fantasy',
-        'I don’t watch anime',
-      ],
+      options: ['Romantic / School life', 'Dark / Psychological', 'Funny / Slice of life', 'Action / Fantasy', 'I don’t watch anime'],
     },
     {
       id: 'book',
       label: '📚 Favorite type of book?',
       type: 'radio',
-      options: [
-        'Erotic',
-        'Fantasy',
-        'Romance',
-        'Biography',
-        'I don’t read',
-      ],
+      options: ['Erotic', 'Fantasy', 'Romance', 'Biography', 'I don’t read'],
     },
     {
       id: 'country',
       label: '🌍 What’s your dream destination?',
       type: 'radio',
-      options: [
-        'Japan',
-        'Dubai',
-        'USA (NYC / LA)',
-        'Bali / Thailand',
-        'Somewhere calm & lost',
-      ],
+      options: ['Japan', 'Dubai', 'USA (NYC / LA)', 'Bali / Thailand', 'Somewhere calm & lost'],
     },
     {
       id: 'history',
       label: '🕰️ Favorite era in human history?',
       type: 'radio',
-      options: [
-        'Ancient Egypt / Rome',
-        'Middle Ages',
-        'Renaissance / 1700s',
-        '20th century',
-        'Now — I love my time',
-      ],
+      options: ['Ancient Egypt / Rome', 'Middle Ages', 'Renaissance / 1700s', '20th century', 'Now — I love my time'],
     },
     {
       id: 'events',
       label: '🥳 Favorite type of party?',
       type: 'radio',
-      options: [
-        'Private with 2–3 people',
-        'Big with music & dancing',
-        'Chill with food & talk',
-        'I don’t like parties',
-      ],
+      options: ['Private with 2–3 people', 'Big with music & dancing', 'Chill with food & talk', 'I don’t like parties'],
     },
   ]
 
@@ -123,14 +80,15 @@ export default function CareerPage() {
         color: '#fff',
       }}
     >
-      <h1 style={{ fontSize: 28, color: '#FFD700', marginBottom: 24 }}>
-        👑 Build Your Streaming Identity
-      </h1>
+      {/* Header de carrière */}
+      <NovaCareerHeader username="amelia" rank="Butterfly" isVip={true} isGold={false} />
+      <NovaUsageLimit username="amelia" />
 
       <p style={{ marginBottom: 24, fontSize: 14, color: '#ccc' }}>
         Answer these fun questions so Velvet House and Nova can better understand your personality, help you grow, and suggest content that fits you perfectly.
       </p>
 
+      {/* QCM */}
       {questions.map((q) => (
         <section
           key={q.id}
@@ -174,19 +132,8 @@ export default function CareerPage() {
         </section>
       ))}
 
-      <div
-        style={{
-          marginTop: 40,
-          background: '#262626',
-          padding: 20,
-          borderRadius: 10,
-          fontSize: 13,
-          color: '#ccc',
-        }}
-      >
-        <p>✅ Your answers are saved locally for now.</p>
-        <p>🔒 In the future, they will be synced to your Nova coaching profile.</p>
-      </div>
+      {/* Analyse Nova */}
+      <NovaCareerCoach answers={answers} />
     </main>
   )
-}
+      }
