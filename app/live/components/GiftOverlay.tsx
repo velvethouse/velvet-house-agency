@@ -23,4 +23,4 @@ export default function GiftOverlay({ name }: { name: string }) {
       />
     </div>
   )
-}
+        }
