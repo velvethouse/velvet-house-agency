@@ -1,18 +1,32 @@
-// 📄 /app/contact/page.tsx
+'use client'
 
-"use client";
-
-import { useState } from "react";
+import { useState } from 'react'
 
 export default function ContactPage() {
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [sent, setSent] = useState(false);
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+  const [response, setResponse] = useState('')
 
   function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setSent(true);
-    // TODO: connecter à un backend ou service email (ex: EmailJS, Resend, Formspree…)
+    e.preventDefault()
+
+    const lower = message.toLowerCase()
+    const isCritical =
+      lower.includes('urgent') ||
+      lower.includes('police') ||
+      lower.includes('fraud') ||
+      lower.includes('trader') ||
+      lower.includes('scam')
+
+    if (isCritical) {
+      setResponse('🛑 Message flagged as critical. Sébastien will handle this personally.')
+    } else {
+      setResponse('✅ Nova will reply to your message shortly. Thank you!')
+    }
+
+    // 🔐 À brancher sur un backend/API plus tard
+    setEmail('')
+    setMessage('')
   }
 
   return (
@@ -20,45 +34,44 @@ export default function ContactPage() {
       style={{
         padding: 24,
         maxWidth: 800,
-        margin: "0 auto",
-        minHeight: "100vh",
+        margin: '0 auto',
+        minHeight: '100vh',
         fontFamily: 'system-ui,Segoe UI,Roboto,sans-serif',
+        color: '#fff',
       }}
     >
-      <h1 style={{ color: "#D4AF37", fontSize: 28, marginBottom: 16 }}>
+      <h1 style={{ color: '#D4AF37', fontSize: 28, marginBottom: 16 }}>
         📩 Contact Us
       </h1>
 
-      {sent ? (
-        <p style={{ color: "#6cc66c", fontSize: 16 }}>
-          ✅ Your message has been sent! We'll reply shortly.
+      {response ? (
+        <p style={{ color: response.startsWith('✅') ? '#6cc66c' : '#FFD700', fontSize: 16 }}>
+          {response}
         </p>
       ) : (
         <form
           onSubmit={handleSubmit}
-          style={{ display: "grid", gap: 12, maxWidth: 500 }}
+          style={{ display: 'grid', gap: 16, maxWidth: 500 }}
         >
-          <label style={{ color: "#f5f5f5" }}>
+          <label>
             Your Email
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="input-velvet"
-              style={{ width: "100%", padding: 8, marginTop: 4 }}
+              style={inputStyle}
             />
           </label>
 
-          <label style={{ color: "#f5f5f5" }}>
+          <label>
             Your Message
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               required
               rows={5}
-              className="input-velvet"
-              style={{ width: "100%", padding: 8, marginTop: 4 }}
+              style={{ ...inputStyle, resize: 'vertical' }}
             />
           </label>
 
@@ -68,5 +81,16 @@ export default function ContactPage() {
         </form>
       )}
     </main>
-  );
+  )
+}
+
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  padding: '10px 12px',
+  borderRadius: 8,
+  border: '1px solid #444',
+  background: '#000',
+  color: '#fff',
+  marginTop: 6,
+  fontSize: 14
 }
