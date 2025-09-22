@@ -2,7 +2,7 @@
 
 interface GiftDispatcherProps {
   name: string
-  context?: 'live' | 'chat' | 'photo' | 'gallery' | 'default'
+  context?: 'live' | 'chat' | 'photo' | 'gallery' | 'battle' | 'default'
   size?: number
   autoPlay?: boolean
   loop?: boolean
@@ -17,12 +17,27 @@ export default function GiftDispatcher({
 }: GiftDispatcherProps) {
   let computedSize = size
 
-  // Auto-ajustement si pas défini manuellement
+  // Taille automatique selon le contexte
   if (!size) {
-    if (context === 'live') computedSize = 300
-    else if (context === 'chat') computedSize = 96
-    else if (context === 'photo') computedSize = 150
-    else computedSize = 200
+    switch (context) {
+      case 'live':
+        computedSize = 300
+        break
+      case 'battle':
+        computedSize = 260
+        break
+      case 'chat':
+        computedSize = 96
+        break
+      case 'photo':
+        computedSize = 150
+        break
+      case 'gallery':
+        computedSize = 200
+        break
+      default:
+        computedSize = 180
+    }
   }
 
   return (
@@ -42,4 +57,4 @@ export default function GiftDispatcher({
       />
     </div>
   )
-}
+    }
