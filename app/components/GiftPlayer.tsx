@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
 interface GiftPlayerProps {
-  name: string;      // nom du gift = nom du fichier (ex: lotus → lotus.webm)
-  size?: number;     // taille en px
-  loop?: boolean;    // boucle
-  autoPlay?: boolean;// auto-play
+  name: string        // nom du gift = nom du fichier .webm
+  size?: number       // taille du player en pixels
+  loop?: boolean      // boucle (par défaut : true)
+  autoPlay?: boolean  // auto-play (par défaut : true)
 }
 
 export default function GiftPlayer({
@@ -16,6 +16,7 @@ export default function GiftPlayer({
   return (
     <div className="flex items-center justify-center">
       <video
+        key={name} // important : relance l’animation si le gift change
         src={`/gifts/${name}.webm`}
         autoPlay={autoPlay}
         loop={loop}
@@ -29,5 +30,5 @@ export default function GiftPlayer({
         }}
       />
     </div>
-  );
-          }
+  )
+}
