@@ -1,28 +1,28 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import GoalWidget from '../components/GoalWidget';
-import StudioGallery from '../components/StudioGallery';
-import NovaStudioCoach from '@/components/studio/NovaStudioCoach';
-import StatsPerformance from '../components/StatsPerformance';
+import { useState } from 'react'
+import GoalWidget from '../components/GoalWidget'
+import StudioGallery from '../components/StudioGallery'
+import NovaChat from '../components/NovaChat'
+import StatsPerformance from '../components/StatsPerformance'
 
 type Props = {
-  params: { username: string };
-};
+  params: { username: string }
+}
 
 export default function StreamerStudioPage({ params }: Props) {
-  const username = params.username;
+  const username = params.username
 
-  const [agreed, setAgreed] = useState(false);
-  const [allowBattle, setAllowBattle] = useState(false);
-  const [battleFrequency, setBattleFrequency] = useState(3);
-  const [isOpponentMuted, setIsOpponentMuted] = useState(false);
+  const [agreed, setAgreed] = useState(false)
+  const [allowBattle, setAllowBattle] = useState(false)
+  const [battleFrequency, setBattleFrequency] = useState(3)
+  const [isOpponentMuted, setIsOpponentMuted] = useState(false)
 
-  const toggleAllowBattle = () => setAllowBattle(!allowBattle);
+  const toggleAllowBattle = () => setAllowBattle(!allowBattle)
 
-  const photos: { id: number; src: string; nsfw: boolean; gift?: string }[] = [];
-  const onToggleNSFW = (id: string | number) => {};
-  const onAssignGift = (id: string | number, gift: string) => {};
+  const photos: { id: number; src: string; nsfw: boolean; gift?: string }[] = []
+  const onToggleNSFW = (id: string | number) => {}
+  const onAssignGift = (id: string | number, gift: string) => {}
 
   if (!agreed) {
     return (
@@ -52,7 +52,7 @@ export default function StreamerStudioPage({ params }: Props) {
           I understand and want to enter my studio
         </button>
       </main>
-    );
+    )
   }
 
   return (
@@ -94,11 +94,7 @@ export default function StreamerStudioPage({ params }: Props) {
         <h2 style={{ color: '#FFD700', marginBottom: 12 }}>⚔️ Battle Frequency</h2>
 
         <label style={{ display: 'block', marginBottom: 8 }}>
-          <input
-            type="checkbox"
-            checked={allowBattle}
-            onChange={toggleAllowBattle}
-          />
+          <input type="checkbox" checked={allowBattle} onChange={toggleAllowBattle} />
           Allow battle mode
         </label>
 
@@ -157,15 +153,16 @@ export default function StreamerStudioPage({ params }: Props) {
             Mute opponent during next battle
           </label>
           <p style={{ fontSize: 13, marginTop: 10, color: '#aaa' }}>
-            When enabled, you won’t hear your opponent during the next battle. Helpful for focus or avoiding disturbances.
+            When enabled, you won’t hear your opponent during the next battle.
+            Helpful for focus or avoiding disturbances.
           </p>
         </div>
       </section>
 
       {/* 🧠 Nova Coach IA */}
       <div style={{ marginTop: 40 }}>
-        <NovaStudioCoach />
+        <NovaChat />
       </div>
     </main>
-  );
-      }
+  )
+    }
