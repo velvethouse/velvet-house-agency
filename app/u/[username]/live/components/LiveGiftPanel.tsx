@@ -3,12 +3,12 @@
 import { useState } from "react";
 import GiftPlayer from "@/components/GiftPlayer";
 import gifts from "@/public/data/gifts.json";
-import { useFollowerStore } from "@/stores/followerStore"; // Hypothèse : store avec solde
-import { toast } from "sonner"; // Pour message d'erreur ou confirmation
+import { useFollowerStore } from "@/stores/followerStore";
+import { toast } from "sonner";
 
 export default function LiveGiftPanel() {
   const [activeGift, setActiveGift] = useState<string | null>(null);
-  const { lotus, deductLotus } = useFollowerStore(); // solde + méthode déduction
+  const { lotus, deductLotus } = useFollowerStore();
 
   const handleSendGift = (giftName: string, giftPrice: number) => {
     if (lotus < giftPrice) {
@@ -16,12 +16,10 @@ export default function LiveGiftPanel() {
       return;
     }
 
-    // Déduire le montant du solde
     deductLotus(giftPrice);
     setActiveGift(giftName);
 
-    // Réinitialiser l'animation après 4 secondes
-    setTimeout(() => setActiveGift(null), 4000);
+    setTimeout(() => setActiveGift(null), 5000); // 5s pour être safe
   };
 
   return (
@@ -42,7 +40,6 @@ export default function LiveGiftPanel() {
         ))}
       </div>
 
-      {/* Zone animation */}
       {activeGift && (
         <div className="fixed top-10 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
           <GiftPlayer giftName={activeGift} />
@@ -50,4 +47,4 @@ export default function LiveGiftPanel() {
       )}
     </div>
   );
-      }
+          }
