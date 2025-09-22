@@ -18,7 +18,7 @@ export default function HomePage() {
         padding: '20px 16px 80px',
       }}
     >
-      {/* Bloc texte + inscription */}
+      {/* Bloc texte principal */}
       <section
         style={{
           background: 'rgba(0, 0, 0, 0.65)',
@@ -35,8 +35,7 @@ export default function HomePage() {
           Velvet House
         </h1>
         <p style={{ marginBottom: '24px', lineHeight: 1.6 }}>
-          More than a platform: an exclusive universe where elegance meets
-          mystery.
+          More than a platform: an exclusive universe where elegance meets mystery.
           <br />
           Every creator shines. Every viewer becomes privileged.
         </p>
@@ -74,7 +73,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Liens directs */}
+      {/* Section exploration (lien direct vers les vraies pages) */}
       <div
         style={{
           marginTop: 60,
@@ -86,11 +85,10 @@ export default function HomePage() {
         }}
       >
         {[
-          { label: '🎥 Live', href: '/live' },
-          { label: '🎁 Gifts', href: '/gifts' },
+          { label: '🎥 Enter the Live', href: '/live' },
+          { label: '🎁 Explore Gifts', href: '/gifts' },
           { label: '💎 Buy Lotus', href: '/lotus' },
           { label: '👑 VIP Access', href: '/vip' },
-          { label: '🎰 Casino', href: '/casino' },
           { label: '📩 Contact', href: '/contact' },
         ].map((item) => (
           <Link
@@ -112,48 +110,21 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* Réseaux sociaux */}
+      {/* Footer texte + socials (si voulu) */}
       <footer
         style={{
           marginTop: 40,
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          gap: 16,
-          paddingTop: 32,
+          textAlign: 'center',
+          fontSize: 12,
+          color: 'rgba(255,255,255,0.4)',
+          paddingTop: 24,
         }}
       >
-        {[
-          { name: 'TikTok', url: '#', icon: '/icons/tiktok.png' },
-          { name: 'Instagram', url: '#', icon: '/icons/instagram.png' },
-          { name: 'Facebook', url: '#', icon: '/icons/facebook.png' },
-          { name: 'X', url: '#', icon: '/icons/x.png' },
-          { name: 'LinkedIn', url: '#', icon: '/icons/linkedin.png' },
-          { name: 'Reddit', url: '#', icon: '/icons/reddit.png' },
-          { name: 'Snapchat', url: '#', icon: '/icons/snapchat.png' },
-          { name: 'Twitch', url: '#', icon: '/icons/twitch.png' },
-          { name: 'Pinterest', url: '#', icon: '/icons/pinterest.png' },
-        ].map((network) => (
-          <a
-            key={network.name}
-            href={network.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'inline-block',
-              transition: 'transform 0.2s ease',
-            }}
-          >
-            <img
-              src={network.icon}
-              alt={network.name}
-              width={28}
-              height={28}
-              style={{ filter: 'brightness(1.2)' }}
-            />
-          </a>
-        ))}
+        © 2025 Velvet House Agency ·{' '}
+        <Link href="/terms" style={{ color: '#FFD700', textDecoration: 'none' }}>
+          Terms
+        </Link>
       </footer>
     </main>
   )
-            }
+}
