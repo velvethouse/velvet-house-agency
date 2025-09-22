@@ -1,100 +1,175 @@
-"use client";
+'use client'
+
+import { useState } from 'react'
 
 export default function LotusPage() {
+  const baseRate = 0.00465
   const packs = [
-    { amount: 1000, price: 4.65, bonus: 50 },
-    { amount: 2000, price: 9.3, bonus: 100 },
-    { amount: 5000, price: 23.25, bonus: 250 },
-    { amount: 10000, price: 46.5, bonus: 500 },
-    { amount: 20000, price: 93.0, bonus: 1000 },
-    { amount: 50000, price: 232.5, bonus: 2500, label: "VIP Gold" },
-    { amount: 100000, price: 465.0, bonus: 5000, label: "GOD" },
-    { amount: 200000, price: 930.0, bonus: 10000 },
-    { amount: 500000, price: 2325.0, bonus: 25000 },
-    { amount: 1000000, price: 4650.0, bonus: 50000 },
-  ];
+    { amount: 1000, bonus: 50, label: null },
+    { amount: 2000, bonus: 100, label: null },
+    { amount: 5000, bonus: 250, label: null },
+    { amount: 10000, bonus: 500, label: null },
+    { amount: 20000, bonus: 1000, label: null },
+    { amount: 50000, bonus: 2500, label: 'VIP Gold' },
+    { amount: 100000, bonus: 5000, label: 'GOD' },
+    { amount: 200000, bonus: 10000, label: null },
+    { amount: 500000, bonus: 25000, label: null },
+    { amount: 1000000, bonus: 50000, label: null },
+  ]
+
+  const [selectedPack, setSelectedPack] = useState<null | typeof packs[0]>(null)
+
+  const openModal = (pack: typeof packs[0]) => {
+    setSelectedPack(pack)
+  }
+
+  const closeModal = () => {
+    setSelectedPack(null)
+  }
 
   return (
     <main
       style={{
-        minHeight: "100vh",
-        padding: "40px 20px",
-        background: "linear-gradient(180deg,#4b1c1c 0%,#2e0d0d 100%)",
-        color: "#fff",
+        minHeight: '100vh',
+        padding: '40px 20px',
+        background: 'linear-gradient(180deg,#4b1c1c 0%,#2e0d0d 100%)',
+        color: '#fff',
         fontFamily: 'system-ui,"Segoe UI",Roboto,Arial,sans-serif',
       }}
     >
-      <section style={{ maxWidth: 900, margin: "0 auto" }}>
-        <h1 style={{ fontSize: "clamp(22px,6vw,36px)", color: "#D4AF37" }}>💎 Buy Lotus</h1>
+      <section style={{ maxWidth: 900, margin: '0 auto' }}>
+        <h1 style={{ fontSize: 'clamp(22px,6vw,36px)', color: '#D4AF37' }}>💎 Buy Lotus</h1>
 
-        <p style={{ marginTop: 8, fontSize: 14, color: "#e9dfcf" }}>
+        <p style={{ marginTop: 8, fontSize: 14, color: '#e9dfcf' }}>
           Select the amount of Lotus you want to buy. Bonus included for each pack!
         </p>
 
-        <div style={{ display: "grid", gap: 18, marginTop: 32 }}>
-          {packs.map((p) => (
+        <div style={{ display: 'grid', gap: 18, marginTop: 32 }}>
+          {packs.map((p) => {
+            const basePrice = p.amount * baseRate
+            const adjusted = basePrice * 1.03
+            const priceStr = adjusted.toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            })
+
+            return (
+              <div
+                key={p.amount}
+                style={{
+                  background: '#1e0c0c',
+                  borderRadius: 12,
+                  padding: '20px 16px',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                }}
+              >
+                <h3 style={{ fontSize: 20, marginBottom: 6 }}>
+                  {p.amount.toLocaleString('en-US')} Lotus{' '}
+                  {p.label && (
+                    <span style={{ fontSize: 14, color: '#FFD700' }}>• {p.label}</span>
+                  )}
+                </h3>
+                <p style={{ margin: '4px 0', fontSize: 14 }}>{priceStr}</p>
+                <p style={{ color: 'lightgreen', fontSize: 13 }}>
+                  +{p.bonus.toLocaleString('en-US')} Lotus bonus
+                </p>
+                <button
+                  onClick={() => openModal(p)}
+                  className="btn3d btn3d--gold"
+                  style={{ marginTop: 10, fontSize: 14, padding: '8px 20px' }}
+                >
+                  Buy
+                </button>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* 💳 MODAL ACHAT */}
+        {selectedPack && (
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'rgba(0,0,0,0.85)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1000,
+            }}
+            onClick={closeModal}
+          >
             <div
-              key={p.amount}
+              onClick={(e) => e.stopPropagation()}
               style={{
-                background: "#1e0c0c",
-                borderRadius: 12,
-                padding: "20px 16px",
-                border: "1px solid rgba(255,255,255,0.1)",
+                background: '#1e0d0d',
+                padding: 30,
+                borderRadius: 20,
+                maxWidth: 400,
+                width: '90%',
+                color: '#fff',
+                textAlign: 'center',
+                border: '1px solid #FFD700',
               }}
             >
-              <h3 style={{ fontSize: 20, marginBottom: 6 }}>
-                {p.amount.toLocaleString("fr-FR")} Lotus{" "}
-                {p.label && <span style={{ fontSize: 14, color: "#FFD700" }}>• {p.label}</span>}
-              </h3>
-              <p style={{ margin: "4px 0", fontSize: 14 }}>{p.price.toFixed(2)} €</p>
-              <p style={{ color: "lightgreen", fontSize: 13 }}>
-                +{p.bonus.toLocaleString("fr-FR")} Lotus bonus
+              <h2 style={{ fontSize: 22, color: '#FFD700' }}>
+                {selectedPack.amount.toLocaleString()} Lotus
+              </h2>
+              <p style={{ fontSize: 14, margin: '8px 0' }}>
+                Price:{' '}
+                {(selectedPack.amount * baseRate * 1.03).toLocaleString('en-US', {
+                  style: 'currency',
+                  currency: 'USD',
+                })}
               </p>
-              <button
-                className="btn3d btn3d--gold"
-                style={{ marginTop: 10, fontSize: 14, padding: "8px 20px" }}
-              >
-                Buy
-              </button>
+              <p style={{ color: 'lightgreen', fontSize: 13 }}>
+                +{selectedPack.bonus.toLocaleString()} bonus
+              </p>
+
+              <div style={{ marginTop: 20, display: 'grid', gap: 12 }}>
+                <button
+                  className="btn3d btn3d--gold"
+                  style={{ padding: '10px 16px', fontWeight: 600 }}
+                  onClick={() => alert('Stripe Checkout à connecter')}
+                >
+                  💳 Pay with Card
+                </button>
+
+                <button
+                  className="btn3d"
+                  style={{
+                    padding: '10px 16px',
+                    background: '#00c39a',
+                    color: '#000',
+                    fontWeight: 600,
+                  }}
+                  onClick={() => alert('Affichage USDT à connecter')}
+                >
+                  🪙 Pay with Crypto (USDT)
+                </button>
+
+                <button
+                  onClick={closeModal}
+                  style={{
+                    background: 'transparent',
+                    border: '1px solid #fff',
+                    color: '#fff',
+                    padding: '8px 12px',
+                    borderRadius: 10,
+                    marginTop: 10,
+                    fontSize: 13,
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
-          ))}
-        </div>
-
-        {/* 🔽 Ajout : instructions paiement */}
-        <div style={{ marginTop: 60 }}>
-          <h2 style={{ fontSize: 20, color: "#D4AF37" }}>💳 Payment Instructions</h2>
-          <p style={{ marginTop: 8, fontSize: 14, color: "#e9dfcf" }}>
-            After choosing your pack, complete your payment using one of the following methods:
-          </p>
-
-          <ul style={{ fontSize: 14, marginTop: 18, lineHeight: 1.7, paddingLeft: 20 }}>
-            <li>
-              <strong>🏦 Bank Transfer (Hong Kong):</strong><br />
-              Account Name: <code style={{ background: '#222', padding: '2px 6px', borderRadius: 4 }}>Novalink Limited</code><br />
-              Bank: <code style={{ background: '#222', padding: '2px 6px', borderRadius: 4 }}>HSBC Hong Kong</code><br />
-              Account Number: <code style={{ background: '#222', padding: '2px 6px', borderRadius: 4 }}>123-456789-001</code><br />
-              SWIFT Code: <code style={{ background: '#222', padding: '2px 6px', borderRadius: 4 }}>HSBCHKHHHKH</code>
-            </li>
-
-            <li style={{ marginTop: 16 }}>
-              <strong>🪙 USDT (TRC20):</strong><br />
-              Wallet: <code style={{ background: '#222', padding: '2px 6px', borderRadius: 4 }}>
-                TM3XpYa5MVeG8bK8T3XHEDaK4dS8xvPf8T
-              </code>
-            </li>
-
-            <li style={{ marginTop: 16 }}>
-              <strong>💳 Card Payment:</strong><br />
-              Available soon via Stripe
-            </li>
-          </ul>
-
-          <p style={{ fontSize: 13, marginTop: 24, color: "#aaa" }}>
-            Once payment is sent, confirm with our team via WhatsApp or live chat.  
-            Your Lotus balance will be updated within 5 minutes.
-          </p>
-        </div>
+          </div>
+        )}
       </section>
     </main>
-  );
-}
+  )
+    }
