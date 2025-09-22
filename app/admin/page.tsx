@@ -1,69 +1,87 @@
-"use client";
+'use client'
 
-export default function AdminDashboardPage() {
+export default function AdminPage() {
+  const totalLotusPurchased = 3_800_000
+  const totalLotusPaidOut = 2_450_000
+  const netLotus = totalLotusPurchased - totalLotusPaidOut
+  const usd = (lotus: number) => `$${(lotus * 0.00465).toLocaleString('en-US')}`
+
+  const criticalAlerts = [
+    { id: 1, user: 'nora_777', type: 'Burnout risk', message: 'Feeling depressed, want to quit...' },
+    { id: 2, user: 'admin_alert', type: 'Suspicious', message: 'Possible underage viewer in private chat' },
+  ]
+
   return (
     <main
       style={{
-        padding: 24,
+        padding: '40px 24px',
         maxWidth: 960,
-        margin: "0 auto",
+        margin: '0 auto',
         fontFamily: 'system-ui,Segoe UI,Roboto,sans-serif',
+        color: '#fff',
       }}
     >
-      <h1 style={{ fontSize: 28, color: "#D4AF37", marginBottom: 8 }}>
-        👑 Welcome back, Velvet King
+      <h1 style={{ fontSize: 28, color: '#FFD700', marginBottom: 24 }}>
+        👑 Velvet House – Admin Dashboard
       </h1>
-      <p style={{ color: "#f5f5f5", marginBottom: 32 }}>
-        This is your official admin panel. You can manage the platform, monitor
-        earnings, and support streamers in need.
-      </p>
 
-      {/* 🧾 Résumé rapide */}
-      <div
-        style={{
-          background: "#2e0d0d",
-          border: "1px solid rgba(212,175,55,0.2)",
-          borderRadius: 12,
-          padding: "16px 20px",
-          marginBottom: 32,
-          color: "#f5f5f5",
-          lineHeight: 1.6,
-        }}
-      >
-        <p>🧠 Streamers to monitor: <b>3</b></p>
-        <p>💰 Net earnings: <b>1 350 €</b></p>
-        <p>🪙 Total Lotus sold: <b>2 400 000 ♢</b></p>
-      </div>
+      <section style={section}>
+        <h2 style={h2}>📊 Platform Revenue</h2>
+        <p>Total Lotus purchased: <strong>{totalLotusPurchased.toLocaleString()} ♢</strong></p>
+        <p>Total paid to streamers: <strong>{totalLotusPaidOut.toLocaleString()} ♢</strong></p>
+        <p>Net revenue: <strong style={{ color: 'lightgreen' }}>{netLotus.toLocaleString()} ♢</strong> = <strong>{usd(netLotus)}</strong></p>
+      </section>
 
-      {/* 🧭 Navigation admin */}
-      <div
-        style={{
-          display: "grid",
-          gap: 16,
-          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-        }}
-      >
-        <a href="/admin/streamers" className="card" style={cardStyle}>
-          🧠 Streamer Mental Health
-        </a>
-        <a href="/admin/earnings" className="card" style={cardStyle}>
-          💰 Earnings Overview
-        </a>
-        <a href="/admin/identity" className="card" style={cardStyle}>
-          👤 Admin Identity
-        </a>
-      </div>
+      <section style={section}>
+        <h2 style={h2}>🧠 Nova Alerts</h2>
+        {criticalAlerts.length === 0 ? (
+          <p style={{ fontSize: 14, color: '#aaa' }}>No current alerts.</p>
+        ) : (
+          <ul style={{ marginTop: 10, paddingLeft: 20 }}>
+            {criticalAlerts.map((a) => (
+              <li key={a.id} style={{ marginBottom: 12, fontSize: 14 }}>
+                <strong>{a.type}</strong> from <code style={code}>{a.user}</code>: {a.message}
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section style={section}>
+        <h2 style={h2}>👑 Velvet King Identity</h2>
+        <p>
+          Logged in as: <strong style={{ color: '#FFD700' }}>Velvet King</strong> (admin)  
+        </p>
+        <p style={{ fontSize: 13, color: '#aaa' }}>
+          Your badge will be visible during live entries, comments, and VIP interactions.
+        </p>
+      </section>
+
+      <section style={{ marginTop: 60 }}>
+        <h2 style={h2}>🛠️ Admin Tools (Coming Soon)</h2>
+        <ul style={{ paddingLeft: 20, lineHeight: 1.6, fontSize: 14 }}>
+          <li>Agency payouts control panel</li>
+          <li>Moderation: suspend / reactivate accounts</li>
+          <li>Live monitoring of top earning streamers</li>
+          <li>Automated flag review (NSFW AI, abuse reports)</li>
+        </ul>
+      </section>
     </main>
-  );
+  )
 }
 
-const cardStyle: React.CSSProperties = {
-  background: "#2e0d0d",
-  border: "1px solid rgba(212,175,55,0.2)",
-  padding: 20,
-  borderRadius: 12,
-  color: "#f5f5f5",
-  fontWeight: 600,
-  textDecoration: "none",
-  transition: "all 0.2s ease",
-};
+const section: React.CSSProperties = {
+  marginBottom: 48
+}
+
+const h2: React.CSSProperties = {
+  fontSize: 20,
+  color: '#FFD700',
+  marginBottom: 12
+}
+
+const code: React.CSSProperties = {
+  background: '#222',
+  padding: '2px 6px',
+  borderRadius: 4
+            }
