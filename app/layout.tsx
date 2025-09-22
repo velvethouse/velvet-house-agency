@@ -6,10 +6,10 @@ export const metadata: Metadata = {
   title: "Velvet House Agency",
   description:
     "Velvet House — premium live platform with VIP, gifts, unlockable content and the GOD game. NSFW unlock via gifts only.",
-  icons: { icon: "/icons/icon-192.png" },
+  icons: { icon: "/icons/lotus.png" },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -21,13 +21,14 @@ export default async function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#FFD700" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/icons/icon-192.png" />
+        <link rel="icon" href="/icons/lotus.png" />
+        <link rel="apple-touch-icon" href="/icons/lotus.png" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <link rel="apple-touch-icon" href="/icons/icon-512.png" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <title>Velvet House</title>
       </head>
+
       <body
         style={{
           margin: 0,
@@ -37,6 +38,7 @@ export default async function RootLayout({
           fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
         }}
       >
+        {/* ✅ Header + nav */}
         <header
           style={{
             position: "sticky",
@@ -81,30 +83,22 @@ export default async function RootLayout({
               }}
             >
               <a href="/live" style={linkStyle}>Live</a>
-              <a href="/gaming" style={linkStyle}>
-                Gamer <span style={soonStyle}>(soon)</span>
-              </a>
               <a href="/vip" style={linkStyle}>VIP</a>
               <a href="/gifts" style={linkStyle}>Gifts</a>
-              <a href="/casino" style={linkStyle}>
-                Casino <span style={soonStyle}>(soon)</span>
-              </a>
               <a href="/lotus" style={linkStyle}>Lotus</a>
               <a href="/dashboard" style={linkStyle}>Dashboard</a>
               <a href="/contact" style={linkStyle}>Contact</a>
-              <a href="/ads" style={linkStyle}>
-                Ads <span style={soonStyle}>(soon)</span>
-              </a>
               <a href="/terms" style={linkStyle}>Terms</a>
             </div>
           </nav>
         </header>
 
-        {/* ✅ Bloc global d’animation cadeaux */}
+        {/* 🎁 Cadeaux live */}
         <GiftStage />
 
         <main>{children}</main>
 
+        {/* ✅ Footer */}
         <footer
           style={{
             maxWidth: 1100,
@@ -127,10 +121,6 @@ export default async function RootLayout({
           >
             <span>© {new Date().getFullYear()} Velvet House Agency</span>
             <span>
-              <a href="/legal" style={{ color: "#D4AF37", textDecoration: "none" }}>
-                Legal
-              </a>{" "}
-              ·{" "}
               <a href="/terms" style={{ color: "#D4AF37", textDecoration: "none" }}>
                 Terms
               </a>
@@ -146,11 +136,4 @@ const linkStyle: React.CSSProperties = {
   textDecoration: "none",
   color: "#f5f5f5",
   whiteSpace: "nowrap",
-};
-
-const soonStyle: React.CSSProperties = {
-  fontSize: 11,
-  color: "#d7c9b3",
-  marginLeft: 4,
-  opacity: 0.9,
 };
