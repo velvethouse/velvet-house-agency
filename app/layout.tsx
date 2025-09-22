@@ -1,39 +1,12 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
 import GiftStage from "@/components/GiftStage";
-
-type Announcement = {
-  id: string;
-  message: string;
-  level?: "info" | "warn" | "vip";
-  startAt: string;
-  endAt: string;
-};
-
-function getBaseUrl() {
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL!;
-  return "http://localhost:3000";
-}
-
-async function getAnnouncements(): Promise<Announcement[]> {
-  const base = getBaseUrl();
-  try {
-    const res = await fetch(`${base}/api/announcements`, { cache: "no-store" });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return Array.isArray(data.items) ? data.items : [];
-  } catch {
-    return [];
-  }
-}
 
 export const metadata: Metadata = {
   title: "Velvet House Agency",
   description:
     "Velvet House — premium live platform with VIP, gifts, unlockable content and the GOD game. NSFW unlock via gifts only.",
-  icons: { icon: "/icon.svg" },
+  icons: { icon: "/icons/icon-192.png" },
 };
 
 export default async function RootLayout({
@@ -41,22 +14,20 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const announcements = await getAnnouncements();
-
-  const linkStyle: React.CSSProperties = {
-    textDecoration: "none",
-    color: "#f5f5f5",
-    whiteSpace: "nowrap",
-  };
-  const soonStyle: React.CSSProperties = {
-    fontSize: 11,
-    color: "#d7c9b3",
-    marginLeft: 4,
-    opacity: 0.9,
-  };
-
   return (
     <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#FFD700" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/icons/icon-192.png" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link rel="apple-touch-icon" href="/icons/icon-512.png" />
+        <title>Velvet House</title>
+      </head>
       <body
         style={{
           margin: 0,
@@ -127,25 +98,6 @@ export default async function RootLayout({
               <a href="/terms" style={linkStyle}>Terms</a>
             </div>
           </nav>
-
-          {announcements.length > 0 && (
-            <div style={{ background: "transparent", padding: "2px 8px" }}>
-              {announcements.map((a) => (
-                <div
-                  key={a.id}
-                  style={{
-                    textAlign: "center",
-                    color: "#D4AF37",
-                    fontSize: 12,
-                    lineHeight: 1.6,
-                    opacity: 0.92,
-                  }}
-                >
-                  {a.message}
-                </div>
-              ))}
-            </div>
-          )}
         </header>
 
         {/* ✅ Bloc global d’animation cadeaux */}
@@ -188,4 +140,17 @@ export default async function RootLayout({
       </body>
     </html>
   );
-                }
+}
+
+const linkStyle: React.CSSProperties = {
+  textDecoration: "none",
+  color: "#f5f5f5",
+  whiteSpace: "nowrap",
+};
+
+const soonStyle: React.CSSProperties = {
+  fontSize: 11,
+  color: "#d7c9b3",
+  marginLeft: 4,
+  opacity: 0.9,
+};
