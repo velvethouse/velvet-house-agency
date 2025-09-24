@@ -1,26 +1,31 @@
 'use client'
 
-import GiftDispatcher from '@/components/gifts/GiftDispatcher'
+import { gifts } from '@/data/gifts'
+import GiftPlayer from '@/components/GiftPlayer'
 
-interface ChatGiftBubbleProps {
-  name: string // nom du gift (ex: "lotus")
-  sender: 'me' | 'other' // qui l’a envoyé
+interface GiftDispatcherProps {
+  name: string
+  size?: number
+  context?: 'chat' | 'live' | 'profile'
 }
 
-export default function ChatGiftBubble({ name, sender }: ChatGiftBubbleProps) {
-  const isMine = sender === 'me'
+export default function GiftDispatcher({ name, size = 120, context }: GiftDispatcherProps) {
+  const gift = gifts.find((g) => g.name === name)
+
+  if (!gift) {
+    return (
+      <div className="text-red-500 text-sm">
+        ❌ Unknown gift: {name}
+      </div>
+    )
+  }
 
   return (
-    <div className={`flex ${isMine ? 'justify-end' : 'justify-start'} mb-2`}>
-      <div
-        className={`rounded-xl p-2 ${
-          isMine ? 'bg-pink-600' : 'bg-gray-700'
-        }`}
-        style={{ maxWidth: 150 }}
-      >
-        <GiftDispatcher name={name} context="chat" />
-        <p className="text-center text-xs text-white mt-1">🎁 {name}</p>
-      </div>
+    <div className="flex flex-col items-center">
+      <GiftPlayer name={gift.name} size={size} autoPlay loop={false} />
+      <p className="text-xs mt-1">
+        {context === 'chat' ? '💬' : context === 'live' ? '🎥' : '🎁'} {gift.name} – {gift.price} ♢
+      </p>
     </div>
   )
-}
+                          }
