@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { gifts } from '@/lib/gifts'
-import GiftPlayer from '@/app/components/GiftPlayer'
-import NovaAssistant from '../components/NovaAssistant'
+import { gifts } from '@/data/gifts'
+import GiftPlayer from '@/components/GiftPlayer'
+import NovaAssistant from '@/components/NovaAssistant'
 
 export default function ChatPage({ params }: { params: { username: string } }) {
   const [activeGift, setActiveGift] = useState<string | null>(null)
@@ -51,4 +51,4 @@ export default function ChatPage({ params }: { params: { username: string } }) {
       </footer>
     </div>
   )
-}
+    }
