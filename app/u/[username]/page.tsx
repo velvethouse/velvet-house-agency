@@ -5,7 +5,7 @@ import EventNotice from '@/components/studio/EventNotice'
 import StudioGallery from '@/components/studio/StudioGallery'
 
 export default function UserProfilePage({ params }: { params: { username: string } }) {
-  const avatar = `/images/${params.username}.jpg` // TODO: avatar réel (DB)
+  const avatar = `/images/${params.username}.jpg` // TODO: remplacer par avatar réel (DB)
 
   return (
     <main className="p-4 space-y-6">
@@ -20,13 +20,19 @@ export default function UserProfilePage({ params }: { params: { username: string
       </div>
 
       {/* 📢 Event public */}
-      <EventNotice />
+      <div>
+        <EventNotice />
+      </div>
 
       {/* 🖼️ Galerie photo/vidéo */}
-      <StudioGallery />
+      <div>
+        <StudioGallery />
+      </div>
 
       {/* 🎁 Gifts accessibles depuis le profil */}
-      <LiveGiftOverlay />
+      <div>
+        <LiveGiftOverlay />
+      </div>
     </main>
   )
 }
