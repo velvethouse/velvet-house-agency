@@ -1,22 +1,31 @@
-// stores/giftStore.ts
-import { create } from "zustand";
+import { create } from 'zustand'
 
-export type Gift = {
-  id: string;
-  name: string;
-  animation: string; // ex: "lotus.json"
-  amount: number;
-  duration: number; // ✅ <-- AJOUT ICI
-};
+type Streamer = {
+  username: string
+  avatar: string
+  lotusEarned: number
+}
 
-export type GiftState = {
-  current: Gift | null;
-  setGift: (gift: Gift) => void;
-  clearGift: () => void;
-};
+type GiftState = {
+  streamers: Streamer[]
+}
 
-export const useGiftStore = create<GiftState>((set) => ({
-  current: null,
-  setGift: (gift) => set({ current: gift }),
-  clearGift: () => set({ current: null }),
-}));
+export const useGiftStore = create<GiftState>(() => ({
+  streamers: [
+    {
+      username: "amelia_vip",
+      avatar: "/images/amelia.jpg",
+      lotusEarned: 14300,
+    },
+    {
+      username: "nova_stream",
+      avatar: "/images/nova.jpg",
+      lotusEarned: 210000,
+    },
+    {
+      username: "chloe_vh",
+      avatar: "/images/chloe.jpg",
+      lotusEarned: 50000,
+    },
+  ],
+}))
