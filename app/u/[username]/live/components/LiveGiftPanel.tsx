@@ -3,12 +3,12 @@
 import { useState } from "react";
 import GiftPlayer from "@/components/GiftPlayer";
 import gifts from "@/public/data/gifts.json";
-import { useFollowerStore } from "@/stores/followerStore";
 import { toast } from "sonner";
+import { useGiftStore } from "@/stores/giftStore";
 
 export default function LiveGiftPanel() {
-  const [activeGift, setActiveGift] = useState<string | null>(null);
-  const { lotus, deductLotus } = useFollowerStore();
+  const [lotus, setLotus] = useState(3000); // TEMP: simulate balance
+  const { setGift, clearGift } = useGiftStore();
 
   const handleSendGift = (giftName: string, giftPrice: number) => {
     if (lotus < giftPrice) {
@@ -16,10 +16,16 @@ export default function LiveGiftPanel() {
       return;
     }
 
-    deductLotus(giftPrice);
-    setActiveGift(giftName);
+    setLotus((prev) => Math.max(prev - giftPrice, 0));
+    setGift({
+      id: giftName,
+      name: giftName,
+      animation: giftName + ".json",
+      amount: giftPrice,
+      duration: 5, // seconds
+    });
 
-    setTimeout(() => setActiveGift(null), 5000); // 5s pour être safe
+    setTimeout(() => clearGift(), 5000); // 5s
   };
 
   return (
@@ -39,12 +45,6 @@ export default function LiveGiftPanel() {
           </button>
         ))}
       </div>
-
-      {activeGift && (
-        <div className="fixed top-10 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
-          <GiftPlayer giftName={activeGift} />
-        </div>
-      )}
     </div>
   );
-          }
+}
