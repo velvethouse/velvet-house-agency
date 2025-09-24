@@ -40,67 +40,47 @@ export default function RootLayout({
           fontFamily: 'system-ui, "Segoe UI", Roboto, Arial, sans-serif',
         }}
       >
-        {/* ✅ Header + nav */}
-        <header
+        {/* 🌟 Contenu principal */}
+        <main>{children}</main>
+
+        {/* 🧭 Menu fixe bas */}
+        <div
           style={{
-            position: "sticky",
-            top: 0,
-            zIndex: 50,
-            backdropFilter: "blur(8px)",
-            background: "rgba(43,13,13,0.88)",
-            borderBottom: "1px solid rgba(212,175,55,0.18)",
+            position: "fixed",
+            bottom: 16,
+            left: 0,
+            right: 0,
+            zIndex: 100,
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          <nav
+          <div
             style={{
-              maxWidth: 1100,
-              margin: "0 auto",
-              padding: "12px 16px",
               display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: 12,
               flexWrap: "wrap",
+              gap: 12,
+              justifyContent: "center",
+              background: "rgba(255,255,255,0.9)",
+              padding: "12px 16px",
+              borderRadius: "16px",
+              maxWidth: 360,
             }}
           >
-            <a
-              href="/"
-              style={{
-                color: "#D4AF37",
-                fontWeight: 900,
-                textDecoration: "none",
-                letterSpacing: ".3px",
-              }}
-            >
-              Velvet House
-            </a>
-
-            <div
-              style={{
-                display: "flex",
-                gap: 16,
-                flexWrap: "wrap",
-                alignItems: "center",
-                fontWeight: 700,
-              }}
-            >
-              <a href="/live" style={linkStyle}>Live</a>
-              <a href="/vip" style={linkStyle}>VIP</a>
-              <a href="/gifts" style={linkStyle}>Gifts</a>
-              <a href="/lotus" style={linkStyle}>Lotus</a>
-              <a href="/contact" style={linkStyle}>Contact</a>
-              <a href="/terms" style={linkStyle}>Terms</a>
-            </div>
-          </nav>
-        </header>
-
-        <main>{children}</main>
+            <a href="/live" style={buttonStyle}>🎥 Live</a>
+            <a href="/gifts" style={buttonStyle}>🎁 Gifts</a>
+            <a href="/lotus" style={buttonStyle}>💎 Lotus</a>
+            <a href="/vip" style={buttonStyle}>👑 VIP</a>
+            <a href="/contact" style={buttonStyle}>📨 Contact</a>
+            <a href="/terms" style={buttonStyle}>📄 Terms</a>
+          </div>
+        </div>
 
         {/* ✅ Footer */}
         <footer
           style={{
             maxWidth: 1100,
-            margin: "24px auto 32px",
+            margin: "80px auto 32px",
             padding: "0 16px",
             color: "#d7c9b3",
             fontSize: 12,
@@ -133,8 +113,12 @@ export default function RootLayout({
   );
 }
 
-const linkStyle: React.CSSProperties = {
+const buttonStyle: React.CSSProperties = {
+  padding: "8px 16px",
+  background: "#fff",
+  color: "#000",
+  fontWeight: "bold",
+  borderRadius: "12px",
   textDecoration: "none",
-  color: "#f5f5f5",
   whiteSpace: "nowrap",
 };
