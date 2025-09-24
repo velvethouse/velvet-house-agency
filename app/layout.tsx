@@ -88,7 +88,6 @@ export default function RootLayout({
               <a href="/vip" style={linkStyle}>VIP</a>
               <a href="/gifts" style={linkStyle}>Gifts</a>
               <a href="/lotus" style={linkStyle}>Lotus</a>
-              <a href="/dashboard" style={linkStyle}>Dashboard</a>
               <a href="/contact" style={linkStyle}>Contact</a>
               <a href="/terms" style={linkStyle}>Terms</a>
             </div>
