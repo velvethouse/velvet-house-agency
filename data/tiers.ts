@@ -36,3 +36,42 @@ export const TIERS: Record<TierKey, {
     ]
   }
 };
+
+// 🎯 Rangs des streameuses (Butterfly system)
+export type StreamerTier = {
+  name: string;
+  symbol: string;
+  minLotus: number;
+  maxLotus?: number;
+  commission: number;
+};
+
+export const tiers: StreamerTier[] = [
+  {
+    name: "Cristalline",
+    symbol: "🐛",
+    minLotus: 0,
+    maxLotus: 9999,
+    commission: 62,
+  },
+  {
+    name: "Butterfly",
+    symbol: "🦋",
+    minLotus: 10000,
+    maxLotus: 199999,
+    commission: 64,
+  },
+  {
+    name: "Golden Butterfly",
+    symbol: "💛",
+    minLotus: 200000,
+    maxLotus: 999999,
+    commission: 67,
+  },
+  {
+    name: "Fire Butterfly",
+    symbol: "🔥",
+    minLotus: 1000000,
+    commission: 70,
+  },
+];
