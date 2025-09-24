@@ -3,7 +3,6 @@
 import { useState } from "react";
 import GiftPlayer from "@/components/GiftPlayer";
 import gifts from "@/public/data/gifts.json";
-import { toast } from "sonner";
 import { useGiftStore } from "@/stores/giftStore";
 
 export default function LiveGiftPanel() {
@@ -12,7 +11,7 @@ export default function LiveGiftPanel() {
 
   const handleSendGift = (giftName: string, giftPrice: number) => {
     if (lotus < giftPrice) {
-      toast.error("Insufficient Lotus 💸");
+      alert("Insufficient Lotus 💸");
       return;
     }
 
@@ -25,7 +24,7 @@ export default function LiveGiftPanel() {
       duration: 5, // seconds
     });
 
-    setTimeout(() => clearGift(), 5000); // 5s
+    setTimeout(() => clearGift(), 5000); // reset animation after 5s
   };
 
   return (
