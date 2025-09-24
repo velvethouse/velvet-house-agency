@@ -73,7 +73,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer texte + lien Terms */}
       <footer
         style={{
           marginTop: 40,
