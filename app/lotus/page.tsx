@@ -4,17 +4,23 @@ import { useState } from 'react'
 
 export default function LotusPage() {
   const baseRate = 0.00465
+
+  // TODO : remplacer par vraie détection (store auth)
+  const userVip = 'vip-gold' // 'free' | 'vip' | 'vip-gold'
+
+  const bonusRate = userVip === 'vip-gold' ? 0.05 : userVip === 'vip' ? 0.02 : 0
+
   const packs = [
-    { amount: 1000, bonus: 50, label: null },
-    { amount: 2000, bonus: 100, label: null },
-    { amount: 5000, bonus: 250, label: null },
-    { amount: 10000, bonus: 500, label: null },
-    { amount: 20000, bonus: 1000, label: null },
-    { amount: 50000, bonus: 2500, label: 'VIP Gold' },
-    { amount: 100000, bonus: 5000, label: 'GOD' },
-    { amount: 200000, bonus: 10000, label: null },
-    { amount: 500000, bonus: 25000, label: null },
-    { amount: 1000000, bonus: 50000, label: null },
+    { amount: 1000, label: null },
+    { amount: 2000, label: null },
+    { amount: 5000, label: null },
+    { amount: 10000, label: null },
+    { amount: 20000, label: null },
+    { amount: 50000, label: 'VIP Gold' },
+    { amount: 100000, label: 'GOD' },
+    { amount: 200000, label: null },
+    { amount: 500000, label: null },
+    { amount: 1000000, label: null },
   ]
 
   const [selectedPack, setSelectedPack] = useState<null | typeof packs[0]>(null)
@@ -41,13 +47,15 @@ export default function LotusPage() {
         <h1 style={{ fontSize: 'clamp(22px,6vw,36px)', color: '#D4AF37' }}>💎 Buy Lotus</h1>
 
         <p style={{ marginTop: 8, fontSize: 14, color: '#e9dfcf' }}>
-          Select the amount of Lotus you want to buy. Bonus included for each pack!
+          Select the amount of Lotus you want to buy. VIP members receive exclusive bonuses.
         </p>
 
         <div style={{ display: 'grid', gap: 18, marginTop: 32 }}>
           {packs.map((p) => {
             const basePrice = p.amount * baseRate
             const adjusted = basePrice * 1.03
+            const bonusLotus = Math.floor(p.amount * bonusRate)
+
             const priceStr = adjusted.toLocaleString('en-US', {
               style: 'currency',
               currency: 'USD',
@@ -70,9 +78,11 @@ export default function LotusPage() {
                   )}
                 </h3>
                 <p style={{ margin: '4px 0', fontSize: 14 }}>{priceStr}</p>
-                <p style={{ color: 'lightgreen', fontSize: 13 }}>
-                  +{p.bonus.toLocaleString('en-US')} Lotus bonus
-                </p>
+                {bonusLotus > 0 && (
+                  <p style={{ color: 'lightgreen', fontSize: 13 }}>
+                    +{bonusLotus.toLocaleString()} bonus for {userVip === 'vip' ? 'VIP' : 'VIP Gold'}
+                  </p>
+                )}
                 <button
                   onClick={() => openModal(p)}
                   className="btn3d btn3d--gold"
@@ -125,9 +135,11 @@ export default function LotusPage() {
                   currency: 'USD',
                 })}
               </p>
-              <p style={{ color: 'lightgreen', fontSize: 13 }}>
-                +{selectedPack.bonus.toLocaleString()} bonus
-              </p>
+              {bonusRate > 0 && (
+                <p style={{ color: 'lightgreen', fontSize: 13 }}>
+                  +{Math.floor(selectedPack.amount * bonusRate).toLocaleString()} bonus Lotus
+                </p>
+              )}
 
               <div style={{ marginTop: 20, display: 'grid', gap: 12 }}>
                 <button
