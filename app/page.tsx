@@ -28,12 +28,51 @@ export default function HomePage() {
           width: '100%',
           textAlign: 'center',
           color: '#fff',
-          margin: '120px auto 0',
+          margin: '60px auto 0',
         }}
       >
         <h1 style={{ fontSize: '32px', color: '#FFD700', marginBottom: '20px' }}>
           Velvet House
         </h1>
+
+        {/* ✅ Menu flottant en haut */}
+        <div
+          style={{
+            marginTop: 10,
+            marginBottom: 24,
+            display: 'grid',
+            gap: 10,
+            gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+            justifyContent: 'center',
+          }}
+        >
+          {[
+            { label: '🎥 Live', href: '/live' },
+            { label: '🎁 Gifts', href: '/gifts' },
+            { label: '💎 Lotus', href: '/lotus' },
+            { label: '👑 VIP', href: '/vip' },
+            { label: '📩 Contact', href: '/contact' },
+            { label: '📃 Terms', href: '/terms' },
+          ].map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              style={{
+                background: 'rgba(255,255,255,0.9)',
+                color: '#2e0d0d',
+                fontWeight: 600,
+                textAlign: 'center',
+                padding: '8px 12px',
+                borderRadius: 12,
+                textDecoration: 'none',
+                fontSize: 14,
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+
         <p style={{ marginBottom: '24px', lineHeight: 1.6 }}>
           More than a platform: an exclusive universe where elegance meets mystery.
           <br />
@@ -73,7 +112,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer texte + lien Terms */}
+      {/* ✅ Footer */}
       <footer
         style={{
           marginTop: 40,
@@ -90,4 +129,4 @@ export default function HomePage() {
       </footer>
     </main>
   )
-      }
+              }
