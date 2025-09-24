@@ -1,18 +1,22 @@
-// app/live/page.tsx
+'use client'   // 🔥 Ajout obligatoire
+
 import Link from "next/link";
 import { tiers } from "@/data/tiers";
 import { useGiftStore } from "@/stores/giftStore";
 
 export default function LivePage() {
-  // 🔥 Ici on utilise le store global (ou API plus tard)
-  const { streamers } = useGiftStore(); 
+  const { streamers } = useGiftStore(); // Zustand côté client uniquement
 
   return (
     <main className="p-4">
       <h1 className="text-2xl font-bold mb-4">🎥 Live Now</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {streamers.map((s) => {
-          const tier = tiers.find((t) => t.minLotus <= s.lotusEarned && s.lotusEarned < (t.maxLotus ?? Infinity));
+          const tier = tiers.find(
+            (t) =>
+              t.minLotus <= s.lotusEarned &&
+              s.lotusEarned < (t.maxLotus ?? Infinity)
+          );
 
           return (
             <Link
@@ -27,7 +31,11 @@ export default function LivePage() {
               />
               <div className="p-2 flex justify-between items-center">
                 <span className="font-medium">@{s.username}</span>
-                {tier && <span className="text-sm">{tier.symbol} {tier.name}</span>}
+                {tier && (
+                  <span className="text-sm">
+                    {tier.symbol} {tier.name}
+                  </span>
+                )}
               </div>
             </Link>
           );
@@ -35,4 +43,4 @@ export default function LivePage() {
       </div>
     </main>
   );
-        }
+                               }
