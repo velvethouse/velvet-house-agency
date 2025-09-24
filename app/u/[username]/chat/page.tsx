@@ -51,4 +51,4 @@ export default function ChatPage({ params }: { params: { username: string } }) {
       </footer>
     </div>
   )
-    }
+        }
