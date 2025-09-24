@@ -14,7 +14,7 @@ export default function HomePage() {
         backgroundPosition: 'center top',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         padding: '20px 16px 80px',
       }}
     >
@@ -111,22 +111,6 @@ export default function HomePage() {
           </a>
         </div>
       </section>
-
-      {/* ✅ Footer */}
-      <footer
-        style={{
-          marginTop: 40,
-          textAlign: 'center',
-          fontSize: 12,
-          color: 'rgba(255,255,255,0.4)',
-          paddingTop: 24,
-        }}
-      >
-        © 2025 Velvet House Agency ·{' '}
-        <Link href="/terms" style={{ color: '#FFD700', textDecoration: 'none' }}>
-          Terms
-        </Link>
-      </footer>
     </main>
   )
-              }
+        }
