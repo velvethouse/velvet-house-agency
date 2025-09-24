@@ -2,14 +2,11 @@
 
 import { useState } from 'react'
 
+type VipStatus = 'free' | 'vip' | 'vip-gold'
+const userVip: VipStatus = 'vip-gold' // à remplacer plus tard par store réel
+
 export default function LotusPage() {
   const baseRate = 0.00465
-
-  // TODO : remplacer par vraie détection (store auth)
-  const userVip = 'vip-gold' // 'free' | 'vip' | 'vip-gold'
-
-  const bonusRate = userVip === 'vip-gold' ? 0.05 : userVip === 'vip' ? 0.02 : 0
-
   const packs = [
     { amount: 1000, label: null },
     { amount: 2000, label: null },
@@ -24,6 +21,12 @@ export default function LotusPage() {
   ]
 
   const [selectedPack, setSelectedPack] = useState<null | typeof packs[0]>(null)
+
+  const getBonus = (amount: number) => {
+    if (userVip === 'vip') return Math.round(amount * 0.02)
+    if (userVip === 'vip-gold') return Math.round(amount * 0.05)
+    return 0
+  }
 
   const openModal = (pack: typeof packs[0]) => {
     setSelectedPack(pack)
@@ -47,19 +50,20 @@ export default function LotusPage() {
         <h1 style={{ fontSize: 'clamp(22px,6vw,36px)', color: '#D4AF37' }}>💎 Buy Lotus</h1>
 
         <p style={{ marginTop: 8, fontSize: 14, color: '#e9dfcf' }}>
-          Select the amount of Lotus you want to buy. VIP members receive exclusive bonuses.
+          Select the amount of Lotus you want to buy.
+          {userVip === 'vip' && ' As a VIP, you get +2% bonus.'}
+          {userVip === 'vip-gold' && ' As a VIP Gold, you get +5% bonus.'}
         </p>
 
         <div style={{ display: 'grid', gap: 18, marginTop: 32 }}>
           {packs.map((p) => {
             const basePrice = p.amount * baseRate
             const adjusted = basePrice * 1.03
-            const bonusLotus = Math.floor(p.amount * bonusRate)
-
             const priceStr = adjusted.toLocaleString('en-US', {
               style: 'currency',
               currency: 'USD',
             })
+            const bonusLotus = getBonus(p.amount)
 
             return (
               <div
@@ -135,9 +139,10 @@ export default function LotusPage() {
                   currency: 'USD',
                 })}
               </p>
-              {bonusRate > 0 && (
+              {getBonus(selectedPack.amount) > 0 && (
                 <p style={{ color: 'lightgreen', fontSize: 13 }}>
-                  +{Math.floor(selectedPack.amount * bonusRate).toLocaleString()} bonus Lotus
+                  +{getBonus(selectedPack.amount).toLocaleString()} bonus for{' '}
+                  {userVip === 'vip' ? 'VIP' : 'VIP Gold'}
                 </p>
               )}
 
@@ -184,4 +189,4 @@ export default function LotusPage() {
       </section>
     </main>
   )
-    }
+  }
