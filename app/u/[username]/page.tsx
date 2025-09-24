@@ -1,16 +1,15 @@
 'use client'
 
-import NovaAssistant from '@/components/NovaAssistant'
 import LiveGiftOverlay from '@/components/gifts/LiveGiftOverlay'
 import EventNotice from '@/components/studio/EventNotice'
 import StudioGallery from '@/components/studio/StudioGallery'
 
 export default function UserProfilePage({ params }: { params: { username: string } }) {
-  const avatar = `/images/${params.username}.jpg` // TODO: remplacer par avatar réel en DB
+  const avatar = `/images/${params.username}.jpg` // TODO: avatar réel (DB)
 
   return (
     <main className="p-4 space-y-6">
-      {/* 🏷️ Nom + avatar */}
+      {/* 🏷️ Avatar + pseudo */}
       <div className="flex items-center gap-4">
         <img
           src={avatar}
@@ -20,17 +19,14 @@ export default function UserProfilePage({ params }: { params: { username: string
         <h1 className="text-2xl font-bold">@{params.username}</h1>
       </div>
 
-      {/* 📢 Event public de la streameuse */}
+      {/* 📢 Event public */}
       <EventNotice />
 
       {/* 🖼️ Galerie photo/vidéo */}
       <StudioGallery />
 
-      {/* 🧠 Nova assistant */}
-      <NovaAssistant context="profile" />
-
       {/* 🎁 Gifts accessibles depuis le profil */}
       <LiveGiftOverlay />
     </main>
   )
-      }
+}
