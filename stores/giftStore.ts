@@ -8,24 +8,12 @@ type Streamer = {
 
 type GiftState = {
   streamers: Streamer[]
+  setStreamers: (data: Streamer[]) => void
 }
 
-export const useGiftStore = create<GiftState>(() => ({
-  streamers: [
-    {
-      username: "amelia_vip",
-      avatar: "/images/amelia.jpg",
-      lotusEarned: 14300,
-    },
-    {
-      username: "nova_stream",
-      avatar: "/images/nova.jpg",
-      lotusEarned: 210000,
-    },
-    {
-      username: "chloe_vh",
-      avatar: "/images/chloe.jpg",
-      lotusEarned: 50000,
-    },
-  ],
+export const useGiftStore = create<GiftState>((set) => ({
+  streamers: [],
+
+  // ✅ Permet de charger dynamiquement les streameuses (via API, backoffice, etc.)
+  setStreamers: (data) => set({ streamers: data }),
 }))
