@@ -1,11 +1,10 @@
 'use client'
 
-type Props = {
-  lotus: number            // solde réel
-  currency: 'USDT' | 'SEPA' | 'HK' // devise choisie
-}
+const PayoutPage = () => {
+  // TEMP : valeur simulée pour build
+  const lotus = 25000
+  const currency: 'USDT' | 'SEPA' | 'HK' = 'USDT'
 
-export default function PayoutPage({ lotus, currency }: Props) {
   const minimumLotus = 7000
 
   const getCommissionRate = (lotus: number) => {
@@ -32,26 +31,22 @@ export default function PayoutPage({ lotus, currency }: Props) {
   })
 
   return (
-    <main
-      style={{
-        padding: 24,
-        maxWidth: 960,
-        margin: '0 auto',
-        fontFamily: 'system-ui,Segoe UI,Roboto,sans-serif',
-        color: '#fff'
-      }}
-    >
+    <main style={{
+      padding: 24,
+      maxWidth: 960,
+      margin: '0 auto',
+      fontFamily: 'system-ui,Segoe UI,Roboto,sans-serif',
+      color: '#fff'
+    }}>
       <h1 style={{ fontSize: 26, color: '#D4AF37', marginBottom: 24 }}>💸 Request Payout</h1>
 
-      <section
-        style={{
-          background: '#2e0d0d',
-          border: '1px solid rgba(212,175,55,0.2)',
-          padding: 20,
-          borderRadius: 12,
-          marginBottom: 32
-        }}
-      >
+      <section style={{
+        background: '#2e0d0d',
+        border: '1px solid rgba(212,175,55,0.2)',
+        padding: 20,
+        borderRadius: 12,
+        marginBottom: 32
+      }}>
         <p><strong>Available Lotus:</strong> {lotus.toLocaleString()} ♢</p>
         <p><strong>Commission rate:</strong> {(commission * 100).toFixed(0)}%</p>
         <p><strong>Currency:</strong> {currency} ({(fee * 100).toFixed(1)}% fee)</p>
@@ -105,6 +100,8 @@ export default function PayoutPage({ lotus, currency }: Props) {
     </main>
   )
 }
+
+export default PayoutPage
 
 const codeStyle: React.CSSProperties = {
   background: '#222',
