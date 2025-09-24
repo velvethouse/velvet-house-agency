@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import GiftStage from "@/components/GiftStage";
 
 export const metadata: Metadata = {
   title: "Velvet House Agency",
@@ -25,7 +24,10 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/lotus.png" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
         <title>Velvet House</title>
       </head>
 
@@ -93,9 +95,6 @@ export default function RootLayout({
           </nav>
         </header>
 
-        {/* 🎁 Cadeaux live */}
-        <GiftStage />
-
         <main>{children}</main>
 
         {/* ✅ Footer */}
@@ -121,7 +120,10 @@ export default function RootLayout({
           >
             <span>© {new Date().getFullYear()} Velvet House Agency</span>
             <span>
-              <a href="/terms" style={{ color: "#D4AF37", textDecoration: "none" }}>
+              <a
+                href="/terms"
+                style={{ color: "#D4AF37", textDecoration: "none" }}
+              >
                 Terms
               </a>
             </span>
