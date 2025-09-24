@@ -28,7 +28,7 @@ export default function GiftsPage() {
         >
           {gifts.map((gift) => (
             <div
-              key={gift.name}
+              key={gift.id}
               style={{
                 background: '#1e0d0d',
                 borderRadius: 12,
@@ -40,7 +40,9 @@ export default function GiftsPage() {
             >
               <GiftPlayer name={gift.name} size={160} autoPlay loop={false} />
 
-              <p style={{ marginTop: 10, fontSize: 16 }}>{gift.symbol}</p>
+              {/* 🔁 Remplace l'ancien `gift.symbol` par `gift.name` */}
+              <p style={{ marginTop: 10, fontSize: 16 }}>{gift.name}</p>
+
               <p style={{ color: '#FFD700', fontSize: 14 }}>
                 {gift.price.toLocaleString()} ♢
               </p>
@@ -50,4 +52,4 @@ export default function GiftsPage() {
       </section>
     </main>
   )
-              }
+            }
