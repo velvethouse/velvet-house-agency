@@ -1,32 +1,38 @@
-'use client'
-
-import { useState } from 'react'
-import GiftOverlay from './components/GiftOverlay'
-import GiftButton from './components/GiftButton'
+// app/live/page.tsx
+import Link from "next/link";
+import { tiers } from "@/data/tiers";
+import { useGiftStore } from "@/stores/giftStore";
 
 export default function LivePage() {
-  const [currentGift, setCurrentGift] = useState<string | null>(null)
-
-  const handleGiftSend = (gift: string) => {
-    setCurrentGift(null) // reset if same gift
-    setTimeout(() => {
-      setCurrentGift(gift)
-    }, 50)
-  }
+  // 🔥 Ici on utilise le store global (ou API plus tard)
+  const { streamers } = useGiftStore(); 
 
   return (
-    <div className="relative min-h-screen bg-black text-white">
-      {/* Zone live vidéo (à intégrer) */}
-      <div className="p-4 text-center">
-        <h1 className="text-xl font-bold mb-2">🎥 Live de Nova</h1>
-        <p>Tu regardes une streameuse en direct.</p>
+    <main className="p-4">
+      <h1 className="text-2xl font-bold mb-4">🎥 Live Now</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {streamers.map((s) => {
+          const tier = tiers.find((t) => t.minLotus <= s.lotusEarned && s.lotusEarned < (t.maxLotus ?? Infinity));
+
+          return (
+            <Link
+              key={s.username}
+              href={`/u/${s.username}/live`}
+              className="block bg-neutral-900 rounded-xl overflow-hidden shadow hover:shadow-lg transition"
+            >
+              <img
+                src={s.avatar}
+                alt={s.username}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-2 flex justify-between items-center">
+                <span className="font-medium">@{s.username}</span>
+                {tier && <span className="text-sm">{tier.symbol} {tier.name}</span>}
+              </div>
+            </Link>
+          );
+        })}
       </div>
-
-      {/* Boutons de gifts */}
-      <GiftButton onSend={handleGiftSend} />
-
-      {/* Overlay cadeau */}
-      {currentGift && <GiftOverlay name={currentGift} />}
-    </div>
-  )
-}
+    </main>
+  );
+        }
