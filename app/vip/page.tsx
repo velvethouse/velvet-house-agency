@@ -29,8 +29,7 @@ export default function VipPage() {
           <li>Access exclusive live events and premieres</li>
           <li>Join the VIP community chat room</li>
           <li>View special behind-the-scenes content (3 days access)</li>
-          <li>Support creators with priority messages and badges</li>
-          <li>VIP badge displayed on your profile</li>
+          <li>Support creators with priority messages and VIP badge</li>
           <li><strong>+2% bonus Lotus on every pack purchased</strong></li>
           <li><strong>+1000 Lotus included</strong></li>
         </ul>
@@ -76,9 +75,9 @@ export default function VipPage() {
         <ul style={{ paddingLeft: 20, color: '#f5f5f5', lineHeight: 1.7, marginTop: 10 }}>
           <li>All VIP benefits included</li>
           <li>Discreet watermark on exclusive content</li>
-          <li>Save your favorite content to a private folder</li>
-          <li>Anonymous mode for content viewing and purchases</li>
-          <li><strong>+5% bonus Lotus on all future pack purchases</strong></li>
+          <li>Save favorite content to your private folder</li>
+          <li>Anonymous mode for viewing and purchases</li>
+          <li><strong>+5% bonus Lotus</strong> on all future purchases</li>
         </ul>
 
         <Link
@@ -100,4 +99,4 @@ export default function VipPage() {
       </section>
     </main>
   )
-}
+        }
