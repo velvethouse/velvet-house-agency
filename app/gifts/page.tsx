@@ -1,7 +1,7 @@
 'use client'
 
-import { gifts } from '@/lib/gifts'
-import GiftPlayer from '@/app/components/GiftPlayer'
+import { gifts } from '@/data/gifts'
+import GiftPlayer from '@/components/GiftPlayer'
 
 export default function GiftsPage() {
   return (
@@ -41,11 +41,13 @@ export default function GiftsPage() {
               <GiftPlayer name={gift.name} size={160} autoPlay loop={false} />
 
               <p style={{ marginTop: 10, fontSize: 16 }}>{gift.symbol}</p>
-              <p style={{ color: '#FFD700', fontSize: 14 }}>{gift.price.toLocaleString()} ♢</p>
+              <p style={{ color: '#FFD700', fontSize: 14 }}>
+                {gift.price.toLocaleString()} ♢
+              </p>
             </div>
           ))}
         </div>
       </section>
     </main>
   )
-}
+              }
