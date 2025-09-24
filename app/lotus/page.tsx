@@ -1,12 +1,18 @@
 'use client'
 
+import { useUserStore } from '@/stores/userStore'
 import { useState } from 'react'
 
-type VipStatus = 'free' | 'vip' | 'vip-gold'
-const userVip: VipStatus = 'vip-gold' // à remplacer plus tard par store réel
-
 export default function LotusPage() {
+  const { vipStatus } = useUserStore()
   const baseRate = 0.00465
+
+  const getBonusRate = () => {
+    if (vipStatus === 'vip') return 0.02
+    if (vipStatus === 'vip-gold') return 0.05
+    return 0
+  }
+
   const packs = [
     { amount: 1000, label: null },
     { amount: 2000, label: null },
@@ -22,19 +28,8 @@ export default function LotusPage() {
 
   const [selectedPack, setSelectedPack] = useState<null | typeof packs[0]>(null)
 
-  const getBonus = (amount: number) => {
-    if (userVip === 'vip') return Math.round(amount * 0.02)
-    if (userVip === 'vip-gold') return Math.round(amount * 0.05)
-    return 0
-  }
-
-  const openModal = (pack: typeof packs[0]) => {
-    setSelectedPack(pack)
-  }
-
-  const closeModal = () => {
-    setSelectedPack(null)
-  }
+  const openModal = (pack: typeof packs[0]) => setSelectedPack(pack)
+  const closeModal = () => setSelectedPack(null)
 
   return (
     <main
@@ -49,21 +44,18 @@ export default function LotusPage() {
       <section style={{ maxWidth: 900, margin: '0 auto' }}>
         <h1 style={{ fontSize: 'clamp(22px,6vw,36px)', color: '#D4AF37' }}>💎 Buy Lotus</h1>
 
-        <p style={{ marginTop: 8, fontSize: 14, color: '#e9dfcf' }}>
-          Select the amount of Lotus you want to buy.
-          {userVip === 'vip' && ' As a VIP, you get +2% bonus.'}
-          {userVip === 'vip-gold' && ' As a VIP Gold, you get +5% bonus.'}
-        </p>
+        {vipStatus !== 'none' && (
+          <p style={{ marginTop: 8, fontSize: 14, color: '#e9dfcf' }}>
+            As a {vipStatus === 'vip' ? 'VIP' : 'VIP Gold'}, you receive +{getBonusRate() * 100}% bonus on each pack.
+          </p>
+        )}
 
         <div style={{ display: 'grid', gap: 18, marginTop: 32 }}>
           {packs.map((p) => {
+            const bonus = Math.floor(p.amount * getBonusRate())
+            const total = p.amount + bonus
             const basePrice = p.amount * baseRate
             const adjusted = basePrice * 1.03
-            const priceStr = adjusted.toLocaleString('en-US', {
-              style: 'currency',
-              currency: 'USD',
-            })
-            const bonusLotus = getBonus(p.amount)
 
             return (
               <div
@@ -81,12 +73,15 @@ export default function LotusPage() {
                     <span style={{ fontSize: 14, color: '#FFD700' }}>• {p.label}</span>
                   )}
                 </h3>
-                <p style={{ margin: '4px 0', fontSize: 14 }}>{priceStr}</p>
-                {bonusLotus > 0 && (
-                  <p style={{ color: 'lightgreen', fontSize: 13 }}>
-                    +{bonusLotus.toLocaleString()} bonus for {userVip === 'vip' ? 'VIP' : 'VIP Gold'}
-                  </p>
-                )}
+                <p style={{ margin: '4px 0', fontSize: 14 }}>
+                  Price: {adjusted.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  })}
+                </p>
+                <p style={{ fontSize: 14, color: '#fff' }}>
+                  You will receive: <strong>{total.toLocaleString('en-US')}</strong> Lotus
+                </p>
                 <button
                   onClick={() => openModal(p)}
                   className="btn3d btn3d--gold"
@@ -139,13 +134,13 @@ export default function LotusPage() {
                   currency: 'USD',
                 })}
               </p>
-              {getBonus(selectedPack.amount) > 0 && (
-                <p style={{ color: 'lightgreen', fontSize: 13 }}>
-                  +{getBonus(selectedPack.amount).toLocaleString()} bonus for{' '}
-                  {userVip === 'vip' ? 'VIP' : 'VIP Gold'}
+              {vipStatus !== 'none' && (
+                <p style={{ fontSize: 14, color: 'lightgreen' }}>
+                  Total credited: {(
+                    selectedPack.amount + Math.floor(selectedPack.amount * getBonusRate())
+                  ).toLocaleString()} Lotus
                 </p>
               )}
-
               <div style={{ marginTop: 20, display: 'grid', gap: 12 }}>
                 <button
                   className="btn3d btn3d--gold"
@@ -189,4 +184,4 @@ export default function LotusPage() {
       </section>
     </main>
   )
-  }
+        }
