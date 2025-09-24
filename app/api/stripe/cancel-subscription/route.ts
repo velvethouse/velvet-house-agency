@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-08-16',
+  // ✅ Corrige l'erreur de typage
+  apiVersion: '2023-08-16' as const,
 })
 
 export async function POST(req: Request) {
@@ -13,7 +14,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Missing subscription ID' }, { status: 400 })
     }
 
-    // ❌ Annule l'abonnement immédiatement
     const deleted = await stripe.subscriptions.cancel(subscriptionId)
 
     return NextResponse.json({ success: true, deleted })
