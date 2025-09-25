@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { NextResponse } from 'next/server'
 
+// Solution propre : on force les types attendus avec l’interface officielle
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  // ✅ Corrige l'erreur de typage
-  apiVersion: '2023-08-16' as const,
-})
+  apiVersion: '2023-08-16',
+} satisfies Stripe.StripeConfig)
 
 export async function POST(req: Request) {
   try {
@@ -16,9 +16,9 @@ export async function POST(req: Request) {
 
     const deleted = await stripe.subscriptions.cancel(subscriptionId)
 
-    return NextResponse.json({ success: true, deleted })
-  } catch (err: any) {
-    console.error('❌ Stripe cancel error:', err.message)
-    return NextResponse.json({ error: err.message }, { status: 500 })
+    return NextResponse.json({ success: true, subscription: deleted })
+  } catch (error: any) {
+    console.error('❌ Cancel error:', error.message)
+    return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
